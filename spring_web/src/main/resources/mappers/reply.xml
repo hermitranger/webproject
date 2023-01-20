@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+	<update id="update">
+		update reply set reply_text=#{reply_text}
+		where idx=#{idx}
+	</update>
+	
+	<delete id="delete">
+		delete from reply where idx=#{idx}
+	</delete>
+	
+	<select id="detail" resultType="com.example.web.model.ReplyDTO">
+		select * from reply where idx=#{idx}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*) from reply
+		where board_idx=#{board_idx}
+	</select>
+	
+<!-- 	<insert id="insert">
+		insert into reply
+		(idx,board_idx,reply_text,replyer) values
+		(reply_seq.nextval,#{board_idx},#{reply_text},#{replyer})
+	</insert> -->
+	
+	<insert id="insert">
+		insert into reply
+		(board_idx,reply_text,replyer) values
+		(#{board_idx},#{reply_text},#{replyer})
+	</insert>
+	
+	<select id="list" resultType="com.example.web.model.ReplyDTO">
+	<include refid="paging_header"/>
+	select idx, board_idx, reply_text, replyer,user_id, r.regdate,
+	(select writer from board where idx=r.board_idx) writer
+	from reply r, user u,(select @rnum:=0) cnt
+	where r.replyer=u.user_id and board_idx=#{board_idx}
+	order by idx desc
+	<include refid="paging_footer"/>	
+	</select>
+	<sql id="paging_header">
+		select *
+		from(
+		select (select @rnum:=@rnum+1) num, A.*
+		from(
+	</sql>
+	<sql id="paging_footer">
+	) A
+	) AA
+	limit #{start}, #{end}
+	</sql>
+
+</mapper>

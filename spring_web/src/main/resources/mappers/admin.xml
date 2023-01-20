@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<!--https://tychejin.tistory.com/27  -->
+	<!--https://turing0809.tistory.com/48, https://risha-lee.tistory.com/13  -->
+	<!--https://seoulitelab.tistory.com/entry/%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%82%98%EB%88%84%EA%B8%B0-%EC%98%A4%EB%9D%BC%ED%81%B4-MySQL-MariaDB  -->
+	<!--https://js-development.tistory.com/15 특정문자 검색   -->
+	<!-- ↑페이지 나누기 mysql -->
+	<!--https://three-pleasure.tistory.com/256  mysql 변수 및 사용법-->
+	<!--https://us01.tistory.com/17 세션변수  -->
+	<!--https://wakestand.tistory.com/556 @ROWNUM 사용법  -->
+	<select id="user_list"
+		resultType="com.example.web.model.UserDTO">
+		select * from
+		(select @RNUM := @RNUM+1 AS NUM,A.* from
+		(select * from
+		user
+		<include refid="user_search" />
+		)A,
+		(select @RNUM :=0)b)c where c.num between #{start} and #{end}
+	</select>	
+	
+	<select id="product_list"
+		resultType="com.example.web.model.ProductDTO">
+		select * from
+		(select @RNUM := @RNUM+1 AS NUM2,P.* from
+		(select
+		product_cate,product_brand,product_name,product_code,
+		product_date,product_price,product_saleprice,TIMESTAMPDIFF(day,
+		product_date , NOW()) AS product_saledate from product
+		<include refid="product_search" />
+		)P,
+		(select @RNUM :=0)d)e where e.num2 between #{start} and #{end}
+	</select>	
+
+	<select id="user_count" resultType="int">
+	<!--조건에 만족한 자료 카운트   -->
+		select count(*) from user
+		<include refid="user_search"/>
+	</select>
+	
+	<select id="product_count" resultType="int">
+	<!--조건에 만족한 자료 카운트   -->
+		select count(*) from product
+		<include refid="product_search"/>
+	</select>
+	
+	<select id="soldout_count" resultType="int">
+	<!--조건에 만족한 자료 카운트   -->
+		select count(*) from product<!--  where product_date  "2022-09-22" -->
+		<include refid="soldout_search"/>
+	</select>
+	
+	<update id="restore">
+		update user
+		set
+		user_check = 0
+		where user_id=#{user_id}
+	</update>
+	
+	<update id="drop">
+		update user
+		set
+		user_check = -1
+		where user_id=#{user_id}
+	</update>
+	
+	<update id="sale_percent">
+		update product
+		set
+		product_saleprice =
+		#{product_saleprice}
+		where product_code =#{product_code}
+	</update>
+	
+	
+		<sql id="user_search">
+		<choose>
+			<when test="search_option == 'all' and #{keyword} != null "><!--all, not null 모두검색 -->
+				where 
+				user_check != 1 and (user_id like CONCAT('%',#{keyword},'%') or
+				user_passwd like CONCAT('%',#{keyword},'%') or
+				user_name like
+				CONCAT('%',#{keyword},'%') or
+				user_birth like
+				CONCAT('%',#{keyword},'%') or
+				user_gender like
+				CONCAT('%',#{keyword},'%') or
+				user_email like
+				CONCAT('%',#{keyword},'%') or
+				user_phone like
+				CONCAT('%',#{keyword},'%') or
+				user_check like
+				CONCAT('%',#{keyword},'%'))
+			</when>
+
+			<when test="search_option == 'user_id' and #{keyword} != null "><!--all, null 모두검색 -->
+				where user_check != 1 and user_id like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'user_passwd'"><!--all, null 모두검색 -->
+				where user_check != 1 and user_passwd like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'user_name'"><!--all, null 모두검색 -->
+				where user_check != 1 and user_name like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'user_gender'"><!--all, null 모두검색 -->
+				where user_check != 1 and user_gender like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'user_email'"><!--all, null 모두검색 -->
+				where user_check != 1 and user_email like CONCAT('%',#{keyword},'%')`
+			</when>
+			<when test="search_option == 'user_phone'"><!--all, null 모두검색 -->
+				where user_check != 1 and user_phone like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'user_check'"><!--all, null 모두검색 -->
+				where user_check != 1 and user_check = #{keyword}
+			</when>
+			<otherwise>
+			where user_check != 1
+			<!--모두 검색 -->
+			</otherwise>
+		</choose>
+	</sql>
+
+	
+	
+	<sql id="product_search"> <!--추가해야함 -->
+		<choose>
+
+			<when test="search_option == 'all' and #{keyword} != null "><!--all, null 모두검색 -->
+				where product_cate like CONCAT('%',#{keyword},'%') or
+				product_brand like CONCAT('%',#{keyword},'%') or
+				product_name like CONCAT('%',#{keyword},'%') or
+				product_code like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'product_cate'"><!--all, null 모두검색 -->
+			where product_cate like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'product_brand'"><!--all, null 모두검색 -->
+			where product_brand like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'product_code'"><!--all, null 모두검색 -->
+			where product_code like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'product_name'"><!--all, null 모두검색 -->
+			where product_name like CONCAT('%',#{keyword},'%')
+			</when>
+			<otherwise><!--모두검색 -->
+			</otherwise>
+	
+		</choose>
+	</sql>
+	
+	<sql id="soldout_search"> <!--추가해야함 -->
+		<choose>
+
+			<when test="search_option == 'all' and #{keyword} != null "><!--all, null 모두검색 -->
+				where (product_cate like CONCAT('%',#{keyword},'%') or
+				product_brand like CONCAT('%',#{keyword},'%') or
+				product_name like CONCAT('%',#{keyword},'%') or
+				product_code like CONCAT('%',#{keyword},'%')) and 
+				product_amount = 0
+			</when>
+			<when test="search_option == 'product_cate'"><!--all, null 모두검색 -->
+			 where product_cate like CONCAT('%',#{keyword},'%') and 
+				product_amount = 0
+			</when>
+			<when test="search_option == 'product_brand'"><!--all, null 모두검색 -->
+			 where product_brand like CONCAT('%',#{keyword},'%') and 
+				product_amount = 0
+			</when>
+			<when test="search_option == 'product_code'"><!--all, null 모두검색 -->
+			 where product_code like CONCAT('%',#{keyword},'%') and 
+				product_amount = 0
+			</when>
+			<when test="search_option == 'product_name'"><!--all, null 모두검색 -->
+			 where product_name like CONCAT('%',#{keyword},'%') and product_amount = 0
+			</when>
+			<otherwise><!--모두검색 -->
+			</otherwise>
+	
+		</choose>
+	</sql>
+	
+	<select id="soldout" resultType="com.example.web.model.ProductDTO">
+	select * from product where product_amount = 0
+	</select>
+
+</mapper>
+	

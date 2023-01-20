@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+
+	<select id="list" resultType="com.example.web.model.ProductDTO">
+		select * from
+		(select @RNUM := @RNUM + 1 AS NUM, A.* from
+		(select * from product <include refid="search" /> <!-- order by product_code desc -->)A,
+		(select @RNUM :=0)b)c
+		where c.num between #{start} and #{end} 
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*) from product
+		<include refid="search" />
+	</select>
+	
+	<select id="new_list"
+		resultType="com.example.web.model.ProductDTO">
+		select product_code, product_name, product_cate, product_price from
+		product limit 4
+	</select>
+	
+	<sql id="search">
+		<choose>			
+ 			<when test="search_option == 'all'"><!--all, not null 모두검색 -->
+ 				where product_amount > 0 and 
+ 				((product_brand like CONCAT('%',#{keyword},'%')) or
+				(product_name like CONCAT('%',#{keyword},'%')) or
+				(product_cate like CONCAT('%',#{keyword},'%')))
+			</when>
+			<when test="search_option == 'product_brand'">
+			where product_amount > 0 and product_brand like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'product_price'">
+			where product_amount > 0 and product_price like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'product_name'">
+			where product_amount > 0 and product_name like CONCAT('%',#{keyword},'%') 
+			</when>
+			<when test="search_option == 'product_cate'">
+			where product_amount > 0 and product_cate like CONCAT('%',#{keyword},'%')
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="detail"
+		resultType="com.example.web.model.ProductDTO">
+		select * from product where product_code = #{product_code}
+	</select>
+
+	<insert id="insert">
+		insert into product (product_code, filename,
+		product_name, product_cate, product_brand, product_price,
+		product_amount, product_detail, product_check) values
+		(#{product_code},#{filename},#{product_name},#{product_cate},#{product_brand},#{product_price},#{product_amount},#{product_detail},#{product_check})
+	</insert>
+
+	<update id="update">
+		update product set product_name = #{product_name},
+		product_cate = #{product_cate}, product_brand =
+		#{product_brand},product_saleprice=#{product_saleprice},
+		product_price
+		= #{product_price}, product_amount = #{product_amount}, product_detail
+		= #{product_detail}, product_check = #{product_check},
+		filename=#{filename}
+		where product_code = #{product_code}
+	</update>
+
+	<delete id="delete">
+		delete from product where product_code =
+		#{product_code}
+	</delete>
+
+	<select id="file_info" resultType="String">
+		select filename from product
+		where product_code= #{product_code}
+	</select>
+
+	<select id="recommend_check" resultType="int">
+		select count(*) from recommend where m_id=#{user_id} and
+		p_code=#{product_code} and r_idx=1
+	</select>
+
+	<insert id="recommend_insert">
+		INSERT INTO recommend VALUE(1,#{user_id},#{product_code})
+	</insert>
+	
+	<!-- <update id="recommend_insert">
+		update recommend set r_idx=1 where m_id=#{user_id} and p_code=#{product_code}
+	</update> -->
+
+	<delete id="recommend_delete">
+		delete from recommend where r_idx=1 and m_id=#{user_id} and p_code=#{product_code}; 
+	</delete>
+
+	<update id="product_buy">
+		update product set product_amount=#{product_amount}-1
+	</update>
+</mapper>
