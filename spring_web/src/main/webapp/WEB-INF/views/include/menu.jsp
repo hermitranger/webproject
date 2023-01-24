@@ -76,6 +76,7 @@
 							<li><a href="/soldout.do" style="color: white;">매진물품관리</a></li>
 							<li><a href="/admin_sale_list.do" style="color: white;">세일상품</a></li>
 						</ul>
+					<li><a href="/admin_manage.page">관리페이지</a><li>
 					<li><a href="/logout.do">로그아웃</a></li>
 				</c:when>
 			</c:choose>

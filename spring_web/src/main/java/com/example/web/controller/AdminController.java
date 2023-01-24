@@ -231,4 +231,9 @@ public class AdminController {
 		}
 		return "redirect:/board/list.do";
 	}
+	
+	@RequestMapping("admin_manage.page")
+	public String admin_manage() {
+		return "admin/manage";
+	}
 }
