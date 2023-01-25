@@ -14,4 +14,7 @@ public interface ProductDAO {
 	public void recommend_insert(String product_code, String user_id);
 	public void recommend_delete(String product_code,String user_id);
 	public List<ProductDTO> new_list();
+	public List<ProductDTO> catelist(int start, int end, String find);
+	public int catecount(String find);
+	
 }

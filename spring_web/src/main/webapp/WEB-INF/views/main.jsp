@@ -35,25 +35,25 @@
 	<!-- 상단부 카테고리 영역 -->
 	<section class="home-cards">
 		<div>
-			<a href="/shop/list.do"> <img
+			<a href="/shop/catelist.do?condition=1"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">계절가전</h3>
 		</div>
 		<div>
-			<a href="/shop/list.do"> <img
+			<a href="/shop/catelist.do?condition=2"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">음향기기</h3>
 		</div>
 		<div>
-			<a href="/shop/list.do"> <img
+			<a href="/shop/catelist.do?condition=3"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">주방가전</h3>
 		</div>
 		<div>
-			<a href="/shop/list.do"> <img
+			<a href="/shop/catelist.do?condition=4"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">컴퓨터 및 기타</h3>

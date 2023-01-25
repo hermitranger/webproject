@@ -86,4 +86,30 @@ public class ProductDAOImpl implements ProductDAO {
 		map.put("user_id",user_id);
 		sqlSession.selectOne("product.recommend_delete", map);
 	}
+	
+	@Override
+	public List<ProductDTO> catelist(int start, int end, String find){
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("find", find);
+		
+		map.put("start",start-1);
+		map.put("end", end);
+		System.out.println("start:end="+start+":"+end);		
+		return sqlSession.selectList("product.catelist",map);
+		
+	}
+	
+	
+	
+	@Override
+	public int catecount(String find){
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("find", find);
+		
+				
+		return sqlSession.selectOne("product.catecount",map);
+		
+	}
 }

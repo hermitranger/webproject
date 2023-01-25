@@ -108,6 +108,62 @@ public class ProductController {
 		return mav;
 	}
 	
+	@RequestMapping("/shop/catelist.do")
+	public ModelAndView catelist(@RequestParam(defaultValue ="1") int curPage,			
+			@RequestParam(defaultValue="0") int condition,
+			@RequestParam(defaultValue = "all") String search_option, 
+			@RequestParam(defaultValue="") String keyword)
+		 {
+		
+		ModelAndView mav= new ModelAndView();
+		mav.setViewName("/shop/list");
+		String find;		
+		
+		switch (condition) {
+		
+		case 1 : find="CONVERT(product_code,UNSIGNED) < 200000 "; 
+				break;
+		case 2 : find="CONVERT(product_code,UNSIGNED) >= 300000 and CONVERT(product_code,UNSIGNED) < 400000";
+				break;
+		case 3 : find="CONVERT(product_code,UNSIGNED) >= 400000 and CONVERT(product_code,UNSIGNED) < 500000";
+				break;
+		case 4 : find="CONVERT(product_code,UNSIGNED) >= 600000";
+				break;
+		default: find="CONVERT(product_code,UNSIGNED) >= 0";
+				break;
+		//convert(int 형으로 변환시킬 column, int형-unsigned,signed 양수,음수) 비교연산자(>,<,=) 찾을 값(product_code)
+				
+		}
+			
+		
+		
+		int count = productDao.catecount(find);
+		
+		PageUtil page_info = new PageUtil(count, curPage);
+
+		int start = page_info.getPageBegin();
+		int end = page_info.getPageEnd();
+		
+		List<ProductDTO> list = productDao.catelist(start, end, find);
+//		Set<ProductDTO> set = new HashSet<ProductDTO>(list);
+//		List<ProductDTO> new_list = new ArrayList<ProductDTO>(set);
+//		System.out.println("boardcontroller list:"+list);
+//		System.out.println("boardcontroller set:"+set);
+//		System.out.println("boardcontroller new_list:"+new_list);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("count", count);
+		map.put("search_option", search_option);
+		map.put("keyword", keyword);
+		map.put("page_info", page_info);
+		mav.addObject("map", map);
+		return mav;
+	
+		
+		
+	}
+	
 	@RequestMapping("/shop/edit/{product_code}")
 	public ModelAndView edit(@PathVariable("product_code") String product_code, ModelAndView mav) {
 		mav.setViewName("/shop/edit");
