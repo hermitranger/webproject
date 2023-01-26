@@ -38,145 +38,62 @@
 </script>
 </head>
 <body>
-	<c:if test="${sessionScope.user_check == null}">
-		<%@ include file="../include/menu.jsp"%>
-	</c:if>
-	<c:if test="${sessionScope.user_check >= 0}">
-		<%@ include file="../include/menu.jsp"%>
-	</c:if>
-
-	<!-- <div class="columns">
-
-		<div class="column">
-			<div class="thumbnail-container">
-				<img class="drift-demo-trigger"
-					data-zoom="https://awik.io/demo/webshop-zoom/shoe-large.jpg"
-					src="https://awik.io/demo/webshop-zoom/shoe-small.jpg">
-			</div>
-		</div>
-
-		<div class="column">
-			<div class="details">
-				<h1>Air Jordan 1 Retro</h1>
-				<p class="price">$95.99</p>
-				<p class="description">A remarkable shoe that's naturally soft,
-					cozy all over, and fits your every move.</p>
+	<%@ include file="../include/menu.jsp"%>
 
 
-
-				<div class="columns">
-
-					<div class="column" id="wishlist-container">
-
-						<button class="button">
-							<span class="icon is-small"> <i class="fas fa-heart"></i>
-							</span> <span>ADD TO WISHLIST</span>
-						</button>
-
-					</div>
-
-					<div class="column" id="buy-container">
-
-						<button class="button buy-button">
-							<span class="icon is-small"> <i
-								class="fas fa-shopping-bag"></i>
-							</span> <span>ADD TO BAG</span>
-						</button>
-
-					</div>
-
-				</div>
-
-				<p class="small-text">
-					<span>Standard delivery</span> 2-5 working days
-				</p>
-				<p class="small-text">
-					<span>Next day delivery</span> order before 2pm ($5.79)
-				</p>
-
-			</div>
-		</div>
-
-	</div>
-
-	<p class="small-text"
-		style="text-align: center; padding-top: 30px; padding-bottom: 15px;">
-		Zoom plugin: <a href="" target="_blank">Drift</a>
-	</p> -->
 	<form name="form1" method="post">
-		<table>
-			<tr>
-				<td><img src="/resources/images/${dto.filename}" width="300px"
-					height="300px"></td>
-				<td align="center">
-					<table>
-						<tr>
-							<td>등록일자</td>
-							<td><fmt:formatDate pattern="yyyy년 MM월 dd일"
-									value="${dto.product_date}" /></td>
-						</tr>
-						<tr>
-							<td>상품명</td>
-							<td>${dto.product_name}</td>
-						</tr>
-						<tr>
-							<td>상품종류</td>
-							<td>${dto.product_cate}</td>
-						</tr>
-						<tr>
-							<td>상품브랜드</td>
-							<td>${dto.product_brand}</td>
-						</tr>
-						<tr>
-							<td>상품가격</td>
-							<td><fmt:formatNumber value="${dto.product_price}"
-									pattern="#,###원" /></td>
-						</tr>
-						<c:if test="${dto.product_price ne dto.product_saleprice}">
-							<tr>
-								<td>세일가격</td>
-								<td><fmt:formatNumber value="${dto.product_saleprice}"
-										pattern="#,###원" /></td>
-							</tr>
-						</c:if>
-
-						<tr>
-							<td>상세설명</td>
-							<td>${dto.product_detail}</td>
-						</tr>
-						<td>상품검수</td>
+		<div class="card">
+			<div class="left">
+				<img src="/resources/images/${dto.filename}" width="300px"
+					height="300px" alt="shoe"> <i class="fa fa-long-arrow-left"></i>
+				<i class="fa fa-long-arrow-right"></i>
+			</div>
+			<div class="right">
+				<div class="product-info">
+					<div class="product-name">
+						<h1>${dto.product_cate}</h1>
+						<i class="fa fa-search"></i> <i class="fa fa-user"></i> <i
+							class="fa fa-shopping-cart"></i>
+					</div>
+					<div class="details">
+						<h3>
+							<fmt:formatNumber value="${dto.product_price}" pattern="#,###원" />
+						</h3>
+						<h2>${dto.product_name}</h2>
+						<h4>
+							<span class="fa fa-dollar"></span>${dto.product_brand}
+						</h4>
+					</div>
+					<ul>
+						<li><fmt:formatDate pattern="yyyy년 MM월 dd일"
+								value="${dto.product_date}" /> 등록</li>
+					</ul>
+					<ul>
+						<li>검수등급</li>
 						<c:if test="${dto.product_check eq 2}">
-							<td>상</td>
+							<li>상</li>
 						</c:if>
 						<c:if test="${dto.product_check eq 1}">
-							<td>중</td>
+							<li>중</li>
 						</c:if>
 						<c:if test="${dto.product_check eq 0}">
-							<td>하</td>
-
+							<li>하</li>
 						</c:if>
-						<tr>
-							<td>위시</td>
-							<td><button type="button" id="btnRecommend">추천하기</button></td>
-						</tr>
-						<tr>
-							<td><button type="button" id="btnBuy">구매하기</button></td>
-							<td><button type="button" id="btnSell">판매하기</button></td>
-						</tr>
-						<tr>
-							<td colspan="4"><input type="hidden" name="product_code"
-								value="${dto.product_code}"> <a href="/shop/list.do">상품목록</a>
-								<c:if test="${sessionScope.user_check == '1'}">
-									<a href="/shop/edit/${dto.product_code}">상품수정</a>
-								</c:if></td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
+					</ul>
+					<br>
+					<br> <input type="button" id="btnBuy" value="구매하기"
+						style="color: black;"> <input type="button" id="btnSell"
+						value="판매하기" style="color: black;">
+					<c:if test="${sessionScope.user_check == '1'}">
+						<input type="button"
+							onclick="location.href='/shop/edit/${dto.product_code}'"
+							value="상품수정" style="color: black;">
+					</c:if>
+				</div>
+			</div>
+		</div>
 	</form>
-	<%-- 	
-	<script src="${path}/resources/js/detail.js?ver=2"></script>
-	<link rel="stylesheet" href="${path}/resources/css/detail.css?ver=2" /> --%>
+
+	<link rel="stylesheet" href="${path}/resources/css/detail.css?ver=2" />
 </body>
 </html>
