@@ -100,6 +100,13 @@ public class ProductDAOImpl implements ProductDAO {
 		
 	}
 	
+	@Override
+	public List<ProductDTO> recommendList(String product_code){//추천목록0127
+		
+		return sqlSession.selectList("product.recommendList",product_code);
+		
+	}
+	
 	
 	
 	@Override

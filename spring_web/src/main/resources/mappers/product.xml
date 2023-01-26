@@ -107,4 +107,10 @@
 	<update id="product_buy">
 		update product set product_amount=#{product_amount}-1
 	</update>
+	<select id="recommendList" resultType="com.example.web.model.ProductDTO">
+		SELECT * FROM product p WHERE product_code LIKE concat('%',#{product_code},'%')
+		AND product_code!=#{product_code}
+		ORDER BY p.recommend DESC LIMIT 0,5;
+	</select>
+	
 </mapper>

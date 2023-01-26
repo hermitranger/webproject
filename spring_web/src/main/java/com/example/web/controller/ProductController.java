@@ -172,10 +172,11 @@ public class ProductController {
 	}
 
 	// 수정 요함
-	@RequestMapping("/shop/detail/{product_code}")
+	@RequestMapping("/shop/detail/{product_code}") //수정완료0127
 	public ModelAndView detail(@PathVariable("product_code") String product_code, ModelAndView mav) {
 		mav.setViewName("/shop/detail");
 		mav.addObject("dto", productDao.detail(product_code));
+		mav.addObject("list", productDao.recommendList(product_code));//추천목록추가0127
 		return mav;
 	}
 
@@ -234,5 +235,8 @@ public class ProductController {
 		}
 		return "/shop/list";
 	}
+	
+	
+	
 
 }
