@@ -52,13 +52,31 @@
 				<div align="left">
 					<img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 					<h4 align="center">
+					
 						<a href="/shop/detail/${row.product_code}">${row.product_name}</a>
+						
 					</h4>
 					<c:if test="${sessionScope.user_id == 'admin'}">
 						<a href="/shop/edit/${row.product_code}">[편집]</a>
 					</c:if>
 					<p align="center">
-						<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
+				
+					<c:if test="${row.product_price ne row.product_saleprice}">
+						할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원" />
+					</c:if>
+					
+					<c:if test="${row.product_price eq row.product_saleprice}">
+						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
+					</c:if>
+						
+					<%-- <c:choose>
+						<c:when test="${row.product_price ne row.product_saleprice}">	
+							할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원" />
+						</c:when>
+						<c:otherwise>
+							정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
+						</c:otherwise>
+					</c:choose> --%>
 					</p>
 				</div>
 			</c:forEach>
