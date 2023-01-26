@@ -67,16 +67,16 @@ public class UserController {
 
 	@RequestMapping("login_check.do")
 	public ModelAndView login_check(UserDTO dto, HttpSession session, ModelAndView mav) {
-		String user_name = userDao.login(dto);	
-		int user_check = userDao.check(dto);
-
+		String user_name = userDao.login(dto);
 		if (user_name != null) { // 로그인 성공하면 세션변수 등록
+			int user_check = userDao.check(dto);
 			session.setAttribute("user_id", dto.getUser_id());
 			session.setAttribute("user_name", user_name);			
 			session.setAttribute("user_check", user_check);
 		}
 
 		if (user_name != null) { // 로그인 성공하면
+			int user_check = userDao.check(dto);
 			if (dto.getUser_check() >= 0) {
 				mav.setViewName("main");
 				System.out.println("user_check : " + user_check);
