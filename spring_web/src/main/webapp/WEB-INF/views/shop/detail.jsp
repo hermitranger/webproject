@@ -21,7 +21,7 @@
 	$(function() {
 		$("#btnBuy").click(function() {
 			if (confirm("해당 제품을 구매하시겠습니까??")) {
-				document.form1.action = "/shop/buypro.do";
+				document.form1.action = "/OrderSell.do";
 				document.form1.submit();
 			}
 		});
@@ -30,7 +30,7 @@
 	$(function() {
 		$("#btnSell").click(function() {
 			if (confirm("해당 제품을 판매하시겠습니까??")) {
-				document.form1.action = "/shop/sellpro.do";
+				document.form1.action = "/OrderBuy.do";
 				document.form1.submit();
 			}
 		});
@@ -166,7 +166,7 @@
 						<tr>
 							<td colspan="4"><input type="hidden" name="product_code"
 								value="${dto.product_code}"> <a href="/shop/list.do">상품목록</a>
-								<c:if test="${sessionScope.user_check == 'admin'}">
+								<c:if test="${sessionScope.user_check == '1'}">
 									<a href="/shop/edit/${dto.product_code}">상품수정</a>
 								</c:if></td>
 						</tr>

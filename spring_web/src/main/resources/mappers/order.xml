@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+
+
+	<select id="Buy_Product" resultType="com.example.web.model.ProductDTO">
+		select * from product where product_code = #{product_code}
+	</select>
+	
+	<select id="Buy_User" resultType="com.example.web.model.UserDTO">
+		select * from user where user_id = #{user_id}
+	</select>
+	
+	<select id="Sell_Product" resultType="com.example.web.model.ProductDTO">
+		select * from product where product_code = #{product_code}
+	</select>
+	
+	<select id="Sell_User" resultType="com.example.web.model.UserDTO">
+		select * from user where user_id = #{user_id}
+	</select>
+	
+	<insert id="Sell_Result">
+	insert into sell_bill values
+		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_price},#{user_id},#{user_name},#{user_phone},#{user_email},#{sell_post},#{sell_address},#{bill_deliver},#{bill_total})
+	</insert>
+
+		<!-- map.put("Pdto", Pdto);
+		//여기부터 시작 들어갈거 다 맵에 넣어야함
+		map.put("user_id",user_id);
+		map.put("user_phone",user_phone);
+		map.put("user_name",user_name);
+		map.put("user_email",user_email);
+		map.put("bill_order", bill_order);
+		map.put("sell_address", sell_address);
+		map.put("sell_post", sell_post);
+		 -->
+
+
+	<insert id="Buy_Result">
+	insert into buy_bill values
+		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_price},#{Udto.user_id},#{Udto.user_name},#{buy_post},#{buy_address},#{bill_deliver})
+	</insert>
+	
+	
+		
+		
+</mapper>
