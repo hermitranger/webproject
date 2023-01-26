@@ -166,7 +166,7 @@
 						<tr>
 							<td colspan="4"><input type="hidden" name="product_code"
 								value="${dto.product_code}"> <a href="/shop/list.do">상품목록</a>
-								<c:if test="${sessionScope.user_check == '1'}">
+								<c:if test="${sessionScope.user_check == 1}">
 									<a href="/shop/edit/${dto.product_code}">상품수정</a>
 								</c:if></td>
 						</tr>
