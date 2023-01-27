@@ -100,6 +100,17 @@ public class ProductDAOImpl implements ProductDAO {
 		
 	}
 	
+	@Override
+	public List<ProductDTO> recommendList(String p_code,String product_code){//추천목록0127
+		
+		Map<String,String> map = new HashMap<>();
+		map.put("p_code", p_code);
+		map.put("product_code", product_code);
+		
+		return sqlSession.selectList("product.recommendList",map);
+		
+	}
+	
 	
 	
 	@Override

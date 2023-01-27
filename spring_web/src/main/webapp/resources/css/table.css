@@ -125,12 +125,14 @@ h4 {
 	margin: 0 auto;
 	padding: 10px 17px;
 	-webkit-box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.35);
+	position: relative;
 }
 
 #keywords {
 	margin: 0 auto;
 	font-size: 1.2em;
 	margin-bottom: 15px;
+	position: relative;
 }
 
 #keywords thead {
@@ -139,9 +141,9 @@ h4 {
 }
 
 #keywords thead tr th {
-	font-weight: bold;
-	padding: 12px 30px;
-	padding-left: 42px;
+  font-weight: bold;
+  padding: 12px 30px;
+  padding-left: 42px;
 }
 
 #keywords thead tr th span {

@@ -140,6 +140,14 @@ value="/board/list.do" ondragstart="drag(event)" >게시판으로 이동</button
 <button id="btnGotoUser" name="btn2" draggable="true" onclick="location.href='admin_user_list.do'"
 value="/admin_user_list.do" ondragstart="drag(event)" >유저관리로 이동</button></div>
 
+<div class="box" id="second" ><button id="btnGotoProduct" name="btn3" draggable="true" onclick="location.href='admin_deal.do'"
+value="/admin_deal.do" ondragstart="drag(event)" >거래내역으로 이동</button></div>
+<br>
+<div class="box" id="third" ><button id="btnGotoSoldout" name="btn4" draggable="true" onclick="location.href='soldout.do'"
+value="/soldout.do" ondragstart="drag(event)" >매진물품관리로 이동</button></div>
+
+<div class="box" id="fourth" ><button id="btnGotoSale" name="btn5" draggable="true" onclick="location.href='admin_sale.do'"
+value="/admin_sale_list.do" ondragstart="drag(event)" >세일물품관리로 이동</button></div>
 <div draggable="true" class="box" id="third" ondrop="drop(event)" ondragover="allowdrop(event)">
 멀티관리모드(창을 끌어다 놓으세요)</div>
 <div class="box">

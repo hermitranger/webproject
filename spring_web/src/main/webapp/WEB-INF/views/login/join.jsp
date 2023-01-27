@@ -170,10 +170,10 @@
 			value="${dto.user_id}" class="fadeIn second"
 					placeholder="아이디"> 
 				<input type="button" value="아이디확인"
-			onclick="idcheck()" class="fadeIn second">
+			onclick="idcheck()" class="fadeIn second" style="color:black;">
 			<div id = "message"></div>
 			<br>
-			<input type="text" id="user_passwd" name="user_passwd"
+			<input type="password" id="user_passwd" name="user_passwd"
 			value="${dto.user_passwd}" class="fadeIn third" placeholder="비밀번호">
 			<br>
 			<input type="text"
@@ -189,7 +189,7 @@
 			<input type="text"
 			id="user_phone" name="user_phone" value="${dto.user_phone}" class="fadeIn forth" placeholder="전화번호">
 			
-			<input type = "button" id="join" value = "회원가입">
+			<input type = "button" id="join" value = "회원가입" style="color:black;">
 			</form>
 
 		</div>

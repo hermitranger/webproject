@@ -49,7 +49,7 @@ public class OrderController {
 
 	@RequestMapping("OrderSell.do")
 	public ModelAndView OrderSell(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
-
+		System.out.println(product_code);
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 

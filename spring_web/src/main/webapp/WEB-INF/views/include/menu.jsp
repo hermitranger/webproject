@@ -33,7 +33,7 @@
 			<input type="submit" value="조회" style="color: black">
 		</form>
 		<ul>
-			<li><a href="/">홈페이지</a></li>
+			<li><a href="/" >홈페이지</a></li>
 			<li><a href="/shop/list.do">상품 목록</a>
 			<li><a href="/board/list.do">게시판</a> 
 			<!-- <ul>
