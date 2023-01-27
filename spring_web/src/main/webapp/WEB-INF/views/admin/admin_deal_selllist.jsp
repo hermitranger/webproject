@@ -10,8 +10,9 @@
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 	function list(page) {
-		location.href = "/admin/admin_deal_selllist.do?curPage=" + page
-				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
+		location.href = "/admin/admin_deal_selllist.do?curPage="
+				+ page
+				+ "&search_option=${sellmap.search_option}&keyword=${sellmap.keyword}";
 	}
 </script>
 </head>
@@ -25,20 +26,20 @@
 				action="/admin/admin_deal_selllist.do">
 				<select name="search_option">
 					<option value="all"
-						<c:out value="${sellmap.search_option == 'all' ? 'selected' : '' }"/>>전체</option>
+						<c:out value="${sellsellmap.search_option == 'all' ? 'selected' : '' }"/>>전체</option>
 					<option value="s_code"
-						<c:out value="${sellmap.search_option == 's_code' ? 'selected' : '' }"/>>상품코드</option>
+						<c:out value="${sellsellmap.search_option == 's_code' ? 'selected' : '' }"/>>상품코드</option>
 					<option value="sell_id"
-						<c:out value="${sellmap.search_option == 'sell_id' ? 'selected' : '' }"/>>유저아이디</option>
+						<c:out value="${sellsellmap.search_option == 'sell_id' ? 'selected' : '' }"/>>유저아이디</option>
 					<option value="s_name"
-						<c:out value="${sellmap.search_option == 's_name' ? 'selected' : '' }"/>>상품명</option>
+						<c:out value="${sellsellmap.search_option == 's_name' ? 'selected' : '' }"/>>상품명</option>
 					<option value="s_cate"
-						<c:out value="${sellmap.search_option == 's_cate' ? 'selected' : '' }"/>>상품카테고리</option>
+						<c:out value="${sellsellmap.search_option == 's_cate' ? 'selected' : '' }"/>>상품카테고리</option>
 					<option value="s_check"
-						<c:out value="${sellmap.search_option == 's_check' ? 'selected' : '' }"/>>검수등급</option>
+						<c:out value="${sellsellmap.search_option == 's_check' ? 'selected' : '' }"/>>검수등급</option>
 					<option value="s_price"
-						<c:out value="${sellmap.search_option == 's_price' ? 'selected' : '' }"/>>상품가격</option>
-				</select> <input name="keyword" value="${sellmap.keyword}"> <input
+						<c:out value="${sellsellmap.search_option == 's_price' ? 'selected' : '' }"/>>상품가격</option>
+				</select> <input name="keyword" value="${sellsellmap.keyword}"> <input
 					type="submit" value="조회 ">
 			</form>
 
@@ -56,7 +57,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="row" items="${sellmap.list}">
+						<c:forEach var="row" items="${sellsellmap.list}">
 							<tr>
 								<td align="center">${row.s_code}</td>
 								<td align="center">${row.sell_id}</td>
@@ -78,35 +79,41 @@
 							</tr>
 						</c:forEach>
 						<!-- 페이지 나눔 -->
-						<div align="center">
-							<c:if test="${map.page_info.curPage > 1 }">
-								<a href="javascript:list('1')" style="color: black;">[처음]</a>
-							</c:if>
-							<c:if test="${map.page_info.curPage > 1}">
-								<a href="javascript:list('${map.page_info.prevPage}')"
-									style="color: black;">[이전]</a>
-							</c:if>
-							<c:forEach var="num" begin="${map.page_info.blockBegin}"
-								end="${map.page_info.blockEnd}">
-								<c:choose>
+						<tr>
+							<td colspan="6" align="center">
+								<div align="center">
+									<c:if test="${sellmap.page_info.curPage > 1 }">
+										<a href="javascript:list('1')" style="color: black;">[처음]</a>
+									</c:if>
+									<c:if test="${sellmap.page_info.curPage > 1}">
+										<a href="javascript:list('${sellmap.page_info.prevPage}')"
+											style="color: black;">[이전]</a>
+									</c:if>
+									<c:forEach var="num" begin="${sellmap.page_info.blockBegin}"
+										end="${sellmap.page_info.blockEnd}">
+										<c:choose>
 
-									<c:when test="${num == map.page_info.curPage}">
-										<span style="color: red">${num}</span>&nbsp; <!--현재 페이지 빨간색으로  -->
-									</c:when>
-									<c:otherwise>
-										<a href="javascript:list('${num}')" style="color: black;">${num}</a>&nbsp;
+											<c:when test="${num == sellmap.page_info.curPage}">
+												<span style="color: red">${num}</span>&nbsp; <!--현재 페이지 빨간색으로  -->
+											</c:when>
+											<c:otherwise>
+												<a href="javascript:list('${num}')" style="color: black;">${num}</a>&nbsp;
 						</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							<c:if test="${map.page_info.curPage < map.page_info.totPage}">
-								<a href="javascript:list('${map.page_info.nextPage}')"
-									style="color: black;">[다음]</a>
-							</c:if>
-							<c:if test="${map.page_info.curPage < map.page_info.totPage}">
-								<a href="javascript:list('${map.page_info.totPage}')"
-									style="color: black;">[끝]</a>
-							</c:if>
-						</div>
+										</c:choose>
+									</c:forEach>
+									<c:if
+										test="${sellmap.page_info.curPage < sellmap.page_info.totPage}">
+										<a href="javascript:list('${sellmap.page_info.nextPage}')"
+											style="color: black;">[다음]</a>
+									</c:if>
+									<c:if
+										test="${sellmap.page_info.curPage < sellmap.page_info.totPage}">
+										<a href="javascript:list('${sellmap.page_info.totPage}')"
+											style="color: black;">[끝]</a>
+									</c:if>
+								</div>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</form>

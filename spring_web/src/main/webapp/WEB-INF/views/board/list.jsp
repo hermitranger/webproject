@@ -108,7 +108,8 @@
 									<a href="javascript:list('${map.page_info.totPage}')"
 										style="color: black;">[끝]</a>
 								</c:if>
-							</div>
+							</div></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
