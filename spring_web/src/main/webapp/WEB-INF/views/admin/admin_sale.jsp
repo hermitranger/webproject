@@ -203,13 +203,12 @@ function list(page){
    +"&search_option=${map.search_option}&keyword=${map.keyword}";
 }
 </script>
-
 </head>
 <body>
 	<%@ include file="../include/menu.jsp"%>
 	<div id="table_">
 		<div id="wrapper">
-			<h2>세일 상품</h2>
+			<h3>세일 상품</h3>
 			<form name="form" method="post" action="/admin_sale_list.do">
 
 				<select name="search_option">
@@ -255,6 +254,15 @@ function list(page){
 					</thead>
 					<tbody>
 						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td align="center">5%</td>
 							<td align="center">10%</td>
 							<td align="center">직접 입력</td>
@@ -337,6 +345,6 @@ function list(page){
 	</div>
 	<c:set var="path" value="${pageContext.request.contextPath}" />
 	<script src="${path}/resources/js/table.js?ver=2"></script>
-	<link rel="stylesheet" href="${path}/resources/css/table.css?ver=2" />
+	<link rel="stylesheet" href="${path}/resources/css/table_sale.css?ver=2" />
 </body>
 </html>

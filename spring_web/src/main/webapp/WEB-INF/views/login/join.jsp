@@ -173,7 +173,7 @@
 			onclick="idcheck()" class="fadeIn second" style="color:black;">
 			<div id = "message"></div>
 			<br>
-			<input type="text" id="user_passwd" name="user_passwd"
+			<input type="password" id="user_passwd" name="user_passwd"
 			value="${dto.user_passwd}" class="fadeIn third" placeholder="비밀번호">
 			<br>
 			<input type="text"
