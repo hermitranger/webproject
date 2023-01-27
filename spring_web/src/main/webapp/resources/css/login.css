@@ -80,7 +80,7 @@ h2.active {
 
 input[type=button], input[type=submit], input[type=reset]  {
   border: none;
-  color: white;
+  color: black;
   padding: 15px 80px;
   text-align: center;
   text-decoration: none;
@@ -110,7 +110,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text][type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;

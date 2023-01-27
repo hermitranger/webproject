@@ -16,6 +16,8 @@
 				document.form1.submit();
 			}
 		});
+		
+		//checkSale();
 	});
 
 	$(function() {
@@ -35,6 +37,22 @@
 			}
 		});
 	});
+	
+/* 	function checkSale(){
+		
+		let price = ${dto.product_price};
+		let saleprice = ${dto.product_saleprice};
+		if(price != saleprice){
+			//$('#salePrice').show();
+			$('div[name="salePrice"]').show();
+		}
+		else{
+			//$('#price').show();
+			$('div[name="price"]').show();
+		}
+		
+		
+	} */
 </script>
 </head>
 <body>
@@ -127,18 +145,27 @@
 							<td>상품브랜드</td>
 							<td>${dto.product_brand}</td>
 						</tr>
+						
 						<tr>
-							<td>상품가격</td>
-							<td><fmt:formatNumber value="${dto.product_price}"
-									pattern="#,###원" /></td>
-						</tr>
-						<c:if test="${dto.product_price ne dto.product_saleprice}">
-							<tr>
-								<td>세일가격</td>
+							<c:if test="${dto.product_price eq dto.product_saleprice}">	
+								<td>가격</td>
+								<td><fmt:formatNumber value="${dto.product_price}"
+										pattern="#,###원" />	</td>
+							</c:if>
+							<c:if test="${dto.product_price ne dto.product_saleprice}">	
+								<td>가격</td>
 								<td><fmt:formatNumber value="${dto.product_saleprice}"
-										pattern="#,###원" /></td>
-							</tr>
-						</c:if>
+										pattern="#,###원" />
+									<p align="center" style="color: red; display:inline;">
+									(SALE: <c:set var="sale" value="${((dto.product_price-dto.product_saleprice)/dto.product_price)*100}"/>
+									<c:out value="${sale}"/>%</p>
+									,정상가 <p style="text-decoration:line-through; display:inline;" align="center">
+									<fmt:formatNumber value="${dto.product_price}"
+										pattern="#,###원" /></p>)
+									
+							</c:if>				
+						</tr>
+					
 
 						<tr>
 							<td>상세설명</td>

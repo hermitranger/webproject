@@ -148,23 +148,28 @@ function createOrderNum(){
 		bill_order += Math.floor(Math.random() * 8);	
 	}
 	return bill_order;
-} 
+}
+
 function fee(){
-	
 	let cate="${Pdto.product_code}";
-	//db에 스트링 형을 지정해놓고 숫자를 입력해놔도.따옴표 안붙이면 db에서 가져온 값이 숫자이기 때문에 숫자로 알아듣는다. 
-	//console.log('확인');
-	//console.log(typeof cate);
-	//alert(cate);
-	//alert(cate.slice(-1));	
+	
 	if(cate.slice(-1) =="1"){     
-		 document.getElementById("fee").value="5000";
+		const price = 5000;
+		let result = price.toLocaleString();
+		 document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
 	 }
-	 else if(cate.slice(-1) =="2"){     
-		 document.getElementById("fee").value="10000";
+	 else if(cate.slice(-1) =="2"){
+		const price = 10000;
+		let result = price.toLocaleString();
+		document.getElementById("fee").value=price;
+		document.getElementById("fee2").value=result;
 	 }
-	 else if(cate.slice(-1) =="3"){     
-		 document.getElementById("fee").value="20000";
+	 else if(cate.slice(-1) =="3"){ 
+		 const price = 20000;
+		let result = price.toLocaleString();
+		document.getElementById("fee").value=price;
+		document.getElementById("fee2").value=result;
 	 }
 	
 }
@@ -172,31 +177,49 @@ function fee(){
 function jejuFee(fullAddr){
     let jeju=fullAddr.substring(0,2);
     let fee="";
-   	let size =$("#product_code").val().toString();
+    let size =$("#product_code").val().toString();
     let test = $("#product_code").val(); 
     if(jeju === "제주"){
 		document.getElementById("jeju").value="제주도는 기존 배송료에서 배송비가 3000원 추가됩니다. ";
     
-   	 if(size.slice(-1) =="1"){     
-   		 document.getElementById("fee").value="8000";
+   	 if(size.slice(-1) =="1"){
+   		const price = 8000;
+		let result = price.toLocaleString();
+		document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
    	 }
-	 	 else if(size.slice(-1) =="2"){     
-   		 document.getElementById("fee").value="13000";
+	 	 else if(size.slice(-1) =="2"){ 
+	 	const price = 13000;
+	 	let result = price.toLocaleString();
+	 	document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
    	 }
-   	 else if(size.slice(-1) =="3"){     
-   		 document.getElementById("fee").value="23000";
+   	 else if(size.slice(-1) =="3"){ 
+   		const price = 23000;
+	 	let result = price.toLocaleString();
+	 	document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
    	 }     
     }
 		else {
 			 document.getElementById("jeju").value="기본배송 지역";
-   	 if(size.slice(-1) =="1"){     
-   		 document.getElementById("fee").value="5000";
+   	 if(size.slice(-1) =="1"){ 
+   		const price = 5000;
+		let result = price.toLocaleString();
+		document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
    	 }
-   	 else if(size.slice(-1) =="2"){     
-   		 document.getElementById("fee").value="10000";
+   	 else if(size.slice(-1) =="2"){
+   		const price = 10000;
+		let result = price.toLocaleString();
+		document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
    	 }
-   	 else if(size.slice(-1) =="3"){     
-   		 document.getElementById("fee").value="20000";
+   	 else if(size.slice(-1) =="3"){
+   		const price = 20000;
+		let result = price.toLocaleString();
+		document.getElementById("fee").value=price;
+		 document.getElementById("fee2").value=result;
    	 } 
 
     }
@@ -254,9 +277,24 @@ function showPostcode() {
 </div>	
 <h3>가격 및 배송료</h3>
 	<div>	
-	상품가격<input type="text" name="product_price" id="product_price" value="${Pdto.product_price}" readonly style="border:0"/><br>
-	배송료 : 
-	<input style="border:0"  id="fee" name="fee" value=""  readonly /><br>
+	상품가격
+	<c:if test="${Pdto.product_price ne Pdto.product_saleprice}">	
+		<fmt:formatNumber value="${Pdto.product_saleprice}" pattern="#,###원"/>
+		(<p align="center" style="color: red; display:inline;">
+		SALE: <c:set var="sale" value="${((Pdto.product_price-Pdto.product_saleprice)/Pdto.product_price)*100}"/>
+		<c:out value="${sale}"/>%</p>
+		,정상가 <p style="text-decoration:line-through; display:inline;" align="center">
+		<fmt:formatNumber value="${Pdto.product_price}"	pattern="#,###원" /></p>)<br>
+		<input type="hidden" name="product_price" id="product_price" value="${Pdto.product_saleprice}" readonly style="border:0"/>
+			
+	</c:if>
+	
+	<c:if test="${Pdto.product_price eq Pdto.product_saleprice}">
+		<input type="text" name="product_price" id="product_price" value="${Pdto.product_price}" readonly style="border:0"/><br>
+	</c:if>
+	배송료 :
+	<input style="border:0"  id="fee2" name="fee2" value="" readonly />원<br>
+
 	<div id='jeju2' style= display:none;>
 		<input style=width:500px id="jeju" name="jeju" value=""  readonly />
 	</div>
@@ -343,6 +381,7 @@ function showPostcode() {
 	<input type="hidden"  id="bill_order" name="bill_order" value="">
 	<input type="hidden" name="product_code" id="product_code" value="${Pdto.product_code}"> 
 	<input type="hidden" name="user_id" id="user_id" value="${Udto.user_id}">
+	<input type="hidden" style="border:0"  id="fee" name="fee" value="" readonly />
 <!--폼데이터 전달용 숨기기 끝  -->
 
 </form>

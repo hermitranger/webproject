@@ -71,17 +71,14 @@ var totalprice=0;
 					</c:if>
 					<p align="center">
 					
-					<c:if test="${row.product_price ne row.product_saleprice}">
-						
-						
+					<c:if test="${row.product_price ne row.product_saleprice}">						
 						<p style="text-decoration:line-through" align="center">
 						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" /></p>
 						<p align="center" style="color: red">
 						할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원"/><br>
 						sale : <c:set var="sale" value="${((row.product_price-row.product_saleprice)/row.product_price)*100}"/>
 						<c:out value="${sale}"/>%
-						</p>
-						
+						</p>		
 					</c:if>
 					
 					<c:if test="${row.product_price eq row.product_saleprice}">
