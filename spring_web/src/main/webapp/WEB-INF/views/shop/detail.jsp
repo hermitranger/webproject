@@ -38,8 +38,12 @@
 </script>
 </head>
 <body>
-	<%@ include file="../include/menu.jsp"%>
-
+	<c:if test="${sessionScope.user_check == null}">
+		<%@ include file="../include/menu.jsp"%>
+	</c:if>
+	<c:if test="${sessionScope.user_check >= 0}">
+		<%@ include file="../include/menu.jsp"%>
+	</c:if>
 
 	<form name="form1" method="post">
 		<div class="card">

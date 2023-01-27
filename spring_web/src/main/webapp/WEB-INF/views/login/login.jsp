@@ -58,7 +58,7 @@
 				<input type="text" id="user_id" name="user_id" class="fadeIn second"
 					placeholder="userid" > 
 				<input type="text" id="user_passwd" name="user_passwd" class="fadeIn third" placeholder="password"> 
-				<input type="submit" id="btnLogin" value = "로그인" class="fadeIn fourth">
+				<input type="submit" id="btnLogin" value = "로그인" class="fadeIn fourth" style="color:black;">
 				<div>
 					<c:if test="${message == 'withdrawal' }">
 						<p style="color: red;">회원탈퇴한 아이디입니다.</p>
@@ -78,10 +78,10 @@
 			<!-- Remind Passowrd -->
 			<div id="formFooter">
 				<p align="center">아이디나 비밀번호를 잊어버리셨나요?</p>
-				<input type="button" class="underlineHover" id="btnFind_id" value = "아이디 찾기">
-				<input type="button" class="underlineHover" id="btnFind_passwd" value = "비밀번호 찾기">
+				<input type="button" class="underlineHover" id="btnFind_id" value = "아이디 찾기" style="color:black;">
+				<input type="button" class="underlineHover" id="btnFind_passwd" value = "비밀번호 찾기" style="color:black;">
 				<p align="center">아직 계정이 없으신가요?</p>
-				<input type="submit" class="underlineHover" id="btnJoin" value = "회원가입하기">
+				<input type="submit" class="underlineHover" id="btnJoin" value = "회원가입하기" style="color:black;">
 			</div>
 
 		</div>

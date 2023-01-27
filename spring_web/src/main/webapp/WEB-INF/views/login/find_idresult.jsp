@@ -34,8 +34,8 @@
 			</form>
 			<div id="formFooter">
 				<input type="button" class="underlineHover" value="비밀번호 찾기"
-					id="btnFindpasswd"> <input type="button"
-					class="underlineHover" value="로그인" id="btnLogin">
+					id="btnFindpasswd" style="color:black;"> <input type="button"
+					class="underlineHover" value="로그인" id="btnLogin" style="color:black;">
 			</div>
 		</div>
 	</div>

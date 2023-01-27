@@ -29,7 +29,7 @@
 			</form>
 			<div id="formFooter">
 				<input type="button" class="underlineHover" value="로그인"
-					id="btnLogin">
+					id="btnLogin" style="color:black;">
 			</div>
 		</div>
 	</div>
