@@ -176,7 +176,9 @@ public class ProductController {
 	public ModelAndView detail(@PathVariable("product_code") String product_code, ModelAndView mav) {
 		mav.setViewName("/shop/detail");
 		mav.addObject("dto", productDao.detail(product_code));
-		mav.addObject("list", productDao.recommendList(product_code));//추천목록추가0127
+		String p_code=product_code.substring(0,6);
+		System.out.println("p_code:"+p_code);
+		mav.addObject("list", productDao.recommendList(p_code,product_code));//추천목록추가0127
 		return mav;
 	}
 
