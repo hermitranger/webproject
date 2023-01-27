@@ -28,8 +28,8 @@ public class OrderController {
 	SellOrderDAO SellOrderDao;
 
 	@RequestMapping("OrderBuy.do")
-	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request,HttpServletResponse response) {
-		response.setHeader("Cache-Control","no-store");
+	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
+
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("userid" + user_id);

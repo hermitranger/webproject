@@ -134,7 +134,7 @@ public class ProductController {
 		//convert(int 형으로 변환시킬 column, int형-unsigned,signed 양수,음수) 비교연산자(>,<,=) 찾을 값(product_code)
 				
 		}
-			
+
 		
 		
 		int count = productDao.catecount(find);
