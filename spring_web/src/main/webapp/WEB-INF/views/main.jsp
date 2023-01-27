@@ -80,7 +80,6 @@
 				<a href="/shop/detail/${row.product_code}">더보기<i
 					class="fas fa-chevron-right"></i></a>
 			</div>
-
 		</c:forEach>
 	</section>
 	<br>

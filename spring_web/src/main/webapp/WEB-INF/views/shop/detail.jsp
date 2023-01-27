@@ -36,6 +36,21 @@
 		});
 	});
 </script>
+<style>
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	gap: 10px;
+}
+
+.box {
+	border: 3px solid #666;
+	background-color: #ddd;
+	width: 40%;
+	height: 20%;
+	padding: 10px;
+}
+</style>
 </head>
 <body>
 	<c:if test="${sessionScope.user_check == null}">
@@ -84,8 +99,7 @@
 							<li>하</li>
 						</c:if>
 					</ul>
-					<br>
-					<br> <input type="button" id="btnBuy" value="구매하기"
+					<br> <br> <input type="button" id="btnBuy" value="구매하기"
 						style="color: black;"> <input type="button" id="btnSell"
 						value="판매하기" style="color: black;">
 					<c:if test="${sessionScope.user_check == '1'}">
@@ -96,8 +110,27 @@
 				</div>
 			</div>
 		</div>
+		<div class="card">
+			<div class="center">
+				<div class="container">
+					<c:if test="${empty list}"><h5>추천상품이 없습니다</h5></c:if>
+					<c:forEach var="row" items="${list }">
+						<span> <a href="/shop/detail/${row.product_code}"> <img
+								src="/resources/images/${row.filename}" width="50px"
+								height="50px"></a><br> 등록일자<fmt:formatDate
+								pattern="yyyy년 MM월 dd일" value="${row.product_date}" /><br>
+							상품명:${row.product_name}<br> 상품종류:${row.product_cate}<br>
+							상품브랜드:${row.product_brand}<br> 상품가격:<fmt:formatNumber
+								value="${row.product_price}" pattern="#,###원" /><br> 상품검수:<c:if
+								test="${row.product_check eq 2}">상	</c:if> <c:if
+								test="${row.product_check eq 1}">중</c:if> <c:if
+								test="${row.product_check eq 0}">하</c:if>
+						</span>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
 	</form>
-
 	<link rel="stylesheet" href="${path}/resources/css/detail.css?ver=2" />
 </body>
 </html>

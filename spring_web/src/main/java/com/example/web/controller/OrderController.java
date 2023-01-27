@@ -3,6 +3,7 @@ package com.example.web.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class OrderController {
 	SellOrderDAO SellOrderDao;
 
 	@RequestMapping("OrderBuy.do")
-	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
-
+	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request,HttpServletResponse response) {
+		response.setHeader("Cache-Control","no-store");
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("userid" + user_id);
