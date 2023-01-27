@@ -98,7 +98,6 @@
 			</a>
 		</div>
 	</section>
-
 </div>
 <!-- Links -->
 <section class="links">
@@ -132,8 +131,6 @@
 		</ul>
 	</div>
 </section>
-
-<!-- Footer -->
 <footer class="footer">
 	<div class="footer-inner">
 		<ul>
