@@ -41,7 +41,14 @@
 		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_price},#{Udto.user_id},#{Udto.user_name},#{buy_post},#{buy_address},#{bill_deliver})
 	</insert>
 	
+	<select id="CheckProduct" resultType="int">
+		select count(*) from sell_bill where s_code = #{product_code} 
+		
+	</select>
 	
+	<delete id="SellFail" >
+		delete from sell_bill where s_code=#{s_code} and sell_id=#{sell_id}
+	</delete>
 		
 		
 </mapper>

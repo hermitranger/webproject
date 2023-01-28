@@ -3,11 +3,12 @@ package com.example.web.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,9 +69,11 @@ public class OrderController {
 
 	}
 
+	@Transactional
 	@RequestMapping("BuyResult.do")
 	@ResponseBody
 	public String BuyResult(@RequestParam Map<String, Object> map) {
+
 		String product_code = (String) map.get("product_code");
 		String user_id = (String) map.get("user_id");
 		String bill_order = (String) map.get("bill_order");
@@ -85,32 +88,45 @@ public class OrderController {
 
 	}
 
+	@Transactional
 	@RequestMapping("SellResult.do")
 	@ResponseBody
 	public String SellResult(@RequestParam Map<String, Object> map) {
-		System.out.println(map);
+	
 		String product_code = (String) map.get("product_code");
-		String user_id = (String) map.get("user_id");
-		System.out.println(user_id);
-		String user_phone = (String) map.get("selectTel") + "-" + (String) map.get("userTel01") + "-"
-				+ (String) map.get("userTel02");
-		String user_name = (String) map.get("user_name");
-		String user_email = (String) map.get("user_email01") + "@" + (String) map.get("selectEmail");
-		String bill_order = (String) map.get("bill_order");
-		String sell_post = (String) map.get("zipcode");
-		String sell_address = (String) map.get("address1") + " " + (String) map.get("address2");
-		int bill_deliver = Integer.parseInt(map.get("fee").toString());// 오브젝트형 -> 인트 하는법 : 스트링 변환후 parseInt
-		
-		int bill_total = bill_deliver + Integer.parseInt(map.get("product_price").toString());// 오브젝트형 -> 인트 하는법 : 스트링
-																								// 변환후 parseInt
-		ProductDTO Pdto = SellOrderDao.Sell_Product(product_code);
-		SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address, sell_post,
-				bill_deliver, bill_total);
-		// int price = Integer.parseInt(map.get("product_price").toString());//할인가격 진행시
-		// 부활
+		int check = SellOrderDao.CheckProduct(product_code);
+		System.out.println("check" +check);
+		  if(check>0) { 
+			  return "0"; 
+			  } 
+		  else { 
+			  String user_id = (String)map.get("user_id"); 
+			  String user_phone = (String)map.get("selectTel") + "-" +  (String)map.get("userTel01") + "-" + (String)map.get("userTel02"); 
+			  String user_name = (String)map.get("user_name"); 
+			  String user_email = (String)map.get("user_email01") + "@" + (String)map.get("selectEmail"); 
+			  String bill_order = (String)map.get("bill_order"); 
+			  String sell_post = (String)map.get("zipcode"); 
+			  String sell_address = (String)map.get("address1") + " " + (String) map.get("address2"); 
+			  int bill_deliver = Integer.parseInt(map.get("fee").toString());// 오브젝트형 -> 인트 하는법 : 스트링 변환후	  parseInt
+			  int bill_total = bill_deliver +
+			  Integer.parseInt(map.get("product_price").toString());// 오브젝트형 -> 인트 하는법 :  스트링 // 변환후 parseInt 
+			  ProductDTO  Pdto = SellOrderDao.Sell_Product(product_code); 
+			  SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address,	 sell_post, bill_deliver, bill_total);
+			  return "1";
+		  }
+		 
 
-		return "1";
+	}
 
+	@RequestMapping("SellFail.do")
+	public String SellFail(@RequestParam String product_code,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String user_id = (String) session.getAttribute("user_id");
+		System.out.println("SellFail"+product_code);
+		System.out.println("SellFail user_id"+user_id);
+		SellOrderDao.SellFail(product_code, user_id);
+		return "redirect:/shop/list.do";
+	
 	}
 
 	@RequestMapping("BuyResult.page")

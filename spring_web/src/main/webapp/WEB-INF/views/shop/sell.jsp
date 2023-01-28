@@ -53,7 +53,42 @@ var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
 function requestPay() {
 	
+	    IMP.request_pay({
+	        pg : 'kcp',
+	        pay_method : 'card',
+	        merchant_uid: "IMP"+makeMerchantUid, 
+	        name: $("#product_name").val(),
+	        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
+	        amount: 1, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
+	        seller_email: $("#user_email").val(),
+	        seller_name: $("#user_name").val(),
+	        seller_tel: $("#user_phone").val(),
+	        seller_addr: $("#address1").val().concat($("#address2").val()),
+	        seller_postcode: $("#zipcode").val()
+	    }, function (rsp) { // callback
+	        if (rsp.success) {  // 결제 성공 시 로직   
+	        	
+	        	alert("결제완료");
+	        	return location.href="/SellResult.page";
+	        } else {  // 결제 실패 시 로직
+	      		
+	        	alert("결제실패");
+	        	sellFail();
+	        	//return location.href="/shop/list.do";
+
+	        }
+	    });
 	
+}
+	
+function sellFail()
+{
+	return location.href = "/SellFail.do?product_code=${Pdto.product_code}";	
+	}
+
+function SellResult(){
+	
+
 	var telRule = /^[0-9]{3,4}$/;
 	var telRule2 = /^[0-9]{3,4}$/;
 	var account = /^[0-9]{11,14}$/;
@@ -87,34 +122,9 @@ function requestPay() {
 		alert("상세주소를 입력해주세요")		
 		
 	}
-	else{
-	    IMP.request_pay({
-	        pg : 'kcp',
-	        pay_method : 'card',
-	        merchant_uid: "IMP"+makeMerchantUid, 
-	        name: $("#product_name").val(),
-	        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
-	        amount: 1, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
-	        seller_email: $("#user_email").val(),
-	        seller_name: $("#user_name").val(),
-	        seller_tel: $("#user_phone").val(),
-	        seller_addr: $("#address1").val().concat($("#address2").val()),
-	        seller_postcode: $("#zipcode").val()
-	    }, function (rsp) { // callback
-	        if (rsp.success) {  // 결제 성공 시 로직   
-	        	 
-	        	alert("결제완료");
-	        	
-	        } else {  // 결제 실패 시 로직
-	        	SellResult();
-	        	alert("결제실패"); 
-             
-	        }
-	    });
-	}
-}
 	
-function SellResult(){
+	else{
+	
 	var url = "/SellResult.do";
 	var bill_order = createOrderNum(); //가맹점 주문번호
 	document.getElementById("bill_order").value = bill_order;
@@ -125,14 +135,17 @@ function SellResult(){
 				data : $("#sellform").serialize(),
 			success : function(jdata) {
 				if (jdata == "1") {
-					return location.href="/SellResult.page";
+					alert("성공");
+					requestPay();
 				} else {
-					alert("오류");
+					alert("매진상품입니다.");
+					return "redirect:/shop/list.do";
 				}
 
 			} 
 
 		});
+	}
 			
 }  	
 //https://cobi-98.tistory.com/20 주문번호 만들기 
@@ -373,7 +386,7 @@ function showPostcode() {
 <!--우편번호 끝 -->
 
 	<!--판매 및 목록 버튼-->
-	<input type="button" value="구매하기" onclick="requestPay()">
+	<input type="button" value="구매하기" onclick="SellResult()">
 	<input type="button" value="목록" onclick="location.href='/shop/list.do'">
 	<!--판매 및 목록 버튼-->
 		

@@ -1,6 +1,7 @@
 package com.example.web.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -44,6 +45,22 @@ public class SellOrderDAOImpl implements SellOrderDAO {
 		
 		return sqlSession.selectOne("order.Sell_Result",map);
 		
+	}
+
+	@Override
+	public int CheckProduct(String product_code) {
+		return sqlSession.selectOne("order.CheckProduct", product_code);	
+	}
+	
+	public SellBillDTO SellFail(String product_code, String user_id) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("s_code", product_code);
+		map.put("sell_id", user_id);
+		System.out.println("SellBillDaoimpl " + product_code);
+		System.out.println("SellBillDaoimpl " + user_id);
+		
+		return sqlSession.selectOne("order.SellFail",map);	
+	
 	}
 
 }
