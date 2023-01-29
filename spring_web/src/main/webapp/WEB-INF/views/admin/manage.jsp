@@ -43,7 +43,11 @@ function drop(event){
 	var data = event.dataTransfer.getData("text");
 	console.log(data);
 	
-	var iframe= $("<iframe class='iframe' style='boarder:none' width='100%' height='100%' src="+data+" value='"+data+"'></ifram>");
+			var iframe= $("<iframe class='iframe' style='boarder:none' width='100%' height='100%' src="+data+" value='"+data+"'></ifram>");
+	
+						/* $("#content").append("<div id='"+data+"'></div>");
+	
+						var here=document.getElementById(data); */
 	
 	var count= $("#content").children().length;
 	
@@ -77,9 +81,24 @@ function drop(event){
 	$("#content").html(html);
 	
 	iframe.appendTo("#del");*/
+	
+	
+										/* $.ajax({
+		
+												url: data,
+												type: "post",
+												success : function(html){
+			
+			
+												$(here).html(html);
+												}
+		
+										}); */
 
 	
-	iframe.appendTo("#content");
+			iframe.appendTo("#content");
+	
+	
 	//var del=$(".iframe[value='"+data+"']");
 	//console.log(del);
 	
@@ -98,10 +117,6 @@ function allowdrop(event){
 	
 	event.preventDefault();
 }
-
-
-
-
 
 </script>
 
@@ -146,7 +161,7 @@ value="/admin_deal.do" ondragstart="drag(event)" >거래내역으로 이동</but
 <div class="box" id="third" ><button id="btnGotoSoldout" name="btn4" draggable="true" onclick="location.href='soldout.do'"
 value="/soldout.do" ondragstart="drag(event)" >매진물품관리로 이동</button></div>
 
-<div class="box" id="fourth" ><button id="btnGotoSale" name="btn5" draggable="true" onclick="location.href='admin_sale.do'"
+<div class="box" id="fourth" ><button id="btnGotoSale" name="btn5" draggable="true" onclick="location.href='admin_sale_list.do'"
 value="/admin_sale_list.do" ondragstart="drag(event)" >세일물품관리로 이동</button></div>
 <div draggable="true" class="box" id="third" ondrop="drop(event)" ondragover="allowdrop(event)">
 멀티관리모드(창을 끌어다 놓으세요)</div>
@@ -156,10 +171,7 @@ value="/admin_sale_list.do" ondragstart="drag(event)" >세일물품관리로 이
 </div>
 </div>
 
-
-
 <div class="content" id="content"></div>
-
 
 </body>
 </html>

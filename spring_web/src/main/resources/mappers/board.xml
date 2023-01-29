@@ -11,7 +11,8 @@
 <select id = "list" resultType="com.example.web.model.BoardDTO">
 	<include refid="paging_header"/>
 	select idx,title,contents,regdate,hit,user_id,
-	(select count(*) from reply where board_idx=b.idx) cnt
+	(select count(*) from reply where board_idx=b.idx) cnt,
+	(select file_name from attach where board_idx=b.idx limit 1) file_name
 	from board b, user u
 	<include refid="search" />
 	order by idx desc, regdate desc
