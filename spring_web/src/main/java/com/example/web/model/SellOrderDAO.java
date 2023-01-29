@@ -9,4 +9,6 @@ public interface SellOrderDAO {
 	int CheckProduct(String product_code);
 	SellBillDTO SellFail(String product_code, String user_id);
 	
+
+	
 }

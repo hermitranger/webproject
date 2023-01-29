@@ -3,6 +3,7 @@ package com.example.web.model;
 import java.util.Date;
 
 public class SellBillDTO {
+	
 	private String bill_order;
 	private String s_code;
 	private String sell_id;
@@ -16,7 +17,62 @@ public class SellBillDTO {
 	private String sell_addressdetail;
 	private String sell_post;
 	private String s_cate;
+	private String impUid;
 	
+	public String getBill_order() {
+		return bill_order;
+	}
+	public void setBill_order(String bill_order) {
+		this.bill_order = bill_order;
+	}
+	public String getS_code() {
+		return s_code;
+	}
+	public void setS_code(String s_code) {
+		this.s_code = s_code;
+	}
+	public String getSell_id() {
+		return sell_id;
+	}
+	public void setSell_id(String sell_id) {
+		this.sell_id = sell_id;
+	}
+	public String getS_name() {
+		return s_name;
+	}
+	public void setS_name(String s_name) {
+		this.s_name = s_name;
+	}
+	public Date getBill_date() {
+		return bill_date;
+	}
+	public void setBill_date(Date bill_date) {
+		this.bill_date = bill_date;
+	}
+	public int getS_price() {
+		return s_price;
+	}
+	public void setS_price(int s_price) {
+		this.s_price = s_price;
+	}
+	public int getS_check() {
+		return s_check;
+	}
+	public void setS_check(int s_check) {
+		this.s_check = s_check;
+	}
+	public int getBill_deliver() {
+		return bill_deliver;
+	}
+	public void setBill_deliver(int bill_deliver) {
+		this.bill_deliver = bill_deliver;
+	}
+	public int getBill_total() {
+		return bill_total;
+	}
+	public void setBill_total(int bill_total) {
+		this.bill_total = bill_total;
+	}
 	public String getSell_address() {
 		return sell_address;
 	}
@@ -41,59 +97,11 @@ public class SellBillDTO {
 	public void setS_cate(String s_cate) {
 		this.s_cate = s_cate;
 	}
-	public String getBill_order() {
-		return bill_order;
+	public String getImpUid() {
+		return impUid;
 	}
-	public void setBill_order(String bill_order) {
-		this.bill_order = bill_order;
-	}
-	public String gets_code() {
-		return s_code;
-	}
-	public void sets_code(String s_code) {
-		this.s_code = s_code;
-	}
-	public String getsell_id() {
-		return sell_id;
-	}
-	public void setsell_id(String sell_id) {
-		this.sell_id = sell_id;
-	}
-	public String gets_name() {
-		return s_name;
-	}
-	public void sets_name(String s_name) {
-		this.s_name = s_name;
-	}
-	public Date getBill_date() {
-		return bill_date;
-	}
-	public void setBill_date(Date bill_date) {
-		this.bill_date = bill_date;
-	}
-	public int gets_price() {
-		return s_price;
-	}
-	public void sets_price(int s_price) {
-		this.s_price = s_price;
-	}
-	public int gets_check() {
-		return s_check;
-	}
-	public void sets_check(int s_check) {
-		this.s_check = s_check;
-	}
-	public int getBill_deliver() {
-		return bill_deliver;
-	}
-	public void setBill_deliver(int bill_deliver) {
-		this.bill_deliver = bill_deliver;
-	}
-	public int getBill_total() {
-		return bill_total;
-	}
-	public void setBill_total(int bill_total) {
-		this.bill_total = bill_total;
+	public void setImpUid(String impUid) {
+		this.impUid = impUid;
 	}
 	@Override
 	public String toString() {
@@ -101,6 +109,8 @@ public class SellBillDTO {
 				+ s_name + ", bill_date=" + bill_date + ", s_price=" + s_price + ", s_check=" + s_check
 				+ ", bill_deliver=" + bill_deliver + ", bill_total=" + bill_total + ", sell_address=" + sell_address
 				+ ", sell_addressdetail=" + sell_addressdetail + ", sell_post=" + sell_post + ", s_cate=" + s_cate
-				+ "]";
+				+ ", impUid=" + impUid + "]";
 	}
+	
+	
 }

@@ -40,7 +40,9 @@ $(function(){
 		   });
 		});
 });
- 
+
+
+
 //document.cookie = "crossCookie=bar; SameSite=None; Secure";//
 var IMP = window.IMP; // 생략 가능
 IMP.init("imp54321076");//가맹점 식별코드imp54321076
@@ -51,42 +53,38 @@ var seconds = today.getSeconds();  // 초
 var milliseconds = today.getMilliseconds();
 var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
-function requestPay() {
-	
-	    IMP.request_pay({
-	        pg : 'kcp',
-	        pay_method : 'card',
-	        merchant_uid: "IMP"+makeMerchantUid, 
-	        name: $("#product_name").val(),
-	        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
-	        amount: 1, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
-	        seller_email: $("#user_email").val(),
-	        seller_name: $("#user_name").val(),
-	        seller_tel: $("#user_phone").val(),
-	        seller_addr: $("#address1").val().concat($("#address2").val()),
-	        seller_postcode: $("#zipcode").val()
-	    }, function (rsp) { // callback
-	        if (rsp.success) {  // 결제 성공 시 로직   
-	        	
-	        	alert("결제완료");
-	        	return location.href="/SellResult.page";
-	        } else {  // 결제 실패 시 로직
-	      		
-	        	alert("결제실패");
-	        	sellFail();
-	        	//return location.href="/shop/list.do";
 
-	        }
-	    });
+function SellDo(){
 	
-}
-	
-function sellFail()
-{
-	return location.href = "/SellFail.do?product_code=${Pdto.product_code}";	
+	const data ={
+		imp_uid	: "",
+		payMethod : $("input[type='raido']:checked").val(),
+		product_code : $("#product_code").val(),
+		user_id : $("#user_id").val(),
+		selectTel : $("#selectTel").val(),
+		userTel01 : $("#userTel01").val(),
+		userTel02 : $("#userTel02").val(),
+		user_name : $("#user_name").val(),
+		user_email01 : $("#user_email01").val(),
+		selectEmail : $("#selectEmail").val(),
+		bill_order : $("#bill_order").val(),
+		zipcode : $("#zipcode").val(),
+		address1 : $("#address1").val(),
+		address2 : $("#address2").val(),
+		fee : $("#fee").val(),
+		product_price : $("#product_price").val(),
+		amount: 100,
+		orderNum: createOrderNum(),
+        name: $("#product_name").val(),
+        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
+        amount: 100, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
+        seller_email: $("#user_email").val(),
+        seller_name: $("#user_name").val(),
+        seller_tel: $("#user_phone").val(),
+        seller_addr: $("#address1").val().concat($("#address2").val()),
+        seller_postcode: $("#zipcode").val() 
+			
 	}
-
-function SellResult(){
 	
 
 	var telRule = /^[0-9]{3,4}$/;
@@ -123,20 +121,64 @@ function SellResult(){
 		
 	}
 	
-	else{
+	requestPay(data);
+			
+}
+
+function requestPay(data) {
 	
+		document.getElementById("bill_order").value = data.orderNum;
+	    IMP.request_pay({
+	        pg : 'kcp',
+	        pay_method : 'card',
+	        merchant_uid: data.orderNum,
+	        name: data.name,
+	        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
+	        amount: 100, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
+	        seller_email: "",
+	        seller_name: "",
+	        seller_tel: data.phone,
+	        seller_addr: data.seller_addr,
+	        seller_postcode: data.seller_postcode
+	    }, function (rsp) { // callback
+	        if (rsp.success) {  // 결제 성공 시 로직   
+	        	data.imp_uid = rsp.imp_uid;
+		        data.merchant_uid = rsp.merchant_uid;
+		        document.getElementById("imp_uid").value = rsp.imp_uid;
+		        document.getElementById("merchant_uid").value=rsp.merchant_uid;
+		        SellResult(data); 
+	        	alert("결제완료");
+	        	//return location.href="/SellResult.page";
+	        } else {  // 결제 실패 시 로직
+	      		
+	        	alert("결제실패");
+	        	sellFail();
+	        	//return location.href="/shop/list.do";
+
+	        }
+	    });
+	
+}
+	
+function sellFail()
+{
+	return location.href = "/SellFail.do?product_code=${Pdto.product_code}";	
+	}
+
+
+
+function SellResult(data){
+
 	var url = "/SellResult.do";
-	var bill_order = createOrderNum(); //가맹점 주문번호
-	document.getElementById("bill_order").value = bill_order;
 		$.ajax({
 			url : url, 
 			type : 'POST',
 			traditional : true,
-				data : $("#sellform").serialize(),
+				data : data,
 			success : function(jdata) {
 				if (jdata == "1") {
 					alert("성공");
-					requestPay();
+					return location.href="/SellResult.page"
 				} else {
 					alert("매진상품입니다.");
 					return "redirect:/shop/list.do";
@@ -145,9 +187,29 @@ function SellResult(){
 			} 
 
 		});
-	}
-			
-}  	
+}
+function Refund(){
+
+	var url = "/SellResult.do";
+		$.ajax({
+			url : url, 
+			type : 'POST',
+			traditional : true,
+				data : $("#sellform").serialize(),
+			success : function(jdata) {
+				if (jdata == "1") {
+					alert("성공");
+					return location.href="/SellResult.page"
+				} else {
+					alert("매진상품입니다.");
+					return "redirect:/shop/list.do";
+				}
+
+			} 
+
+		});
+}
+
 //https://cobi-98.tistory.com/20 주문번호 만들기 
 function createOrderNum(){
 	const date = new Date();
@@ -386,8 +448,11 @@ function showPostcode() {
 <!--우편번호 끝 -->
 
 	<!--판매 및 목록 버튼-->
-	<input type="button" value="구매하기" onclick="SellResult()">
+	<input type="button" value="구매하기" onclick="SellDo()">
 	<input type="button" value="목록" onclick="location.href='/shop/list.do'">
+	<input type="button" value="취소" onclick="Refund()">
+	<input type="text" id="imp_uid"  name="imp_uid" value="" readonly/>
+	<input type="hidden"  id="fee" name="fee" value="" readonly />
 	<!--판매 및 목록 버튼-->
 		
 <!--폼데이터 전달용 숨기기  -->
@@ -395,6 +460,8 @@ function showPostcode() {
 	<input type="hidden" name="product_code" id="product_code" value="${Pdto.product_code}"> 
 	<input type="hidden" name="user_id" id="user_id" value="${Udto.user_id}">
 	<input type="hidden" style="border:0"  id="fee" name="fee" value="" readonly />
+	<input type="hidden" id="merchant_uid" name="merchant_uid" value="" readonly />
+
 <!--폼데이터 전달용 숨기기 끝  -->
 
 </form>

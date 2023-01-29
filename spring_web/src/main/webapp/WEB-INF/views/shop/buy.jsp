@@ -57,7 +57,7 @@ function requestPay() {
 	        merchant_uid: "IMP"+makeMerchantUid, 
 	        name: $("#product_name").val(),
 	        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
-	        amount: 1, //테스트용 1원 값은 $("#fee").val()
+	        amount: 100, //테스트용 1원 값은 $("#fee").val()
 	        buyer_email: $("#user_email").val(),
 	        buyer_name: $("#user_name").val(),
 	        buyer_tel: $("#user_phone").val(),
