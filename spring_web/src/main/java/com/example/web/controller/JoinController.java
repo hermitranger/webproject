@@ -135,6 +135,7 @@ public class JoinController {
 	public Map<String, String> idcheck(String user_id, Model model) { // httpservlet 객체 확장==>request,response ==>model
 
 		int result = userDao.idcheck(user_id);
+		
 		System.out.println("cont:" + result);
 		if (result == 1) {
 

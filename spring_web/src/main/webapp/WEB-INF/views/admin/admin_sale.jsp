@@ -207,117 +207,136 @@ function list(page){
 </head>
 <body>
 	<%@ include file="../include/menu.jsp"%>
-	<h2>세일 상품</h2>
-	<form name="form" method="post" action="/admin_sale_list.do">
+	<div id="table_">
+		<div id="wrapper">
+			<h2>세일 상품</h2>
+			<form name="form" method="post" action="/admin_sale_list.do">
 
-		<select name="search_option">
-			<option value="all"
-				<c:out value="${map.search_option == 'all' ? 'selected' : '' }"/>>전체</option>
-			<!--3항식  -->
-			<option value="product_cate"
-				<c:out value="${map.search_option == 'product_cate' ? 'selected' : '' }"/>>제품군</option>
-			<option value="product_brand"
-				<c:out value="${map.search_option == 'product_brand' ? 'selected' : ''}"/>>브랜드</option>
-			<option value="product_name"
-				<c:out value="${map.search_option== 'product_name' ? 'selected' : '' }"/>>제품명</option>
-			<option value="product_code"
-				<c:out value="${map.search_option== 'product_code' ? 'selected' :'' }"/>>제품코드</option>
-		</select> <input name="keyword" value="${map.keyword}"> <input
-			type="submit" value="검색">
-	</form>
-	할인 :
-	<input name="saleAll_text" type="number" style="width: 50px;" MIN='0'
-		MAX='99'>
-	<button name="saleAll" value="5">5%</button>
-	<button name="saleAll" value="10">10%</button>
-	<button name="saleAll" value="0">정상가 복구</button>
-	<button name="saleAll" value="적용">전체적용</button>
+				<select name="search_option">
+					<option value="all"
+						<c:out value="${map.search_option == 'all' ? 'selected' : '' }"/>>전체</option>
+					<!--3항식  -->
+					<option value="product_cate"
+						<c:out value="${map.search_option == 'product_cate' ? 'selected' : '' }"/>>제품군</option>
+					<option value="product_brand"
+						<c:out value="${map.search_option == 'product_brand' ? 'selected' : ''}"/>>브랜드</option>
+					<option value="product_name"
+						<c:out value="${map.search_option== 'product_name' ? 'selected' : '' }"/>>제품명</option>
+					<option value="product_code"
+						<c:out value="${map.search_option== 'product_code' ? 'selected' :'' }"/>>제품코드</option>
+				</select> <input name="keyword" value="${map.keyword}"> <input
+					type="submit" value="검색">
+			</form>
+			할인 : <input name="saleAll_text" type="number" style="width: 50px;"
+				MIN='0' MAX='99'>
+			<button name="saleAll" value="5">5%</button>
+			<button name="saleAll" value="10">10%</button>
+			<button name="saleAll" value="0">정상가 복구</button>
+			<button name="saleAll" value="적용">전체적용</button>
 
 
-	<!--세일 상품리스트 list  -->
-	<form name="saleForm">
-		<table border="1" width="1200px">
-			<tr>
-				<th rowspan="2"><input id="allCheck" type="checkbox"
-					name="allCheck" /></th>
-				<th rowspan="2">카테고리</th>
-				<th rowspan="2">브랜드</th>
-				<th rowspan="2">제품명</th>
-				<th rowspan="2">제품코드</th>
-				<th rowspan="2">가격</th>
-				<th rowspan="2">할인가</th>
-				<th rowspan="2">상품등록일자</th>
-				<th rowspan="2">팔리지않은 날짜</th>
-				<th colspan="4">세일 적용</th>
-			</tr>
-			<tr>
-				<td align="center">5%</td>
-				<td align="center">10%</td>
-				<td align="center">직접 입력</td>
-				<td align="center">원상 복구</td>
-			</tr>
-			<!--  value ="${row.user_id}를 사용한 이유 -> userDao , xml 사용,  check박스를 아이디(key)값으로 구분하여 동작 실행
+			<!--세일 상품리스트 list  -->
+			<form name="saleForm">
+				<table id="keywords" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr>
+							<th rowspan="2"><input id="allCheck" type="checkbox"
+								name="allCheck" /></th>
+							<th rowspan="2"><span>카테고리</span></th>
+							<th rowspan="2"><span>브랜드</span></th>
+							<th rowspan="2"><span>제품명</span></th>
+							<th rowspan="2"><span>제품코드</span></th>
+							<th rowspan="2"><span>가격</span></th>
+							<th rowspan="2"><span>할인가</span></th>
+							<th rowspan="2"><span>상품등록일자</span></th>
+							<th rowspan="2"><span>팔리지않은 날짜</span></th>
+							<th colspan="4"><span>세일 적용</span></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="center">5%</td>
+							<td align="center">10%</td>
+							<td align="center">직접 입력</td>
+							<td align="center">원상 복구</td>
+						</tr>
+						<!--  value ="${row.user_id}를 사용한 이유 -> userDao , xml 사용,  check박스를 아이디(key)값으로 구분하여 동작 실행
             즉 체크 박스 1번에 대한  같은줄의 아이디를 벨류로 사용하여 이용.  -->
-			<c:forEach var="row" items="${map.list}">
-				<tr>
-					<td align="center"><input name="RowCheck" type="checkbox"
-						value="${row.product_code}"></td>
-					<td align="center">${row.product_cate}</td>
-					<td align="center">${row.product_brand}</td>
-					<td align="center">${row.product_name}</td>
-					<td align="center">${row.product_code}</td>
-					<%-- <td align="center">${row.product_price}</td>
+						<c:forEach var="row" items="${map.list}">
+							<tr>
+								<td align="center"><input name="RowCheck" type="checkbox"
+									value="${row.product_code}"></td>
+								<td align="center">${row.product_cate}</td>
+								<td align="center">${row.product_brand}</td>
+								<td align="center">${row.product_name}</td>
+								<td align="center">${row.product_code}</td>
+								<%-- <td align="center">${row.product_price}</td>
             <td align="center">${row.product_saleprice}</td> --%>
-					<td align="center"><fmt:formatNumber pattern="#,###원"
-							value="${row.product_price}" /></td>
-					<td align="center"><fmt:formatNumber pattern="#,###원"
-							value="${row.product_saleprice}" /></td>
-					<td align="center"><fmt:formatDate value="${row.product_date}"
-							pattern="yyyy년 MM월 dd일" /></td>
-					<td align="center">${row.product_saledate}일</td>
-					<!--데이터 저장x  -->
-					<td align="center">
-						<button name="sale" value="5">5%</button>
-					</td>
-					<td align="center">
-						<button name="sale" value="10">10%</button>
-					</td>
-					<td align="center"><input name="sale_text" type="number"
-						style="width: 50px;" MIN='0' MAX='99'>
-						<button name="sale" value="적용">할인적용</button></td>
-					<td align="center">
-						<button name="sale" value="0">정상가 복구</button>
-					</td>
+								<td align="center"><fmt:formatNumber pattern="#,###원"
+										value="${row.product_price}" /></td>
+								<td align="center"><fmt:formatNumber pattern="#,###원"
+										value="${row.product_saleprice}" /></td>
+								<td align="center"><fmt:formatDate
+										value="${row.product_date}" pattern="yyyy년 MM월 dd일" /></td>
+								<td align="center">${row.product_saledate}일</td>
+								<!--데이터 저장x  -->
+								<td align="center">
+									<button name="sale" value="5">5%</button>
+								</td>
+								<td align="center">
+									<button name="sale" value="10">10%</button>
+								</td>
+								<td align="center"><input name="sale_text" type="number"
+									style="width: 50px;" MIN='0' MAX='99'>
+									<button name="sale" value="적용">할인적용</button></td>
+								<td align="center">
+									<button name="sale" value="0">정상가 복구</button>
+								</td>
 
-				</tr>
-			</c:forEach>
+							</tr>
+						</c:forEach>
 
-			<!--글나누기 페이지  -->
-			<!--href "#"관련 자료  -->
-			<!--https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ses1030&logNo=220873334215  -->
-			<tr>
-				<td colspan="13" align="center"><c:if
-						test="${map.page_info.curPage > 1 }">
-						<a href="javascript:list('1')">[처음]</a>
-					</c:if> <c:if test="${map.page_info.curPage > 1}">
-						<a href="javascript:list('${map.page_info.prevPage}')">[이전]</a>
-					</c:if> <c:forEach var="num" begin="${map.page_info.blockBegin}"
-						end="${map.page_info.blockEnd}">
-						<c:choose>
-							<c:when test="${num == map.page_info.curPage}">
-								<span style="color: red">${num}</span>&nbsp; <!--현재 페이지 빨간색으로  -->
-							</c:when>
-							<c:otherwise>
-								<a href="javascript:list('${num}')">${num}</a>&nbsp;
-            </c:otherwise>
-						</c:choose>
-					</c:forEach> <c:if test="${map.page_info.curPage < map.page_info.totPage}">
-						<a href="javascript:list('${map.page_info.nextPage}')">[다음]</a>
-					</c:if> <c:if test="${map.page_info.curPage < map.page_info.totPage}">
-						<a href="javascript:list('${map.page_info.totPage}')">[끝]</a>
-					</c:if></td>
-			</tr>
-		</table>
-	</form>
+						<!--글나누기 페이지  -->
+						<!--href "#"관련 자료  -->
+						<!--https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ses1030&logNo=220873334215  -->
+						<tr>
+							<td colspan="13" align="center"><div align="center">
+									<c:if test="${map.page_info.curPage > 1 }">
+										<a href="javascript:list('1')" style="color: black;">[처음]</a>
+									</c:if>
+									<c:if test="${map.page_info.curPage > 1}">
+										<a href="javascript:list('${map.page_info.prevPage}')"
+											style="color: black;">[이전]</a>
+									</c:if>
+									<c:forEach var="num" begin="${map.page_info.blockBegin}"
+										end="${map.page_info.blockEnd}">
+										<c:choose>
+
+											<c:when test="${num == map.page_info.curPage}">
+												<span style="color: red">${num}</span>&nbsp; <!--현재 페이지 빨간색으로  -->
+											</c:when>
+											<c:otherwise>
+												<a href="javascript:list('${num}')" style="color: black;">${num}</a>&nbsp;
+						</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${map.page_info.curPage < map.page_info.totPage}">
+										<a href="javascript:list('${map.page_info.nextPage}')"
+											style="color: black;">[다음]</a>
+									</c:if>
+									<c:if test="${map.page_info.curPage < map.page_info.totPage}">
+										<a href="javascript:list('${map.page_info.totPage}')"
+											style="color: black;">[끝]</a>
+									</c:if>
+								</div></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	<c:set var="path" value="${pageContext.request.contextPath}" />
+	<script src="${path}/resources/js/table.js?ver=2"></script>
+	<link rel="stylesheet" href="${path}/resources/css/table.css?ver=2" />
 </body>
 </html>

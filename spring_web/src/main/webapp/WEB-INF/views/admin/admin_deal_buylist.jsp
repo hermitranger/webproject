@@ -79,13 +79,14 @@
 
 			<!-- 페이지 나눔 -->
 			<tr>
-				<td colspan="7" align="center"><c:if
-						test="${buymap.page_info_b.curPage > 1 }">
+				<td colspan="7" align="center">
+				<c:if test="${buymap.page_info_b.curPage > 1 }">
 						<a href="javascript:list('1')">[처음]</a>
-					</c:if> <c:if test="${buymap.page_info_b.curPage > 1}">
+					</c:if> 
+					<c:if test="${buymap.page_info_b.curPage > 1}">
 						<a href="javascript:list('${buymap.page_info_b.prevPage}')">[이전]</a>
-					</c:if> <c:forEach var="num" begin="${buymap.page_info_b.blockBegin}"
-						end="${buymap.page_info_b.blockEnd}">
+					</c:if> 
+					<c:forEach var="num" begin="${buymap.page_info_b.blockBegin}" end="${buymap.page_info_b.blockEnd}">
 						<c:choose>
 
 							<c:when test="${num == buymap.page_info_b.curPage}">

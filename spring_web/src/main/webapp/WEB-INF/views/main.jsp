@@ -23,37 +23,42 @@
 	<%@ include file="include/menu.jsp"%>
 
 	<!-- 상단부 광고창 -->
+	<br>
+	<br>
+	<br>
+	<br>
 	<header class="showcase">
-		<img src="https://i.ibb.co/zVqhWn2/card5.png" alt="" />
-		<h2>당신만을 위한 중고거래</h2>
-		<p>중고거래를 원한다면 지금 바로 중고장터의 가족이 되어주세요!</p>
-		<a href="/controller/join.page" class="btn"> 회원가입 <i
-			class="fas fa-chevron-right"></i>
-		</a>
+		<h2 align = "center">당신만을 위한 중고거래</h2>
+		<p align = "center">중고거래를 원한다면 지금 바로 중고장터의 가족이 되어주세요!</p>
+		<div align = "center"><a href="/controller/join.page" class="btn" > 회원가입 <i
+			class="fas fa-chevron-right"></i></a></div>
 	</header>
+	<br>
+	<br>
+	<br>
 
 	<!-- 상단부 카테고리 영역 -->
 	<section class="home-cards">
 		<div>
-			<a href="/shop/catelist.do?condition=1"> <img
+			<a href="/shop/list.do"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">계절가전</h3>
 		</div>
 		<div>
-			<a href="/shop/catelist.do?condition=2"> <img
+			<a href="/shop/list.do"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">음향기기</h3>
 		</div>
 		<div>
-			<a href="/shop/catelist.do?condition=3"> <img
+			<a href="/shop/list.do"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">주방가전</h3>
 		</div>
 		<div>
-			<a href="/shop/catelist.do?condition=4"> <img
+			<a href="/shop/list.do"> <img
 				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 			</a>
 			<h3 align="center">컴퓨터 및 기타</h3>
@@ -63,6 +68,7 @@
 	<hr>
 	<br> <br>
 	<h2>신규 등록</h2>
+	<br>
 	<!-- 신규등록 상품 -->
 	<section class="home-cards">
 		<c:forEach var="row" items="${list}">
@@ -77,6 +83,8 @@
 
 		</c:forEach>
 	</section>
+	<br>
+	<br>
 
 	<!-- 광고창 -->
 	<section class="carbon dark">

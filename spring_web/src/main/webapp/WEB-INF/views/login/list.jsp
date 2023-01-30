@@ -80,8 +80,9 @@
 					value="${dto.user_email}"><br> <h2 class="active">전화번호</h2><input type="text"
 					id="user_phone" name="user_phone" value="${dto.user_phone}"><br>
 				<!-- 유저체크<input type="number" id="check"  name="check"><br> -->
-				<input type='button' value='회원정보수정' onclick="conf()"> <input
-					type='button' value='메인화면' onclick="location.href='/'">
+				<br>
+				<input type='button' value='회원정보수정' onclick="conf()" style="color:black;"> <input
+					type='button' value='메인화면' onclick="location.href='/'" style="color:black;">
 			</form>
 		</div>
 	</div>

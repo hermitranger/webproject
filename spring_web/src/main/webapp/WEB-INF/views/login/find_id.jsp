@@ -48,11 +48,11 @@
 			</form>
 			<div id="formFooter">
 				<input type="button" class="underlineHover" value="아이디 찾기"
-					id="btnFindid">
+					id="btnFindid" style="color:black;">
 				<!-- <input type="button" class="underlineHover"
 					value="비밀번호 찾기" id="btnFindpasswd"> -->
 				<input type="button" class="underlineHover" value="로그인"
-					id="btnLogin">
+					id="btnLogin" style="color:black;">
 				<div style="color: red">${message}</div>
 			</div>
 <%-- 			<h2>${sessionScope.user_id}입니다.</h2>

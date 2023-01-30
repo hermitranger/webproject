@@ -48,9 +48,9 @@
 			</form>
 			<div id="formFooter">
 				<input type="button" class="underlineHover"
-					value="비밀번호 찾기" id="btnFindpasswd"> 
+					value="비밀번호 찾기" id="btnFindpasswd" style="color:black;"> 
 				<input type="button" class="underlineHover" value="로그인"
-					id="btnLogin">
+					id="btnLogin" style="color:black;">
 				<div style="color: red">${message}</div>
 			</div>
 			<link rel="stylesheet" href="${path}/resources/css/login.css?ver=2" />
