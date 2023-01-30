@@ -55,7 +55,7 @@ var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 
 
 function SellDo(){
-	
+	bill_order=createOrderNum();
 	const data ={
 		imp_uid	: "",
 		payMethod : $("input[type='raido']:checked").val(),
@@ -67,7 +67,7 @@ function SellDo(){
 		user_name : $("#user_name").val(),
 		user_email01 : $("#user_email01").val(),
 		selectEmail : $("#selectEmail").val(),
-		bill_order : $("#bill_order").val(),
+		bill_order : bill_order,
 		zipcode : $("#zipcode").val(),
 		address1 : $("#address1").val(),
 		address2 : $("#address2").val(),
@@ -82,8 +82,7 @@ function SellDo(){
         seller_name: $("#user_name").val(),
         seller_tel: $("#user_phone").val(),
         seller_addr: $("#address1").val().concat($("#address2").val()),
-        seller_postcode: $("#zipcode").val() 
-			
+        seller_postcode: $("#zipcode").val() 		
 	}
 	
 
@@ -423,11 +422,11 @@ function showPostcode() {
 			<option value="019">018</option>
 			<option value="019">019</option>
 			</select> -
-			<input type="text" name="userTel01" id="userTel01" maxlength='4'> -
-			<input type="text" name="userTel02" id="userTel02" maxlength='4'/>
+			<input type="text" name="userTel01" id="userTel01" maxlength='4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"> -
+			<input type="text" name="userTel02" id="userTel02" maxlength='4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
 </div>
 구매자 이름 : <input type="text" name="user_name" id="user_name" maxlength='10'/><br>
-구매자 이메일 : <input type="text" name="user_email01" id="user_email" maxlength='20'/>@
+구매자 이메일 : <input type="text" name="user_email01" id="user_email01" maxlength='20'/>@
 			<input type="text" name="user_email02" id="user_email02" disabled value="naver.com">
 			<select name="selectEmail" id="selectEmail">
 			<option value="1">직접입력</option>
@@ -450,7 +449,6 @@ function showPostcode() {
 	<!--판매 및 목록 버튼-->
 	<input type="button" value="구매하기" onclick="SellDo()">
 	<input type="button" value="목록" onclick="location.href='/shop/list.do'">
-	<input type="button" value="취소" onclick="Refund()">
 	<input type="text" id="imp_uid"  name="imp_uid" value="" readonly/>
 	<input type="hidden"  id="fee" name="fee" value="" readonly />
 	<!--판매 및 목록 버튼-->

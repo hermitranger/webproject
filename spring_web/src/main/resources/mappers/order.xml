@@ -21,7 +21,7 @@
 	
 	<insert id="Sell_Result">
 	insert into sell_bill values
-		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_price},#{user_id},#{user_name},#{user_phone},#{user_email},#{sell_post},#{sell_address},#{bill_deliver},#{bill_total})
+		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_saleprice},#{user_id},#{user_name},#{user_phone},#{user_email},#{sell_post},#{sell_address},#{bill_deliver},#{bill_total})
 	</insert>
 
 		<!-- map.put("Pdto", Pdto);

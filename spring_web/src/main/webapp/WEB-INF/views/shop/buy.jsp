@@ -56,7 +56,6 @@ function requestPay() {
 	        pay_method : 'card',
 	        merchant_uid: "IMP"+makeMerchantUid, 
 	        name: $("#product_name").val(),
-	        //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
 	        amount: 100, //테스트용 1원 값은 $("#fee").val()
 	        buyer_email: $("#user_email").val(),
 	        buyer_name: $("#user_name").val(),
@@ -65,10 +64,10 @@ function requestPay() {
 	        buyer_postcode: $("#zipcode").val()
 	    }, function (rsp) { // callback
 	        if (rsp.success) {  // 결제 성공 시 로직   
-	       
+	        	BuyResult();
 	        	alert("결제 완료");
 	        } else {  // 결제 실패 시 로직
-	        	BuyResult();//데이터 잘들어가는지 TEST
+	        	
 	        	alert("결제 실패"); 
              
 	        }

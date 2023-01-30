@@ -93,7 +93,7 @@
 						<i class="fa fa-search"></i> <i class="fa fa-user"></i> <i
 							class="fa fa-shopping-cart"></i>
 					</div>
-					<div class="details">
+					<%-- <div class="details">
 						<h3>
 							<fmt:formatNumber value="${dto.product_price}" pattern="#,###원" />
 						</h3>
@@ -102,10 +102,17 @@
 							<span class="fa fa-dollar"></span>${dto.product_brand}
 						</h4>
 					</div>
-					<ul>
+ --%>				<%-- <ul>
 						<li><fmt:formatDate pattern="yyyy년 MM월 dd일"
 								value="${dto.product_date}" /> 등록</li>
-					</ul>
+					</ul> --%>
+					
+					<div class="details">	
+						<h2>${dto.product_name}</h2>
+						<h4>
+							<span class="fa fa-dollar"></span>${dto.product_brand}
+						</h4>
+			
 					<ul>
 						<li>검수등급</li>
 
@@ -119,6 +126,27 @@
 							<li>하</li>
 						</c:if>
 					</ul>
+						<h3>
+						<c:if test="${dto.product_price eq dto.product_saleprice}">	
+								가격
+								<fmt:formatNumber value="${dto.product_price}"
+										pattern="#,###원" />	
+							</c:if>
+							<c:if test="${dto.product_price ne dto.product_saleprice}">	
+								가격
+								<fmt:formatNumber value="${dto.product_saleprice}"
+										pattern="#,###원" /><br>
+									<p align="center" style="color: red; display:inline;">
+									(SALE: <c:set var="sale" value="${((dto.product_price-dto.product_saleprice)/dto.product_price)*100}"/>
+									<c:out value="${sale}"/>%</p>
+									,정상가 <p style="text-decoration:line-through; display:inline;" align="center">
+									<fmt:formatNumber value="${dto.product_price}"
+										pattern="#,###원" /></p>)
+									
+							</c:if>	
+							<%-- <fmt:formatNumber value="${dto.product_price}" pattern="#,###원" /> --%>
+						</h3>
+					</div>
 					<br> <br> <input type="button" id="btnBuy" value="구매하기"
 						style="color: black;"> <input type="button" id="btnSell"
 						value="판매하기" style="color: black;">
