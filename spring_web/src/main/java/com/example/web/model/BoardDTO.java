@@ -15,6 +15,7 @@ public class BoardDTO {
 	private int hit;
 	private String user_id;
 	private int cnt;
+	private String file_name;
 	// 첨부파일의 이름 배열
 	private String[] files;
 	private MultipartFile[] file;
@@ -24,6 +25,12 @@ public class BoardDTO {
 	
 	
 	
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -90,9 +97,10 @@ public class BoardDTO {
 	@Override
 	public String toString() {
 		return "BoardDTO [idx=" + idx + ", title=" + title + ", contents=" + contents + ", writer=" + writer
-				+ ", regdate=" + regdate + ", hit=" + hit + ", user_id=" + user_id + ", cnt=" + cnt + ", files="
-				+ Arrays.toString(files) + ", file=" + Arrays.toString(file) + "]";
+				+ ", regdate=" + regdate + ", hit=" + hit + ", user_id=" + user_id + ", cnt=" + cnt + ", file_name="
+				+ file_name + ", files=" + Arrays.toString(files) + ", file=" + Arrays.toString(file) + "]";
 	}
-
+	
+	
 	
 }

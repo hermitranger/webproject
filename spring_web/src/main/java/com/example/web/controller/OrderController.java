@@ -28,8 +28,8 @@ public class OrderController {
 	SellOrderDAO SellOrderDao;
 
 	@RequestMapping("OrderBuy.do")
-	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request,HttpServletResponse response) {
-		response.setHeader("Cache-Control","no-store");
+	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
+
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("userid" + user_id);
@@ -49,7 +49,7 @@ public class OrderController {
 
 	@RequestMapping("OrderSell.do")
 	public ModelAndView OrderSell(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
-
+		System.out.println(product_code);
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 
@@ -88,6 +88,7 @@ public class OrderController {
 	@RequestMapping("SellResult.do")
 	@ResponseBody
 	public String SellResult(@RequestParam Map<String, Object> map) {
+		System.out.println(map);
 		String product_code = (String) map.get("product_code");
 		String user_id = (String) map.get("user_id");
 		System.out.println(user_id);
@@ -99,6 +100,7 @@ public class OrderController {
 		String sell_post = (String) map.get("zipcode");
 		String sell_address = (String) map.get("address1") + " " + (String) map.get("address2");
 		int bill_deliver = Integer.parseInt(map.get("fee").toString());// 오브젝트형 -> 인트 하는법 : 스트링 변환후 parseInt
+		
 		int bill_total = bill_deliver + Integer.parseInt(map.get("product_price").toString());// 오브젝트형 -> 인트 하는법 : 스트링
 																								// 변환후 parseInt
 		ProductDTO Pdto = SellOrderDao.Sell_Product(product_code);

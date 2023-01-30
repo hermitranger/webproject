@@ -1,242 +1,257 @@
-
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
 /*reset*/
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 /*product info */
-
 h1 {
-  color: rgb(0, 128, 192);
-  font-family: "muli";
-  font-weight: bold;
-  font-size: 22px;
-  margin-top: 21px;
-  display: inline-block;
+	color: rgb(0, 128, 192);
+	font-family: "muli";
+	font-weight: bold;
+	font-size: 22px;
+	margin-top: 21px;
+	display: inline-block;
 }
 
 i.fa.fa-search {
-  margin-left: 90px;
+	margin-left: 90px;
 }
 
 .product-name i {
-  color: #ffffff;
-  transition: 0.3s all ease;
-  margin: 0px 12px;
+	color: #ffffff;
+	transition: 0.3s all ease;
+	margin: 0px 12px;
 }
 
 .product-name i:hover {
-  color: rgb(0, 128, 192);
-  cursor: pointer;
+	color: rgb(0, 128, 192);
+	cursor: pointer;
 }
 
 h3 {
-  color: #ffffff;
-  font-family: "muli";
-  margin-top: 84px;
-  font-size: 20px;
-  font-weight: 500;
+	color: #ffffff;
+	font-family: "muli";
+	margin-top: 84px;
+	font-size: 20px;
+	font-weight: 500;
 }
 
 h2 {
-  color: #ffffff;
-  font-family: "muli";
-  margin-top: 10px;
-  font-weight: 800;
-  font-size: 29px;
+	color: #ffffff;
+	font-family: "muli";
+	margin-top: 10px;
+	font-weight: 800;
+	font-size: 29px;
 }
 
 h4 {
-  display: inline-block;
-  color: #ffffff;
-  font-family: "muli";
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 20px;
+	display: inline-block;
+	color: #ffffff;
+	font-family: "muli";
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 20px;
 }
 
 h4.dis {
-  display: inline-block;
-  color: #ffffff;
-  font-family: "muli";
-  font-weight: 400;
-  font-size: 17px;
-  margin-left: 30px;
-  text-decoration: line-through rgb(64, 128, 128);
+	display: inline-block;
+	color: #ffffff;
+	font-family: "muli";
+	font-weight: 400;
+	font-size: 17px;
+	margin-left: 30px;
+	text-decoration: line-through rgb(64, 128, 128);
 }
 
 h4.dis span {
-  text-decoration: line-through rgb(0, 128, 192);
+	text-decoration: line-through rgb(0, 128, 192);
+}
+
+h5 {
+	display: block; 
+	color : #ffffff;
+	width: 200%;
+	height: 100%;
+	font-size: 20px;
+	margin-left: 200%;
+	margin-top: 170%;
+	color: #ffffff;
 }
 
 .discount {
-  display: inline-block;
+	display: inline-block;
 }
 
 ul {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 li {
-  display: inline-block;
-  margin-right: 25px;
+	display: inline-block;
+	margin-right: 25px;
 }
 
-ul li {
-  color: #ffffff;
-  font-family: "muli";
-  margin-top: 20px;
-  font-weight: 500;
-  font-size: 11px;
+li {
+	color: #ffffff;
+	font-family: "muli";
+	margin-top: 20px;
+	font-weight: 500;
+	font-size: 11px;
 }
 
 .bg {
-  width: 15px;
-  height: 15px;
-  text-align: center;
-  padding: 2px;
-  margin-right: 20px;
-  transition: 0.3s all ease;
-  border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	text-align: center;
+	padding: 2px;
+	margin-right: 20px;
+	transition: 0.3s all ease;
+	border-radius: 50%;
 }
 
 .bg:hover {
-  background-color: rgb(0, 128, 192);
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
+	background-color: rgb(0, 128, 192);
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
 }
 
 .yellow {
-  content: "";
-  width: 13px;
-  height: 13px;
-  background-color: rgb(0, 255, 255);
-  border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0);
-  transition: 0.3s all ease;
+	content: "";
+	width: 13px;
+	height: 13px;
+	background-color: rgb(0, 255, 255);
+	border-radius: 50%;
+	border: 2px solid rgba(0, 0, 0, 0);
+	transition: 0.3s all ease;
 }
 
 .black {
-  content: "";
-  width: 13px;
-  height: 13px;
-  background-color: #000000;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0);
-  transition: 0.3s all ease;
+	content: "";
+	width: 13px;
+	height: 13px;
+	background-color: #000000;
+	border-radius: 50%;
+	border: 2px solid rgba(0, 0, 0, 0);
+	transition: 0.3s all ease;
 }
 
 .blue {
-  content: "";
-  width: 13px;
-  height: 13px;
-  background-color: #02a2ca;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0);
-  transition: 0.3s all ease;
+	content: "";
+	width: 13px;
+	height: 13px;
+	background-color: #02a2ca;
+	border-radius: 50%;
+	border: 2px solid rgba(0, 0, 0, 0);
+	transition: 0.3s all ease;
 }
 
-.yellow:hover,
-.black:hover,
-.blue:hover {
-  border: 2px solid rgb(0, 128, 255);
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  cursor: pointer;
+.yellow:hover, .black:hover, .blue:hover {
+	border: 2px solid rgb(0, 128, 255);
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	cursor: pointer;
 }
 
 .foot {
-  color: #ffffff;
-  font-family: "muli";
-  margin-top: 20px;
-  margin-right: 50px;
-  font-weight: 500;
-  font-size: 11px;
-  float: left;
-  transition: 0.3s all ease;
+	color: #ffffff;
+	font-family: "muli";
+	margin-top: 20px;
+	margin-right: 50px;
+	font-weight: 500;
+	font-size: 11px;
+	float: left;
+	transition: 0.3s all ease;
 }
 
 .foot i:nth-child(1) {
-  margin-left: 0;
-  margin-right: 15px;
+	margin-left: 0;
+	margin-right: 15px;
 }
 
 .foot:hover {
-  color: rgba(95,186,233,0.4);
-  cursor: pointer;
+	color: rgba(95, 186, 233, 0.4);
+	cursor: pointer;
 }
 
 /*shoe slider indicator*/
-
 .left i {
-  color: rgb(0, 128, 255);
-  margin-top: 260px;
-  transition: 0.3s all ease;
+	color: rgb(0, 128, 255);
+	margin-top: 260px;
+	transition: 0.3s all ease;
 }
 
 .fa-long-arrow-left {
-  margin-left: -275px;
+	margin-left: -275px;
 }
 
 .fa-long-arrow-right {
-  margin-left: 15px;
+	margin-left: 15px;
 }
 
 .left i:hover {
-  cursor: pointer;
-  color: #2a2f40;
-} 
+	cursor: pointer;
+	color: #2a2f40;
+}
 
 /*main card*/
-
 .card {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  height: 600px;
-  width: 800px;
-  margin: 0 auto;
-  box-shadow: 0px 15px 50px 10px rgba(0, 0, 0, 0.4);
-  margin-top: 2%;
+	display: flex;
+	align-items: center;
+	background: #fff;
+	height: 600px;
+	width: 800px;
+	margin: 0 auto;
+	box-shadow: 0px 15px 50px 10px rgba(0, 0, 0, 0.4);
+	margin-top: 2%;
 }
 
 .left {
-  content: "";
-  height: 455px;
-  width: 330px;
-  display: flex;
-  align-items: center;
-  background-color: rgba(95,186,233,0.4);
-  margin-left: 93px;
-  border-radius: 0% 50% 50% 0%;
-  position: absolute;
-  z-index: 5;
-} 
+	content: "";
+	height: 455px;
+	width: 330px;
+	display: flex;
+	align-items: center;
+	background-color: rgba(95, 186, 233, 0.4);
+	margin-left: 100px;
+	border-radius: 0% 50% 50% 0%;
+	position: absolute;
+	z-index: 5;
+}
 
 .left img {
-  margin-left: -88px;
-  margin-top: 60px;
+	margin-left: -88px;
+	margin-top: 60px;
 }
 
 .right {
-  content: "";
-  height: 455px;
-  width: 550px;
-  background-color: #2a2f40;
-  z-index: 1;
-  margin-left: 200px;
-} 
+	content: "";
+	height: 455px;
+	width: 550px;
+	background-color: #2a2f40;
+	z-index: 1;
+	margin-left: 200px;
+}
+
+.center {
+	content: "";
+	height: 455px;
+	width: 650px;
+	background-color: #2a2f40;
+	z-index: 1;
+	margin-left: 100px;
+	margin-right: 50px;
+}
 
 .product-info {
-  position: absolute;
-  margin-left: 245px;
-  height: 394px;
-  width: 305px;
-  z-index: 10;
-} 
+	position: absolute;
+	margin-left: 245px;
+	height: 394px;
+	width: 305px;
+	z-index: 10;
+}

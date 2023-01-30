@@ -104,6 +104,32 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping("listM.do")
+	public ModelAndView listM(@RequestParam(defaultValue="1") int curPage,
+			@RequestParam(defaultValue="all") String search_option,
+			@RequestParam(defaultValue="") String keyword) {
+		int count=boardDao.count(search_option, keyword);
+		PageUtil page_info = new PageUtil(count, curPage);
+		int start=page_info.getPageBegin();
+		int end=page_info.getPageEnd();
+				
+		List<BoardDTO> list= boardDao.list(start, end, search_option, keyword);
+				
+		ModelAndView mav= new ModelAndView();
+		mav.setViewName("board/listM");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("count", count);
+		map.put("serch_option", search_option);
+		map.put("keyword", keyword);
+		map.put("page_info", page_info);
+		mav.addObject("map",map);		
+		return mav;
+	}
+	
+	
+	
 	@RequestMapping("detail.do")
 	public ModelAndView detail(int idx, int cur_page, String search_option, String keyword) {
 				

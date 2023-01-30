@@ -13,13 +13,23 @@
 		$("#btnAdd").click(function() {
 			location.href = "/shop/write.do";
 		});
+		
+		sale();
+		
+		
+		
 	});
 
 	function list(page) {
 		location.href = "/shop/list.do?curPage=" + page
 				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
+var totalprice=0;
+
+	
 </script>
+
+
 </head>
 <body>
 	<%@ include file="../include/menu.jsp"%>
@@ -60,23 +70,20 @@
 						<a href="/shop/edit/${row.product_code}">[편집]</a>
 					</c:if>
 					<p align="center">
-				
-					<c:if test="${row.product_price ne row.product_saleprice}">
-						할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원" />
+					
+					<c:if test="${row.product_price ne row.product_saleprice}">						
+						<p style="text-decoration:line-through" align="center">
+						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" /></p>
+						<p align="center" style="color: red">
+						할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원"/><br>
+						sale : <c:set var="sale" value="${((row.product_price-row.product_saleprice)/row.product_price)*100}"/>
+						<c:out value="${sale}"/>%
+						</p>		
 					</c:if>
 					
 					<c:if test="${row.product_price eq row.product_saleprice}">
 						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
 					</c:if>
-						
-					<%-- <c:choose>
-						<c:when test="${row.product_price ne row.product_saleprice}">	
-							할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원" />
-						</c:when>
-						<c:otherwise>
-							정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
-						</c:otherwise>
-					</c:choose> --%>
 					</p>
 				</div>
 			</c:forEach>

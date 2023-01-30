@@ -52,7 +52,6 @@
 		
 	}
 </script>
-	<%@ include file="../include/menu.jsp"%>
 </head>
 <body>
 

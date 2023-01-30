@@ -57,8 +57,9 @@
 			<form name="form1" method="post">
 				<input type="text" id="user_id" name="user_id" class="fadeIn second"
 					placeholder="userid" > 
-				<input type="text" id="user_passwd" name="user_passwd" class="fadeIn third" placeholder="password"> 
+				<input type="password" id="user_passwd" name="user_passwd" class="fadeIn third" placeholder="password"> 
 				<input type="submit" id="btnLogin" value = "로그인" class="fadeIn fourth" style="color:black;">
+
 				<div>
 					<c:if test="${message == 'withdrawal' }">
 						<p style="color: red;">회원탈퇴한 아이디입니다.</p>

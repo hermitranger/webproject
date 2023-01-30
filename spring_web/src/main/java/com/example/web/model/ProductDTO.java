@@ -18,6 +18,7 @@ public class ProductDTO {
 	private int product_check;
 	private MultipartFile file1;
 	private int product_saleprice;
+	private int product_saledate;
 	private int recommend;
 	
 	public String getProduct_code() {
@@ -104,14 +105,19 @@ public class ProductDTO {
 	public void setRecommend(int recommend) {
 		this.recommend = recommend;
 	}
-	
+	public int getProduct_saledate() {
+		return product_saledate;
+	}
+	public void setProduct_saledate(int product_saledate) {
+		this.product_saledate = product_saledate;
+	}
 	@Override
 	public String toString() {
 		return "ProductDTO [product_code=" + product_code + ", filename=" + filename + ", product_name=" + product_name
 				+ ", product_model=" + product_model + ", product_cate=" + product_cate + ", product_brand="
 				+ product_brand + ", product_price=" + product_price + ", product_amount=" + product_amount
 				+ ", product_date=" + product_date + ", product_detail=" + product_detail + ", product_check="
-				+ product_check + ", file1=" + file1 + ", product_saleprice=" + product_saleprice + ", recommend="
-				+ recommend + "]";
+				+ product_check + ", file1=" + file1 + ", product_saleprice=" + product_saleprice
+				+ ", product_saledate=" + product_saledate + ", recommend=" + recommend + "]";
 	}
 }

@@ -37,9 +37,8 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 
-		if (user_id == null) {
 
-			mav.setViewName("/main");
+			mav.setViewName("main");
 			List<ProductDTO> new_list = productDao.new_list();
 			mav.addObject("list", new_list);
 			return mav;
@@ -48,10 +47,9 @@ public class UserController {
 		 * else if (user_id.equals("admin")) {// ==을쓰면 주소값을 비교하기 때문에 , equals("admin")을
 		 * 사용해야함 mav.setViewName("/adminmain"); return mav;
 		 */
-		} else {
-			mav.setViewName("/main");
-			return mav;
-		}
+		/*
+		 * } else { mav.setViewName("/main"); return mav; }
+		 */
 
 	}
 
@@ -79,7 +77,8 @@ public class UserController {
 			int user_check = userDao.check(dto);
 			if (dto.getUser_check() >= 0) {
 				mav.setViewName("main");
-				System.out.println("user_check : " + user_check);
+				List<ProductDTO> new_list = productDao.new_list();
+				mav.addObject("list", new_list);
 			} else {
 				mav.setViewName("login/login");
 				mav.addObject("message", "withdrawal");
