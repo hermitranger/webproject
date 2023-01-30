@@ -60,8 +60,15 @@
 			<artifactId>jquery</artifactId>
 			<version>3.6.2</version>
 		</dependency>
-
-
+<dependency>
+  <groupId>com.google.code.gson</groupId>
+  <artifactId>gson</artifactId>
+</dependency>
+<dependency>
+  <groupId>com.github.iamport</groupId>
+  <artifactId>iamport-rest-client-java</artifactId>
+  <version>0.2.14</version>
+</dependency>
 	</dependencies>
 
 	<build>
@@ -72,5 +79,10 @@
 			</plugin>
 		</plugins>
 	</build>
-
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
 </project>

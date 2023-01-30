@@ -6,10 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 @Repository
 public class SellOrderDAOImpl implements SellOrderDAO {
-
-
+	
 	@Autowired
 	SqlSession sqlSession;
 
@@ -46,4 +46,21 @@ public class SellOrderDAOImpl implements SellOrderDAO {
 		
 	}
 
+	@Override
+	public int CheckProduct(String product_code) {
+		return sqlSession.selectOne("order.CheckProduct", product_code);	
+	}
+	
+	public SellBillDTO SellFail(String product_code, String user_id) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("s_code", product_code);
+		map.put("sell_id", user_id);
+		System.out.println("SellBillDaoimpl " + product_code);
+		System.out.println("SellBillDaoimpl " + user_id);
+		
+		return sqlSession.selectOne("order.SellFail",map);	
+	
+	}
+
+	
 }

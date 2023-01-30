@@ -17,7 +17,10 @@ public class BuyOrderDAOImpl implements BuyOrderDAO {
 
 	@Autowired
 	SqlSession sqlSession;
+	
 
+	
+	
 	@Override
 	public ProductDTO Buy_Product(String product_code) {
 		

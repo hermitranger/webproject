@@ -16,28 +16,29 @@ public class BuyBillDTO {
 	private String buy_addressdetail;
 	private String buy_post;
 	private String b_cate;
+	private String impUid = "";
 	public String getBill_order() {
 		return bill_order;
 	}
 	public void setBill_order(String bill_order) {
 		this.bill_order = bill_order;
 	}
-	public String getb_code() {
+	public String getB_code() {
 		return b_code;
 	}
-	public void setb_code(String b_code) {
+	public void setB_code(String b_code) {
 		this.b_code = b_code;
 	}
-	public String getbuy_id() {
+	public String getBuy_id() {
 		return buy_id;
 	}
-	public void setbuy_id(String buy_id) {
+	public void setBuy_id(String buy_id) {
 		this.buy_id = buy_id;
 	}
-	public String getb_name() {
+	public String getB_name() {
 		return b_name;
 	}
-	public void setb_name(String b_name) {
+	public void setB_name(String b_name) {
 		this.b_name = b_name;
 	}
 	public Date getBill_date() {
@@ -46,16 +47,16 @@ public class BuyBillDTO {
 	public void setBill_date(Date bill_date) {
 		this.bill_date = bill_date;
 	}
-	public int getb_price() {
+	public int getB_price() {
 		return b_price;
 	}
-	public void setb_price(int b_price) {
+	public void setB_price(int b_price) {
 		this.b_price = b_price;
 	}
-	public int getb_check() {
+	public int getB_check() {
 		return b_check;
 	}
-	public void setb_check(int b_check) {
+	public void setB_check(int b_check) {
 		this.b_check = b_check;
 	}
 	public int getBill_deliver() {
@@ -72,6 +73,14 @@ public class BuyBillDTO {
 	}
 	public String getBuy_address() {
 		return buy_address;
+	}
+	@Override
+	public String toString() {
+		return "BuyBillDTO [bill_order=" + bill_order + ", b_code=" + b_code + ", buy_id=" + buy_id + ", b_name="
+				+ b_name + ", bill_date=" + bill_date + ", b_price=" + b_price + ", b_check=" + b_check
+				+ ", bill_deliver=" + bill_deliver + ", bill_total=" + bill_total + ", buy_address=" + buy_address
+				+ ", buy_addressdetail=" + buy_addressdetail + ", buy_post=" + buy_post + ", b_cate=" + b_cate
+				+ ", impUid=" + impUid + "]";
 	}
 	public void setBuy_address(String buy_address) {
 		this.buy_address = buy_address;
@@ -94,12 +103,12 @@ public class BuyBillDTO {
 	public void setB_cate(String b_cate) {
 		this.b_cate = b_cate;
 	}
-	@Override
-	public String toString() {
-		return "BuyBillDTO [bill_order=" + bill_order + ", b_code=" + b_code + ", buy_id=" + buy_id + ", b_name="
-				+ b_name + ", bill_date=" + bill_date + ", b_price=" + b_price + ", b_check=" + b_check
-				+ ", bill_deliver=" + bill_deliver + ", bill_total=" + bill_total + ", buy_address=" + buy_address
-				+ ", buy_addressdetail=" + buy_addressdetail + ", buy_post=" + buy_post + ", b_cate=" + b_cate + "]";
+	public String getImpUid() {
+		return impUid;
 	}
+	public void setImpUid(String impUid) {
+		this.impUid = impUid;
+	} 
+	
 	
 }

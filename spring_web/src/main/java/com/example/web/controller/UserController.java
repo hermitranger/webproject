@@ -65,19 +65,17 @@ public class UserController {
 
 	@RequestMapping("login_check.do")
 	public ModelAndView login_check(UserDTO dto, HttpSession session, ModelAndView mav) {
-		String user_name = userDao.login(dto);		
-		if (user_name != null) { // 로그인 성공하면 세션변수 등록
+		String user_id = userDao.login(dto);
+		
+		if (user_id != null) { // 로그인 성공하면
+			
 			int user_check = userDao.check(dto);
-			session.setAttribute("user_id", dto.getUser_id());
-			session.setAttribute("user_name", user_name);			
-			session.setAttribute("user_check", user_check);
-		}
-
-		if (user_name != null) { // 로그인 성공하면
-			int user_check = userDao.check(dto);
-			if (dto.getUser_check() >= 0) {
+			System.out.println(user_check);
+			if (user_check >= 0) {
 				mav.setViewName("main");
-				List<ProductDTO> new_list = productDao.new_list();
+				session.setAttribute("user_check", user_check);
+				session.setAttribute("user_id", dto.getUser_id());
+				List<ProductDTO> new_list = productDao.new_list();			
 				mav.addObject("list", new_list);
 			} else {
 				mav.setViewName("login/login");
@@ -125,20 +123,14 @@ public class UserController {
 	 * "비밀번호가 일치하지않습니다."); model.addAttribute("dto", userDao.detail(user_id));
 	 * return "user/detail"; } }
 	 */
-	@RequestMapping("user/update.do")
-	public String update(@ModelAttribute UserDTO dto, Model model) {
-		boolean result = userDao.check_passwd(dto.getUser_id(), dto.getUser_passwd());
-		if (result) {
-			userDao.update(dto);
-			return "redirect:/user/list.do";
-		} else {
-			UserDTO dto2 = userDao.detail(dto.getUser_id());
-			model.addAttribute("dto", dto);
-			model.addAttribute("message", "비밀번호가 일치하지않습니다.");
-			return "user/detail";
-		}
-	}
-
+	/* (23.01.29) 사용되지 않음
+	 * @RequestMapping("user/update.do") public String update(@ModelAttribute
+	 * UserDTO dto, Model model) { boolean result =
+	 * userDao.check_passwd(dto.getUser_id(), dto.getUser_passwd()); if (result) {
+	 * userDao.update(dto); return "redirect:/user/list.do"; } else { UserDTO dto2 =
+	 * userDao.detail(dto.getUser_id()); model.addAttribute("dto", dto);
+	 * model.addAttribute("message", "비밀번호가 일치하지않습니다."); return "user/detail"; } }
+	 */
 	@RequestMapping("user.page")
 	public String user_page(HttpSession session) {
 
