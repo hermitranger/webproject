@@ -11,11 +11,11 @@
 <script>
 	$(function() {
 		$("#btnFindid").click(function() {
-			document.form1.action = "findid_check.do";
+			document.form1.action = "findIdCheck.do";
 			document.form1.submit();
 		});
 		$("#btnFindpasswd").click(function() {
-			document.form1.action = "findpasswd.do";
+			document.form1.action = "findPasswd.do";
 			document.form1.submit();
 
 		});

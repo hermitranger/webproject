@@ -16,7 +16,7 @@
 		where
 		user_id=#{user_id} and user_passwd=#{user_passwd}
 	</select>
-	<select id="check" resultType="int">
+	<select id="usercheck" resultType="int">
 		select user_check from user
 		where
 		user_id=#{user_id} and user_passwd=#{user_passwd}
@@ -27,9 +27,9 @@
 		user_name=#{user_name} and
 		user_email=#{user_email}
 	</select>
-
-	<select id="findpasswd" resultType="String">
-		select user_passwd from user
+	
+	<select id="findpasswd" resultType="int">
+		select count(*) from user
 		where
 		user_name=#{user_name} and
 		user_id=#{user_id} and
@@ -38,19 +38,30 @@
 
 	<insert id="insert">
 		insert into user ( user_id, user_passwd, user_name,
-		user_birth, user_gender, user_email, user_phone)
+		user_birth, user_gender, user_email, user_phone, user_addr)
 		values
 		( #{user_id},
 		#{user_passwd}, #{user_name}, #{user_birth},
 		#{user_gender},
-		#{user_email}, #{user_phone})
+		#{user_email}, #{user_phone}, '서울시 여러분')
 	</insert>
 
 	<select id="idcheck" resultType="int">
 		select count(*) from user where
 		user_id=#{user_id}
 	</select>
-	<select id="check_passwd" resultType="int">
+	
+	
+	<select id="emailcheck" resultType="int">
+		select count(*) from user where
+		user_email=#{user_email}
+	</select>
+	
+	<select id="phonecheck" resultType="int">
+		select count(*) from user where user_phone=#{user_phone}
+	</select>
+	
+	<select id="passwdcheck" resultType="int">
 		select count(*) from user where
 		user_id=#{user_id} and user_passwd=#{user_passwd}
 	</select>
@@ -59,5 +70,11 @@
 		update user set user_check = -1
 		where user_id=#{user_id}
 	</update>
+	
+	<update id="changepasswd">
+		update user set user_passwd = #{user_passwd}
+		where user_id=#{user_id}
+	</update>
+	
 
 </mapper>

@@ -46,8 +46,8 @@
 				<c:when test="${sessionScope.user_name == null }">
 					<li class="dropdown"><a href="#">회원메뉴</a>
 						<ul>
-							<li><a href="/login.do">로그인</a></li>
-							<li><a href="/controller/join.page">회원가입</a></li>
+							<li><a href="/login.page">로그인</a></li>
+							<li><a href="/join.page">회원가입</a></li>
 						</ul></li>
 				</c:when>
 			</c:choose>

@@ -50,9 +50,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("insert.do")
-	public String insert(@ModelAttribute BoardDTO dto, HttpSession session) throws Exception{
+	public String insert(@ModelAttribute BoardDTO dto, HttpSession session, Model model) throws Exception{
 		String writer=(String)session.getAttribute("user_id");
 		dto.setWriter(writer);
+		
+		String title= dto.getTitle();
+		
+		if(title.equals("")) {
+			
+			return "board/write";
+			
+		}
 				
 		System.out.println(dto);
 		boardDao.insert(dto);
@@ -63,13 +71,15 @@ public class BoardController {
 		MultipartFile[] file=dto.getFile();
 		
 		
-			
+		
 			for(MultipartFile part: file) {
 			//dto.setFiles(file[i].getOriginalFilename());
+				if(!part.isEmpty()) {
+						String str =UploadFileUtils.uploadFile(upload_path,part.getOriginalFilename(), part.getBytes());
 			
-			String str =UploadFileUtils.uploadFile(upload_path,part.getOriginalFilename(), part.getBytes());
+						boardDao.insert_attach(str);
+			}
 			
-			boardDao.insert_attach(str);
 			
 			}
 			

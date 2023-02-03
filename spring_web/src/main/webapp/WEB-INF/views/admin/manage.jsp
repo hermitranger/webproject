@@ -47,7 +47,7 @@ function drop(event){
 	
 						/* $("#content").append("<div id='"+data+"'></div>");
 	
-						var here=document.getElementById(data); */
+						var here=document.getElementById(data);  */
 						
 	var count= $("#content").children().length;
 	
@@ -83,7 +83,7 @@ function drop(event){
 	iframe.appendTo("#del");*/
 	
 	
-										/*  $.ajax({
+										/* $.ajax({
 		
 												url: data,
 												type: "post",

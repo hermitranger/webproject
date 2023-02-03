@@ -12,7 +12,7 @@
 <script>
 	$(function() {
 		$("#btnFindpasswd").click(function() {
-			document.form1.action = "findpasswd.do";
+			document.form1.action = "findPasswd.page";
 			document.form1.submit();
 
 		});

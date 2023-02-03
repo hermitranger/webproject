@@ -11,7 +11,7 @@
 <script>
 	$(function() {
 		$("#btnFindpasswd").click(function() {
-			document.form1.action = "findpasswd_check.do";
+			document.form1.action = "findPasswdCheck.do";
 			document.form1.submit();
 
 		});
@@ -53,6 +53,7 @@
 					id="btnLogin" style="color:black;">
 				<div style="color: red">${message}</div>
 			</div>
+			
 			<link rel="stylesheet" href="${path}/resources/css/login.css?ver=2" />
 </body>
 </html>

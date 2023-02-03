@@ -23,19 +23,19 @@
 				$("#user_passwd").focus();
 				return;
 			}
-			document.form1.action = "/login_check.do"; //"location.href='URL'"; 형태나 직접 URL형태
+			document.form1.action = "/login.do"; //"location.href='URL'"; 형태나 직접 URL형태
 			document.form1.submit();
 		});
 		$("#btnJoin").click(function() {
-			document.form1.action = "/controller/join.page";
+			document.form1.action = "/join.page";
 			document.form1.submit();
 		});
 		$("#btnFind_id").click(function() {
-			document.form1.action = "/findid.do";
+			document.form1.action = "/findId.page";
 			document.form1.submit();
 		});
 		$("#btnFind_passwd").click(function() {
-			document.form1.action = "/findpasswd.do";
+			document.form1.action = "/findPasswd.page";
 			document.form1.submit();
 		});
 	});
@@ -58,7 +58,7 @@
 				<input type="text" id="user_id" name="user_id" class="fadeIn second"
 					placeholder="userid" > 
 				<input type="password" id="user_passwd" name="user_passwd" class="fadeIn third" placeholder="password"> 
-				<input type="submit" id="btnLogin" value = "로그인" class="fadeIn fourth" style="color:black;">
+				<input type="button" id="btnLogin" value = "로그인" class="fadeIn fourth" style="color:black;">
 
 				<div>
 					<c:if test="${message == 'withdrawal' }">

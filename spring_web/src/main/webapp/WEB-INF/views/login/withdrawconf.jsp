@@ -8,7 +8,7 @@
 <script src="http://code.jquery.com/jquery-3.6.1.min.js">
 </script>
 <script>
-function passwdch(){
+function confirmpasswd(){
 	
 	document.form1.type="post"
 	document.form1.action="withdraw_confirm.do"
@@ -36,7 +36,7 @@ function passwdch(){
 <body>
 <form name="form1">
 비밀번호 확인<input type="password" id='user_passwd' name='user_passwd'>
-<input type="button" onclick="passwdch()" value="입력">
+<input type="button" onclick="confirmpasswd()" value="입력">
 </form>
 ${message}
 </body>

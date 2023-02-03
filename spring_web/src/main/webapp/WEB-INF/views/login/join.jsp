@@ -26,6 +26,19 @@
 
 			$("#message").html(message);
 		}
+		
+		var user_gender = "${dto.user_gender}";
+
+		if (user_gender == "남") {
+
+			$(":radio[name='user_gender'][value='남']").attr('checked', true);
+
+		} else {
+
+			$(":radio[name='user_gender'][value='여']").attr('checked', true);
+		}//: =>input 요소를 선택함 예 :text 지정한 요소를 선택
+
+	
 
 	};
 
@@ -61,6 +74,8 @@
 				//$("#user_name").focus();
 				return;
 			}
+			
+			
 
 			if (($("#user_birth").val()) == "") {
 				alert("생년월일을 입력하세요.")
@@ -88,14 +103,23 @@
 				$("#user_email").focus();
 				return;
 			}
+			
+			var expphone = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+			
+			if (!expphone.test($("#user_phone").val())) {
+				alert("전화번호 형식: 010-xxxx-xxxx 을 지켜주세요.");
+				$("#message").val("사용할 수 없는 전화번호 형식 입니다.");
+				$("#user_phone").val("");
+				$("#user_phone").focus();
+				return;
 
-			if (($("#user_phone").val()) == "") {
+			/* if (($("#user_phone").val()) == "") {
 				alert("전화번호를 입력하세요.")
 				//$("#user_phone").focus();
-				return;
+				return; */
 			}
 
-			document.form1.action = "/controller/join.do"
+			document.form1.action = "/join.do"
 			document.form1.method = "post"
 			document.form1.submit();
 
@@ -124,7 +148,7 @@
 
 		$.ajax({
 			type : "post",
-			url : "/controller/idcheck.do",
+			url : "/idcheck.do",
 			data : params,
 			success : function(map) {
 
