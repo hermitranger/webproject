@@ -236,4 +236,10 @@ public class AdminController {
 	public String admin_manage() {
 		return "admin/manage";
 	}
+	
+	@RequestMapping("admin_purchase.page")
+	public String admin_purchase() {
+		
+		return "admin/purchase";
+	}
 }
