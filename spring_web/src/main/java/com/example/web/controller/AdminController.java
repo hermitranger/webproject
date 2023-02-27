@@ -237,9 +237,9 @@ public class AdminController {
 		return "admin/manage";
 	}
 	
-	@RequestMapping("admin_purchase.page")
-	public String admin_purchase() {
+	@RequestMapping("admin_product.page")
+	public String admin_product() {
 		
-		return "admin/purchase";
+		return "admin/admin_product_regist";
 	}
 }

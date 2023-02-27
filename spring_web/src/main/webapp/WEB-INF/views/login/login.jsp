@@ -42,7 +42,8 @@
 </script>
 </head>
 <body>
-	<%@ include file="../include/menu.jsp"%>
+	<%-- <%@ include file="../include/menu.jsp"%> --%>
+	<jsp:include page="../include/menu.jsp"/>
 
 	<div class="wrapper fadeInDown">
 		<div id="formContent">

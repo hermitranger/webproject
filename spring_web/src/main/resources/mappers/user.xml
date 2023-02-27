@@ -7,7 +7,9 @@
 		user_id=#{user_id}
 	</select>
 	<update id="update">
-		update user set user_passwd = #{user_passwd}, user_name = #{user_name}, user_birth=#{user_birth}, user_gender=#{user_gender}, user_email=#{user_email}, user_phone= #{user_phone}
+		update user set user_passwd = #{user_passwd}, user_name = #{user_name}, user_birth=#{user_birth}, user_gender=#{user_gender}, 
+		user_email=#{user_email}, user_phone= #{user_phone},
+		user_addr=#{user_addr}, user_addrdetail=#{user_addrdetail}, user_zipcode=#{user_zipcode}
 		where user_id=#{user_id}
 	</update>
 
@@ -38,12 +40,12 @@
 
 	<insert id="insert">
 		insert into user ( user_id, user_passwd, user_name,
-		user_birth, user_gender, user_email, user_phone, user_addr)
+		user_birth, user_gender, user_email, user_phone, user_addr, user_addrdetail, user_zipcode)
 		values
 		( #{user_id},
 		#{user_passwd}, #{user_name}, #{user_birth},
 		#{user_gender},
-		#{user_email}, #{user_phone}, '서울시 여러분')
+		#{user_email}, #{user_phone}, #{user_addr}, #{user_addrdetail},#{user_zipcode})
 	</insert>
 
 	<select id="idcheck" resultType="int">

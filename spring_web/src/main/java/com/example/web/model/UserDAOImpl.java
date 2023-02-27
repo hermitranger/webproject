@@ -119,9 +119,9 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	
-	public List<String> search_search(String str) {		
+	public List<ProductDTO> search_search(String str) {		
 		System.out.println("daostr:"+str);
-		List<String> list=sqlSession.selectList("search.search",str);
+		List<ProductDTO> list=sqlSession.selectList("search.search",str);
 		System.out.println("daolist:"+list);
 		return list;
 	}

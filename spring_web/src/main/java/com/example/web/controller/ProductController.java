@@ -1,12 +1,9 @@
 package com.example.web.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.web.model.BillDAO;
@@ -26,7 +25,6 @@ import com.example.web.model.PageUtil;
 import com.example.web.model.ProductDAO;
 import com.example.web.model.ProductDTO;
 import com.example.web.model.UserDAO;
-import com.example.web.model.UserDTO;
 
 @Controller
 public class ProductController {
@@ -46,12 +44,115 @@ public class ProductController {
 		mav.addObject("dto", buydetail);
 		return mav;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/shop/insertCheck.do")
+	public String insertCheck(@RequestParam String product_model) {
+		
+		System.out.println(product_model+"	");
+		
+		int result=productDao.findPModel(product_model);
+		//int result1=productDao.findPName(product_name);
+		
+		System.out.println(result+"   ");
+		
+		if(result==1) {
+			
+			//model.addAttribute("error","error");			
+			//return "redirect:/shop/list.do";
+//			mav.addObject("error", "error");
+//			mav.setViewName("redirect:/shop/list.do");
+			//responseentity에 mav를 담아서 보내보자!
+			
+			//return mav;
+			return "error";
+			//return new ResponseEntity<>(mav,HttpStatus.BAD_REQUEST);
+			
+		}
+		
+		return "pass";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/shop/getProduct_code.do")
+	public String getProduct_code(String product_code, HttpSession session) {
+		
+		long start;
+		long end;
+		
+		start=System.currentTimeMillis();		
+		
+		
+		if(session.getAttribute("end")==null) {
+			
+			end=0;
+		}else {
+			end=(long) session.getAttribute("end");
+		}
+		
+		
+		if(start-end<1000) {
+			
+			String result="timelimit";
+			
+			return result;
+						
+		}
+		
+		int test=(Integer.parseInt(product_code)+1000);
+		
+		String result=findEmptyPcode(product_code, test);
+		
+		end=System.currentTimeMillis();
+		
+		session.setAttribute("end", end);
+		
+		return result;
+	}
+	
+	
+	public String findEmptyPcode(String pcode, int test) {
+				
+		int result=productDao.findPCode(pcode);				
+		
+		while(result>0) {
+			
+			int productcode=Integer.parseInt(pcode);
+			
+			if(productcode < test ) {
+				
+			pcode = String.valueOf(productcode+10);
+			result=productDao.findPCode(pcode);
+						
+			}else {
+				break;
+			}
+		}
+		
+		if(Integer.parseInt(pcode)==test) {		
+			
+			return "error";
+		}		
+		
+	    return pcode;
+	
+		
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping("/shop/insert.do")
-	public String insert(ProductDTO dto, HttpServletRequest request) {
+	public ModelAndView insert(ProductDTO dto, HttpServletRequest request, ModelAndView mav) {
+		
 		String filename = "-";
-		if (!dto.getFile1().isEmpty()) {
+		
+		if (dto.getFile1() != null && !dto.getFile1().isEmpty()) {
 			filename = dto.getFile1().getOriginalFilename();
+			
 			try {
 				ServletContext application = request.getSession().getServletContext();
 				String path = application.getRealPath("/resources/images/");
@@ -62,9 +163,33 @@ public class ProductController {
 			}
 		}
 		dto.setFilename(filename);
+				
+		dto.setProduct_saleprice(dto.getProduct_price());		
+		String pcode=dto.getProduct_code();
+		int test=(Integer.parseInt(dto.getProduct_code())+1000);
+		
+		pcode=findEmptyPcode(pcode,test);
+		
+		if(Integer.parseInt(pcode)==test) {		
+			
+			mav.setViewName("redirect:/shop/list.do");
+			
+			return mav;
+		}		
+		
+		dto.setProduct_code(pcode);		
 		productDao.insert(dto);
-		return "redirect:/shop/list.do";
+		mav.setViewName("redirect:/shop/list.do");
+		//return "redirect:/shop/list.do";
+		return mav;
+		//return new ResponseEntity<>(mav,HttpStatus.OK);
 	}
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping("/shop/list.do")
 	public ModelAndView buyList(@RequestParam(defaultValue = "1") int curPage,
@@ -93,11 +218,12 @@ public class ProductController {
 		int end = page_info.getPageEnd();
 		
 		List<ProductDTO> list = productDao.list(start, end, search_option, keyword);
+		System.out.println("start"+start+"end"+end+"search_option"+search_option+"keyword"+keyword);
 		/*
 		 * Set<ProductDTO> set = new HashSet<ProductDTO>(list); List<ProductDTO>
 		 * new_list = new ArrayList<ProductDTO>(set);
-		 */
-		
+		 */		
+				
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("count", count);
@@ -237,6 +363,35 @@ public class ProductController {
 		}
 		return "/shop/list";
 	}
+	
+	@RequestMapping("/shop/search.do")
+	public @ResponseBody String search_search(String keyword){
+		
+		System.out.println(keyword);
+		if(keyword.equals("")) {
+			return "";
+		}
+		
+		String str="%"+keyword+"%";
+		System.out.println(str);
+		List<ProductDTO> list= userDao.search_search(str);
+		System.out.println(list);
+		String html="";
+		ProductDTO dto = new ProductDTO();
+		
+		for(int i=0; i<list.size();i++) {
+			
+			dto=list.get(i);
+			
+			html+="<a href='/shop/detail/"+dto.getProduct_code()+"' style='color:black'>"+dto.getProduct_name()+"</a><br>";			
+			
+		}
+		
+		System.out.println(list);
+		
+		return html;		
+	}
+	
 	
 	
 	

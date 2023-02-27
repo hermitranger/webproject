@@ -12,6 +12,33 @@
 		location.href = "/shop/list.do?keyword="+keyword;
 	});
 }); */
+$(function(){
+	
+	$("#keyword").keyup(function(){
+		
+		var keyword=$("#keyword").val();
+		
+		$.ajax({
+			
+			type:"post",
+			url:"/shop/search.do",
+			data:{"keyword":keyword},
+			success:function(html){
+				
+				//$("#keyword").val(html);
+				$("#result").html(html);			
+				$("#result").css("background-color","white");
+				var width=$("#keyword").width();
+				console.log(width);
+				$("#result").css("width",width);
+				
+			}			
+		});		
+	});	
+});
+
+
+
 </script>
 <div id="header">
 	<div class="logo">
@@ -28,14 +55,23 @@
 			<option value="product_brand"
 				<c:out value="${map.search_option == 'product_brand' ? 'selected' : '' }"/>>상품가격</option>
 		</select> --%>
-		<form class="search" action = "/shop/list.do">
-			<input name="keyword" type="search"> 
-			<input type="submit" value="조회" style="color: black">
+		<form class="search" action="/shop/list.do">
+						
+			<textarea name="keyword" id="keyword" rows="2" autocomplete="off" 
+			style="resize:none;vertical-align:center;" placeholder="상품검색"></textarea>
+		    <div id="result"></div>
+		    <input type="submit" value="조회" style="color: black">
+		    
+			<!-- <input name="keyword" type="search" id="keyword">  -->			
+			
+			
+		
 		</form>
 		<ul>
 			<li><a href="/" >홈페이지</a></li>
 			<li><a href="/shop/list.do">상품 목록</a>
-			<li><a href="/board/list.do">게시판</a> 
+			<li><a href="/board/list.do">게시판</a>
+			<li><a href="/test" >test</a></li> 
 			<!-- <ul>
 				<li><a href="#">인기상품</a></li>
 				<li><a href="/shop/new_list.do">신규상품</a></li>
@@ -75,7 +111,7 @@
 							<!-- <li><a href="/shop/list.do" style="color: white;">상품목록</a></li> -->
 							<li><a href="/soldout.do" style="color: white;">매진물품관리</a></li>
 							<li><a href="/admin_sale_list.do" style="color: white;">세일상품</a></li>
-							<li><a href="/admin_purchase.page">상품매입페이지</a>
+							<li><a href="/admin_product.page" style="color: white;">상품매입페이지</a>
 						</ul>
 					<li><a href="/admin_manage.page">관리페이지</a><li>
 					<li><a href="/logout.do">로그아웃</a></li>

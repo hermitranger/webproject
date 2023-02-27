@@ -26,6 +26,6 @@ public interface UserDAO {
 	
 	void userWithdraw(String user_id);
 
-	public List<String> search_search(String str);
+	public List<ProductDTO> search_search(String str);
 
 }

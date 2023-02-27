@@ -5,10 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-3.6.1.min.js">
-</script>
+
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- include summernote css/js -->
+<link href="/resources/summernote/summernote.min.css" rel="stylesheet">
+<script src="/resources/summernote/summernote.min.js"></script>
 <script>
-$(function(){
+$(function(){	
+		
+	//id description summernote 가 인 태그를 로 변경
+	$("#description").summernote({
+	height : 300,
+	width : 800
+	});
 	/* $(".fileDrop").on("dragenter dragover", function(e){
 		e.preventDefault();//기본효과 막기
 		
@@ -57,12 +69,21 @@ $(function(){
 
 
 </script>
+<!-- <script>
+$(function() {
+//id description summernote 가 인 태그를 로 변경
+$("#description").summernote({
+height : 300,
+width : 800
+});
+});
 
-
+</script> -->
 
 </head>
 <body>
-<%@ include file="../include/menu.jsp" %>
+<%-- <%@ include file="../include/menu.jsp" %> --%>
+<jsp:include page="../include/menu.jsp"/>
 <h2>게시물 작성</h2>
 <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="/board/insert.do">
 <div>

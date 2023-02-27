@@ -98,7 +98,7 @@ function drop(event){
 										});   */
 
 	
-			iframe.appendTo("#content");
+			iframe.appendTo("#content");						
 	
 	
 	//var del=$(".iframe[value='"+data+"']");
@@ -149,22 +149,25 @@ function allowdrop(event){
 <body>
 <div class="container" id="container">
 <div class="box" id="first">
-
 <button id="btnGotoBoard" name="btn1" draggable="true" onclick="location.href='board/list.do'"
 value="/board/listM.do" ondragstart="drag(event)" >게시판으로 이동</button></div>
-<div class="box" id="second" >
 
+<div class="box" id="second" >
 <button id="btnGotoUser" name="btn2" draggable="true" onclick="location.href='admin_user_list.do'"
 value="/admin_user_list.do" ondragstart="drag(event)" >유저관리로 이동</button></div>
 
-<div class="box" id="second" ><button id="btnGotoProduct" name="btn3" draggable="true" onclick="location.href='admin_deal.do'"
+<div class="box" id="third" ><button id="btnGotoProduct" name="btn3" draggable="true" onclick="location.href='admin_deal.do'"
 value="/admin_deal.do" ondragstart="drag(event)" >거래내역으로 이동</button></div>
-<br>
-<div class="box" id="third" ><button id="btnGotoSoldout" name="btn4" draggable="true" onclick="location.href='soldout.do'"
+
+<div class="box" id="fourth" ><button id="btnGotoSoldout" name="btn4" draggable="true" onclick="location.href='soldout.do'"
 value="/soldout.do" ondragstart="drag(event)" >매진물품관리로 이동</button></div>
 
-<div class="box" id="fourth" ><button id="btnGotoSale" name="btn5" draggable="true" onclick="location.href='admin_sale_list.do'"
-value="/admin_sale_list.do" ondragstart="drag(event)" >세일물품관리로 이동</button></div>
+<div class="box" id="fifth" ><button id="btnGotoSale" name="btn5" draggable="true" onclick="location.href='admin_sale_list.do'"
+value= "/admin_sale_list.do" ondragstart="drag(event)" >세일물품관리로 이동</button></div>
+
+<div class="box" id="sixth" ><button id="btnGotoRegist" name="btn6" draggable="true" onclick="location.href='admin_product.page'"
+value="/admin_product.page" ondragstart="drag(event)" >구매물품등록으로 이동</button></div>
+
 <div draggable="true" class="box" id="third" ondrop="drop(event)" ondragover="allowdrop(event)">
 멀티관리모드(창을 끌어다 놓으세요)</div>
 <div class="box">
@@ -177,39 +180,3 @@ value="/admin_sale_list.do" ondragstart="drag(event)" >세일물품관리로 이
 
 </body>
 </html>
-
-<!-- <html>
-<head>
-<style>
-/* 드래그해 놓을 상자의 모양을 정합니다. 지금은 신경쓰지 않으셔도 됩니다. */
-#div1 {width:350px;height:135px;padding:10px;border:1px solid #999;}
-</style>
-<script>
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();    
-    var data = ev.dataTransfer.getData("text");
-    console.log(data);//drag1 만 가져온 거... value로 하면 될 듯
-    console.log(document.getElementById(data));
-    ev.target.appendChild(document.getElementById(data));
-}
-</script>
-</head>
-<body>
-
-<p>아래 노트북 이미지를 위 상자로 끌어넣어 보세요:</p>
-
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<br>
-<img id="drag1" src="comp1.png" draggable="true" ondragstart="drag(event)" width="128" height="128">
-
-</body>
-</html>
- -->

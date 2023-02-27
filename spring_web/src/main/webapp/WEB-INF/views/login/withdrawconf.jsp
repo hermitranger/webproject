@@ -34,10 +34,18 @@ function confirmpasswd(){
 
 </head>
 <body>
-<form name="form1">
-비밀번호 확인<input type="password" id='user_passwd' name='user_passwd'>
-<input type="button" onclick="confirmpasswd()" value="입력">
-</form>
-${message}
+<%@ include file="../include/menu.jsp"%>
+	<div class="wrapper fadeInDown">
+		<div id="formContent">
+			<!-- Tabs Titles -->
+			<h2 class="active">비밀번호를 입력하세요.</h2>
+			<form name="form1" method="post">
+				<input type="password" id='user_passwd' name='user_passwd'> <input
+					type="button" onclick="confirmpasswd()" value="입력" style = "color:black;">
+			</form>
+			<div><p style="color: red;">${message}</p></div>
+		</div>
+	</div>
+	<link rel="stylesheet" href="${path}/resources/css/login.css?ver=2" />
 </body>
 </html>

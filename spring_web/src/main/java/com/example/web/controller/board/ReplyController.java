@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.web.model.PageUtil;
+import com.example.web.util.PageUtil;
 import com.example.web.model.ReplyDAO;
 import com.example.web.model.ReplyDTO;
 

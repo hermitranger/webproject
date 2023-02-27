@@ -9,6 +9,8 @@ public class UserDTO {
 	private String user_email;
 	private String user_phone;
 	private String user_addr;
+	private String user_addrdetail;
+	private String user_zipcode;
 	private int user_check;
 	public String getUser_id() {
 		return user_id;
@@ -58,20 +60,33 @@ public class UserDTO {
 	public void setUser_addr(String user_addr) {
 		this.user_addr = user_addr;
 	}
+	public String getUser_addrdetail() {
+		return user_addrdetail;
+	}
+	public void setUser_addrdetail(String user_addrdetail) {
+		this.user_addrdetail = user_addrdetail;
+	}
+	public String getUser_zipcode() {
+		return user_zipcode;
+	}
+	public void setUser_zipcode(String user_zipcode) {
+		this.user_zipcode = user_zipcode;
+	}
 	public int getUser_check() {
 		return user_check;
 	}
 	public void setUser_check(int user_check) {
 		this.user_check = user_check;
 	}
-	
 	@Override
 	public String toString() {
 		return "UserDTO [user_id=" + user_id + ", user_passwd=" + user_passwd + ", user_name=" + user_name
 				+ ", user_birth=" + user_birth + ", user_gender=" + user_gender + ", user_email=" + user_email
-				+ ", user_phone=" + user_phone + ", user_addr=" + user_addr + ", user_check=" + user_check + "]";
+				+ ", user_phone=" + user_phone + ", user_addr=" + user_addr + ", user_addrdetail=" + user_addrdetail
+				+ ", user_zipcode=" + user_zipcode + ", user_check=" + user_check + "]";
 	}
-
 	
-
+	
+	
+	
 }

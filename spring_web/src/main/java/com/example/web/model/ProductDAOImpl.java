@@ -24,7 +24,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Map<String, Object> map = new HashMap<>();
 		map.put("search_option",search_option);
 		map.put("keyword",keyword);
-		map.put("start",start);
+		map.put("start",start-1);
 		map.put("end",end);
 		return sqlSession.selectList("product.list",map);
 	}
@@ -123,4 +123,22 @@ public class ProductDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("product.catecount",map);
 		
 	}
+	
+	@Override
+	public int findPModel(String pmodel) {
+		
+		return sqlSession.selectOne("product.findpmodel",pmodel);
+	}
+	
+	@Override
+	public int findPCode(String pcode) {
+
+		return sqlSession.selectOne("product.findpcode",pcode);
+	}
+	
+//	@Override
+//	public int findPName(String pname) {
+//		
+//		return sqlSession.selectOne("product.findpname",pname);
+//	}
 }

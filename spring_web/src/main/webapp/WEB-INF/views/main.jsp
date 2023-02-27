@@ -23,20 +23,21 @@
 	<%@ include file="include/menu.jsp"%>
 
 	<!-- 상단부 광고창 -->
+	
 	<br>
 	<br>
 	<br>
 	<br>
+	<c:if test="${sessionScope.user_id==null }">
 	<header class="showcase">
 		<h2 align = "center">당신만을 위한 중고거래</h2>
 		<p align = "center">중고거래를 원한다면 지금 바로 중고장터의 가족이 되어주세요!</p>
-		<div align = "center"><a href="join.page" class="btn" > 회원가입 <i
-			class="fas fa-chevron-right"></i></a></div>
+		<div align = "center"><a href="join.page" class="btn" > 회원가입 <i class="fas fa-chevron-right"></i></a></div>
 	</header>
 	<br>
 	<br>
 	<br>
-
+	</c:if>
 	<!-- 상단부 카테고리 영역 -->
 	<section class="home-cards">
 		<div>
@@ -77,8 +78,7 @@
 				<h3>${row.product_name}</h3>
 				<h4>${row.product_cate}</h4>
 				<h4>${row.product_price}</h4>
-				<a href="/shop/detail/${row.product_code}">더보기<i
-					class="fas fa-chevron-right"></i></a>
+				<a href="/shop/detail/${row.product_code}">더보기<i class="fas fa-chevron-right"></i></a>
 			</div>
 		</c:forEach>
 	</section>

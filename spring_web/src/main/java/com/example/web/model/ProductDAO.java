@@ -17,4 +17,9 @@ public interface ProductDAO {
 	public List<ProductDTO> catelist(int start, int end, String find);
 	public int catecount(String find);
 	public List<ProductDTO> recommendList(String p_code, String product_code);//0127추천목록
+	public int findPModel(String pmodel);
+	public int findPCode(String pcode);
+//	public int findPName(String pname);
+	
+	
 }

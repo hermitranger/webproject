@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.web.model.BoardDAO;
 import com.example.web.model.BoardDTO;
-import com.example.web.model.PageUtil;
+import com.example.web.util.PageUtil;
 import com.example.web.model.ReplyDAO;
 import com.example.web.util.UploadFileUtils;
 
@@ -270,6 +270,11 @@ public class BoardController {
 		fis.close();
 		os.close();
 		
+	}
+	
+	@RequestMapping("write.test")
+	public String writetest() {
+		return "include/test";
 	}
 	
 //	@ResponseBody

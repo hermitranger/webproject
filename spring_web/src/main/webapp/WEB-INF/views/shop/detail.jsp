@@ -182,7 +182,7 @@
 	</form>
 
 
-<div class="box">
+<%-- <div class="box">
 <div class="container">
 <c:if test="${empty list}">추천상품이 없습니다</c:if>		
 		<c:forEach var="row" items="${list }">
@@ -199,7 +199,7 @@
 		<c:if test="${row.product_check eq 0}">하</c:if>
 		</span>
 		</c:forEach>
-</div></div>
+</div></div> --%>
 	<%-- 	
 	<script src="${path}/resources/js/detail.js?ver=2"></script>
 	<link rel="stylesheet" href="${path}/resources/css/detail.css?ver=2" /> --%>

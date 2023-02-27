@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
+
 public class ProductDTO {
 	private String product_code;
 	private String filename;
@@ -20,7 +21,16 @@ public class ProductDTO {
 	private int product_saleprice;
 	private int product_saledate;
 	private int recommend;
+	private int product_priority;
 	
+	
+	
+	public int getProduct_priority() {
+		return product_priority;
+	}
+	public void setProduct_priority(int product_priority) {
+		this.product_priority = product_priority;
+	}
 	public String getProduct_code() {
 		return product_code;
 	}
@@ -118,6 +128,8 @@ public class ProductDTO {
 				+ product_brand + ", product_price=" + product_price + ", product_amount=" + product_amount
 				+ ", product_date=" + product_date + ", product_detail=" + product_detail + ", product_check="
 				+ product_check + ", file1=" + file1 + ", product_saleprice=" + product_saleprice
-				+ ", product_saledate=" + product_saledate + ", recommend=" + recommend + "]";
+				+ ", product_saledate=" + product_saledate + ", recommend=" + recommend + ", product_priority="
+				+ product_priority + "]";
 	}
+	
 }

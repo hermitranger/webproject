@@ -36,3 +36,16 @@ END$$
 delimiter $$
 
 CALL loopInsert
+
+
+/*
+난방[HOT] 0000
+냉방 [cool] : 1000, 
+음향 [sound] : 3000, 
+영상 [video] : 2000, 
+주방용 [kitchen] : 4000, 
+청소 [clean] : 5000, 
+컴퓨터 [computer] : 6000
+기타 [etc] : 7000*/
+
+카테고리 3 브랜드 2 대중소1 중요도2 동일물품식별2

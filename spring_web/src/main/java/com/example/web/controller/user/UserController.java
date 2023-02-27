@@ -1,4 +1,4 @@
-package com.example.web.controller;
+package com.example.web.controller.user;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +31,11 @@ public class UserController {
 
 	@Autowired
 	ProductDAO productDao;
+	
+	@RequestMapping("test")
+	public String test() {
+		return "include/test";
+	}
 		
 	@RequestMapping("/") // https://jiwontip.tistory.com/77 참고
 	public ModelAndView main( ModelAndView mav) throws Exception {
@@ -223,6 +227,8 @@ public class UserController {
 
 	@RequestMapping("user_update.do")
 	public String user_update(UserDTO dto) {
+		
+		System.out.println("user_update_dto:"+dto);
 
 		userDao.update(dto);
 
@@ -415,25 +421,6 @@ public class UserController {
 		return "search";
 	}
 	
-	@RequestMapping("search_search.do")
-	public @ResponseBody String search_search(String search){
-		
-		System.out.println(search);
-		String str="%"+search+"%";
-		System.out.println(str);
-		List<String> list= userDao.search_search(str);
-		System.out.println(list);
-		String html="";
-		
-		for(int i=0; i<list.size();i++) {
-			
-			html+=list.get(i)+"<br>";			
-		}
-		
-		System.out.println(list);
-		
-		return html;		
-	}
 	
 	
 }

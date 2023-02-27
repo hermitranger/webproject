@@ -14,7 +14,7 @@
 			location.href = "/shop/write.do";
 		});
 		
-		sale();
+		//sale();
 		
 		
 		
@@ -24,15 +24,17 @@
 		location.href = "/shop/list.do?curPage=" + page
 				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
 	}
-var totalprice=0;
+//var totalprice=0;
 
 	
 </script>
 
 
 </head>
-<body>
+<body id="ajaxfunction">
 	<%@ include file="../include/menu.jsp"%>
+<div class="ajaxcontainer">	
+<input type="hidden" id="error" value="${error }">
 	<div class="container_list">
 
 		<div class="main">
@@ -60,6 +62,7 @@ var totalprice=0;
 		<section class="home-cards">
 			<c:forEach var="row" items="${map.list}">
 				<div align="left">
+				<div class="${row.product_code }">
 					<img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
 					<h4 align="center">
 					
@@ -85,6 +88,7 @@ var totalprice=0;
 						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
 					</c:if>
 					</p>
+					</div>
 				</div>
 			</c:forEach>
 		</section>
@@ -124,5 +128,7 @@ var totalprice=0;
 	<script src="${path}/resources/js/main.js?ver=2"></script>
 	<link rel="stylesheet" href="${path}/resources/css/search.css?ver=2" />
 	<link rel="stylesheet" href="${path}/resources/css/main.css?ver=2" />
+	</div>
 </body>
+
 </html>

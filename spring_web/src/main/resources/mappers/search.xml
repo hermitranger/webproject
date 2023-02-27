@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="search">
-	<select id="search" resultType="String">
-		select * from search where
-		search like #{str}
+	<select id="search" resultType="com.example.web.model.ProductDTO">	
+		select *
+		from product
+		<include refid="search" />
+		order by product_name	
+		limit 0 , 5
 	</select>
-
+	<sql id="search">
+				where product_amount > 0 and
+				product_name like #{str}		
+	</sql>
 </mapper>
