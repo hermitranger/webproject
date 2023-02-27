@@ -35,6 +35,7 @@
 						<th><span>상품명</span></th>
 						<th><span>상품카테고리</span></th>
 						<th><span>상품가격</span></th>
+						<th><span>진행내역</span></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,6 +47,13 @@
 							<td align="center">${row.s_cate}</td>
 							<td align="center"><fmt:formatNumber pattern="#,###원"
 									value="${row.s_price}" /></td>
+							<td align="center"><c:set var="row.s_progress" value="" />
+								<c:choose>
+									<c:when test="${row.s_progress eq  0}">입금확인</c:when>
+									<c:when test="${row.s_progress eq  1}">배송중</c:when>
+									<c:when test="${row.s_progress eq  2}">완료</c:when>
+								</c:choose>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -60,6 +68,7 @@
 						<th><span>상품명</span></th>
 						<th><span>상품카테고리</span></th>
 						<th><span>상품가격</span></th>
+						<th><span>진행내역</span></th>
 					</tr>
 				</thead>
 				<c:forEach var="row" items="${buylist}">
@@ -70,7 +79,16 @@
 						<td align="center">${row.b_cate}</td>
 						<td align="center"><fmt:formatNumber pattern="#,###원"
 								value="${row.b_price}" /></td>
-					</tr>
+						<td align="center"><c:set var="row.b_progress" value="" />
+								<c:choose>
+									<c:when test="${row.b_progress eq  0}">미배송</c:when>
+									<c:when test="${row.b_progress eq  1}">배송중</c:when>
+									<c:when test="${row.b_progress eq  2}">검수중</c:when>
+									<c:when test="${row.b_progress eq  3}">검수완</c:when>
+									<c:when test="${row.b_progress eq  4}">완료</c:when>
+								</c:choose>
+						</td>
+					</tr>			
 				</c:forEach>
 				</tbody>
 			</table>

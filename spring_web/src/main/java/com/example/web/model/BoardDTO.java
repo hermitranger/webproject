@@ -24,7 +24,6 @@ public class BoardDTO {
 	
 	
 	
-	
 	public String getFile_name() {
 		return file_name;
 	}

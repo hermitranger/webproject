@@ -71,12 +71,13 @@
 </style>
 </head>
 <body>
-	<c:if test="${sessionScope.user_check == null}">
+<%@ include file="../include/menu.jsp"%>
+<%-- 	<c:if test="${sessionScope.user_check == null}">
 		<%@ include file="../include/menu.jsp"%>
 	</c:if>
 	<c:if test="${sessionScope.user_check >= 0}">
 		<%@ include file="../include/menu.jsp"%>
-	</c:if>
+	</c:if> --%>
 
 	<form name="form1" method="post">
 
@@ -112,21 +113,26 @@
 						<h4>
 							<span class="fa fa-dollar"></span>${dto.product_brand}
 						</h4>
-			
-					<ul>
-						<li>검수등급</li>
-
+						<br>
+					<h4>등급</h4>
+					
+						<%-- <c:if test="${dto.product_check eq 3}">
+							<h4>상</h4>
+						</c:if>
 						<c:if test="${dto.product_check eq 2}">
-							<li>상</li>
+							<h4>중</h4>
 						</c:if>
 						<c:if test="${dto.product_check eq 1}">
-							<li>중</li>
-						</c:if>
-						<c:if test="${dto.product_check eq 0}">
-							<li>하</li>
-						</c:if>
-					</ul>
-						<h3>
+							<h4>하</h4>
+						</c:if> --%>
+
+				 <select name="product_check">
+					<option value="product_check1" <c:out value="${dto.product_check == '3' ? 'selected' : '' }"/>>상</option>
+					<option value="product_check2" <c:out value="${dto.product_check == '2'? 'selected' : '' }"/>>중</option>
+					<option value="product_check3" <c:out value="${dto.product_check == '1' ? 'selected' : '' }"/>>하</option>		
+				</select> 	
+					<br>
+					<h4>
 						<c:if test="${dto.product_price eq dto.product_saleprice}">	
 								가격
 								<fmt:formatNumber value="${dto.product_price}"
@@ -141,13 +147,12 @@
 									<c:out value="${sale}"/>%</p>
 									,정상가 <p style="text-decoration:line-through; display:inline;" align="center">
 									<fmt:formatNumber value="${dto.product_price}"
-										pattern="#,###원" /></p>)
-									
+										pattern="#,###원" /></p>)	
 							</c:if>	
 							<%-- <fmt:formatNumber value="${dto.product_price}" pattern="#,###원" /> --%>
-						</h3>
+					</h4>
 					</div>
-					<br> <br> <input type="button" id="btnBuy" value="구매하기"
+						<br> <input type="button" id="btnBuy" value="구매하기"
 						style="color: black;"> <input type="button" id="btnSell"
 						value="판매하기" style="color: black;">
 					<c:if test="${sessionScope.user_check == '1'}">
@@ -170,9 +175,9 @@
 							상품명:${row.product_name}<br> 상품종류:${row.product_cate}<br>
 							상품브랜드:${row.product_brand}<br> 상품가격:<fmt:formatNumber
 								value="${row.product_price}" pattern="#,###원" /><br> 상품검수:
-								<c:if test="${row.product_check eq 2}">상	</c:if> 
-								<c:if test="${row.product_check eq 1}">중</c:if> 
-								<c:if test="${row.product_check eq 0}">하</c:if>
+								<c:if test="${row.product_check eq 3}">상	</c:if> 
+								<c:if test="${row.product_check eq 2}">중</c:if> 
+								<c:if test="${row.product_check eq 1}">하</c:if>
 						</span>
 					</c:forEach>
 				</div>
@@ -194,9 +199,9 @@
 		상품종류:${row.product_cate}<br>
 		상품브랜드:${row.product_brand}<br>
 		상품가격:<fmt:formatNumber value="${row.product_price}" pattern="#,###원" /><br>
-		상품검수:<c:if test="${row.product_check eq 2}">상	</c:if>
-		<c:if test="${row.product_check eq 1}">중</c:if>
-		<c:if test="${row.product_check eq 0}">하</c:if>
+		상품검수:<c:if test="${row.product_check eq 3}">상	</c:if>
+		<c:if test="${row.product_check eq 2}">중</c:if>
+		<c:if test="${row.product_check eq 1}">하</c:if>
 		</span>
 		</c:forEach>
 </div></div> --%>
@@ -206,6 +211,9 @@
 
 
 	<link rel="stylesheet" href="${path}/resources/css/detail.css?ver=2" />
-
+	<c:set var="path" value="${pageContext.request.contextPath}" />
+	<%-- <script src="${path}/resources/js/main.js?ver=2"></script> --%>
+<%-- <link rel="stylesheet" href="${path}/resources/css/search.css?ver=2" />
+	<link rel="stylesheet" href="${path}/resources/css/main.css?ver=2" /> --%>
 </body>
 </html>

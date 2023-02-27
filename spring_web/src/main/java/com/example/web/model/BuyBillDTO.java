@@ -17,6 +17,7 @@ public class BuyBillDTO {
 	private String buy_post;
 	private String b_cate;
 	private String impUid = "";
+	private String b_progress;
 	public String getBill_order() {
 		return bill_order;
 	}
@@ -74,14 +75,6 @@ public class BuyBillDTO {
 	public String getBuy_address() {
 		return buy_address;
 	}
-	@Override
-	public String toString() {
-		return "BuyBillDTO [bill_order=" + bill_order + ", b_code=" + b_code + ", buy_id=" + buy_id + ", b_name="
-				+ b_name + ", bill_date=" + bill_date + ", b_price=" + b_price + ", b_check=" + b_check
-				+ ", bill_deliver=" + bill_deliver + ", bill_total=" + bill_total + ", buy_address=" + buy_address
-				+ ", buy_addressdetail=" + buy_addressdetail + ", buy_post=" + buy_post + ", b_cate=" + b_cate
-				+ ", impUid=" + impUid + "]";
-	}
 	public void setBuy_address(String buy_address) {
 		this.buy_address = buy_address;
 	}
@@ -108,7 +101,22 @@ public class BuyBillDTO {
 	}
 	public void setImpUid(String impUid) {
 		this.impUid = impUid;
-	} 
+	}
+	public String getB_progress() {
+		return b_progress;
+	}
+	public void setB_progress(String b_progress) {
+		this.b_progress = b_progress;
+	}
+	@Override
+	public String toString() {
+		return "BuyBillDTO [bill_order=" + bill_order + ", b_code=" + b_code + ", buy_id=" + buy_id + ", b_name="
+				+ b_name + ", bill_date=" + bill_date + ", b_price=" + b_price + ", b_check=" + b_check
+				+ ", bill_deliver=" + bill_deliver + ", bill_total=" + bill_total + ", buy_address=" + buy_address
+				+ ", buy_addressdetail=" + buy_addressdetail + ", buy_post=" + buy_post + ", b_cate=" + b_cate
+				+ ", impUid=" + impUid + ", b_progress=" + b_progress + "]";
+	}
+	
 	
 	
 }

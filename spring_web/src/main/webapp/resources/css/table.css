@@ -120,7 +120,7 @@ h4 {
 /** page structure **/
 #wrapper {
 	display: block;
-	width: 850px;
+	width: 900px;
 	background: #fff;
 	margin: 0 auto;
 	padding: 10px 17px;
@@ -175,5 +175,66 @@ h4 {
 }
 
 #keywords tbody tr td.lalign {
+	text-align: left;
+}
+
+#wrapper2 {
+	display: block;
+	width: 1200px;
+	background: #fff;
+	margin: 0 auto;
+	padding: 10px 17px;
+	-webkit-box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.35);
+	position: relative;
+}
+
+#keywords2 {
+	margin: 0 auto;
+	font-size: 1.2em;
+	margin-bottom: 15px;
+	position: relative;
+}
+
+#keywords2 thead {
+	cursor: pointer;
+	background: #c9dff0;
+}
+
+#keywords2 thead tr th {
+  font-weight: bold;
+  /* padding: 12px 30px; */
+  padding: 10px 10px;
+  padding-left: 42px;
+}
+
+#keywords2 thead tr th span {
+	padding-right: 40px;
+	background-repeat: no-repeat;
+	background-position: 100% 100%;
+}
+
+#keywords2 thead tr th.headerSortUp, #keywords thead tr th.headerSortDown
+	{
+	background: #acc8dd;
+}
+
+#keywords2 thead tr th.headerSortUp span {
+	background-image: url('https://i.imgur.com/SP99ZPJ.png');
+}
+
+#keywords2 thead tr th.headerSortDown span {
+	background-image: url('https://i.imgur.com/RkA9MBo.png');
+}
+
+#keywords2 tbody tr {
+	color: #555;
+}
+
+#keywords2 tbody tr td {
+	text-align: center;
+	padding: 15px 10px;
+}
+
+#keywords2 tbody tr td.lalign {
 	text-align: left;
 }

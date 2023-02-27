@@ -30,6 +30,8 @@ public class BillController {
 		mav.setViewName("admin/admin_deal");
 		List<BuyBillDTO> buylist = billDao.buy_deal();
 		List<SellBillDTO> selllist = billDao.sell_deal();
+		//System.out.println("billcontrolelr admin buylist:  "+buylist );
+		//System.out.println("billcontrolelr admin selllist:  "+selllist );
 		mav.addObject("buylist", buylist);
 		mav.addObject("selllist", selllist);
 		return mav;
@@ -43,13 +45,13 @@ public class BillController {
 		
 		if(search_option.equals("b_check")) {
 			if(keyword.equals("상")) {
-				keyword = "0";
+				keyword = "3";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("중")) {
-				keyword = "1";
+				keyword = "2";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("하")){
-				keyword = "2";
+				keyword = "1";
 				Integer.parseInt(keyword);
 			} 
 		}
@@ -78,21 +80,18 @@ public class BillController {
 	public ModelAndView sellList(@RequestParam(defaultValue = "1") int curPage,
 			@RequestParam(defaultValue = "all") String search_option, @RequestParam(defaultValue = "") String keyword) {
 		ModelAndView mav = new ModelAndView();
-
 		if(search_option.equals("s_check")) {
 			if(keyword.equals("상")) {
-				keyword = "0";
+				keyword = "3";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("중")) {
-				keyword = "1";
+				keyword = "2";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("하")){
-				keyword = "2";
+				keyword = "1";
 				Integer.parseInt(keyword);
 			} 
 		}
-
-
 		// 판매내역
 		int count_s = billDao.sell_count(search_option, keyword);
 		PageUtil page_info_s = new PageUtil(count_s, curPage);
@@ -108,6 +107,7 @@ public class BillController {
 		sellmap.put("keyword", keyword);
 		sellmap.put("page_info_s", page_info_s);
 		mav.addObject("sellmap", sellmap);
+		//System.out.println("Billcontroller selllist: "+selllist);
 
 		return mav;
 	}
@@ -118,13 +118,20 @@ public class BillController {
 		mav.setViewName("admin/admin_deal_buydetail");
 		BuyBillDTO buydetail = billDao.buy_detail(b_code);
 		mav.addObject("dto", buydetail);
+		//System.out.println("billcontroller buydetail : " + buydetail);
 		return mav;
 	}
 	
 	@RequestMapping("/admin/buy_update.do")
-	public String update(BuyBillDTO dto) {
+	public String update_B(BuyBillDTO dto) {//관리자 구매목록 - 편집 - 진행상황 및 검수 수정사항 업데이트
 		billDao.buy_update(dto);
 		return "redirect:admin_deal_buylist.do";
+	}
+	
+	@RequestMapping("/admin/sell_update.do")
+	public String update_S(SellBillDTO dto) {//관리자 판매목록 - 편집 - 진행상황 업데이트
+		billDao.sell_update(dto);
+		return "redirect:admin_deal_selllist.do";
 	}
 
 	@RequestMapping("/admin/admin_deal_selldetail/{s_code}")
@@ -143,6 +150,8 @@ public class BillController {
 		String user_id=(String)session.getAttribute("user_id");
 		List<BuyBillDTO> buylist = billDao.user_buy_deal(user_id);
 		List<SellBillDTO> selllist = billDao.user_sell_deal(user_id);
+		//System.out.println("billcontrolelr buylist:  "+buylist );
+		//System.out.println("billcontrolelr selllist:  "+selllist );
 		mav.addObject("buylist", buylist);
 		mav.addObject("selllist", selllist);
 		return mav;
@@ -156,13 +165,17 @@ public class BillController {
 		String user_id=(String)session.getAttribute("user_id");
 		if(search_option.equals("b_check")) {
 			if(keyword.equals("상")) {
-				keyword = "0";
+				keyword = "3";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("중")) {
-				keyword = "1";
+				keyword = "2";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("하")){
-				keyword = "2";
+				keyword = "1";
+				Integer.parseInt(keyword);
+			}
+			else if (keyword.equals("미검수")){
+				keyword = "0";
 				Integer.parseInt(keyword);
 			} 
 		}
@@ -195,13 +208,13 @@ public class BillController {
 		
 		if(search_option.equals("s_check")) {
 			if(keyword.equals("상")) {
-				keyword = "0";
+				keyword = "3";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("중")) {
-				keyword = "1";
+				keyword = "2";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("하")){
-				keyword = "2";
+				keyword = "1";
 				Integer.parseInt(keyword);
 			} 
 		}

@@ -24,6 +24,12 @@ public class SellOrderDAOImpl implements SellOrderDAO {
 		return sqlSession.selectOne("order.Sell_User", user_id);
 	}
 
+	/*
+	 * @Override public String test(String user_id) { return
+	 * sqlSession.selectOne("order.test",user_id);
+	 * 
+	 * }
+	 */
 	
 
 	@Override

@@ -102,12 +102,12 @@
 			<tr>
 				<td>상품검수</td>
 				<td><select name="product_check" id="product_check">
-						<option value="0"
-							<c:out value="${dto.product_check == '0' ? 'selected' : '' }"/>>하</option>
 						<option value="1"
-							<c:out value="${dto.product_check == '1' ? 'selected' : '' }"/>>중</option>
+							<c:out value="${dto.product_check == '1' ? 'selected' : '' }"/>>하</option>
 						<option value="2"
-							<c:out value="${dto.product_check == '2' ? 'selected' : '' }"/>>상</option>
+							<c:out value="${dto.product_check == '2' ? 'selected' : '' }"/>>중</option>
+						<option value="3"
+							<c:out value="${dto.product_check == '3' ? 'selected' : '' }"/>>상</option>
 				</select>
 			</tr>
 			<tr>

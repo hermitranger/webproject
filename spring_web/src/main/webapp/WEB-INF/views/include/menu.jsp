@@ -26,11 +26,11 @@ $(function(){
 			success:function(html){
 				
 				//$("#keyword").val(html);
-				$("#result").html(html);			
-				$("#result").css("background-color","white");
+				$("#result1").html(html);			
+				$("#result1").css("background-color","white");
 				var width=$("#keyword").width();
 				console.log(width);
-				$("#result").css("width",width);
+				$("#result1").css("width",width);
 				
 			}			
 		});		
@@ -59,7 +59,7 @@ $(function(){
 						
 			<textarea name="keyword" id="keyword" rows="2" autocomplete="off" 
 			style="resize:none;vertical-align:center;" placeholder="상품검색"></textarea>
-		    <div id="result"></div>
+		    <div id="result1"></div>
 		    <input type="submit" value="조회" style="color: black">
 		    
 			<!-- <input name="keyword" type="search" id="keyword">  -->			
@@ -68,7 +68,12 @@ $(function(){
 		
 		</form>
 		<ul>
+	
+			<!-- <li><a href="/test.do">트랜잭션 테스트</a> -->
 			<li><a href="/" >홈페이지</a></li>
+			<li><a href="/test" >test</a></li>
+			<li><a href="/test2" >test2</a></li>
+			<li><a href="/test3" >test3</a></li>
 			<li><a href="/shop/list.do">상품 목록</a>
 			<li><a href="/board/list.do">게시판</a>
 			<li><a href="/test" >test</a></li> 
@@ -79,7 +84,7 @@ $(function(){
 			</ul> -->
 			</li>
 			<c:choose>
-				<c:when test="${sessionScope.user_name == null }">
+				<c:when test="${sessionScope.user_check == null }">
 					<li class="dropdown"><a href="#">회원메뉴</a>
 						<ul>
 							<li><a href="/login.page">로그인</a></li>

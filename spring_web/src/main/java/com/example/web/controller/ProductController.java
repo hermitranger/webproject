@@ -196,16 +196,16 @@ public class ProductController {
 			@RequestParam(defaultValue = "all") String search_option, @RequestParam(defaultValue = "") String keyword) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/shop/list");
-		System.out.println("keyword : " + keyword );
+		//System.out.println("keyword : " + keyword );
 		if(search_option.equals("product_check")) {
 			if(keyword.equals("상")) {
-				keyword = "2";
+				keyword = "3";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("중")) {
-				keyword = "1";
+				keyword = "2";
 				Integer.parseInt(keyword);
 			} else if (keyword.equals("하")){
-				keyword = "0";
+				keyword = "1";
 				Integer.parseInt(keyword);
 			} 
 		}
@@ -303,11 +303,43 @@ public class ProductController {
 		mav.setViewName("/shop/detail");
 		mav.addObject("dto", productDao.detail(product_code));
 		String p_code=product_code.substring(0,6);
-		System.out.println("p_code:"+p_code);
+		//System.out.println("p_code:"+p_code);
 		mav.addObject("list", productDao.recommendList(p_code,product_code));//추천목록추가0127
 		return mav;
 	}
 
+	@RequestMapping("/shop/detailBuy/{product_code}") //추가 0213 buy유저가 구매하는걸로 햇음. 
+	public ModelAndView detailBuy(@PathVariable("product_code") String product_code, ModelAndView mav) {
+		mav.setViewName("/shop/detailBuy");
+		mav.addObject("dto", productDao.detail(product_code));
+		String p_code=product_code.substring(0,6);
+		//System.out.println("p_code:"+p_code);
+		mav.addObject("list", productDao.recommendList(p_code,product_code));//추천목록추가0127 ???
+		String top_price=(String)product_code.substring(0, 8)+"3";
+		String mid_price=(String)product_code.substring(0, 8)+"2";
+		String bot_price=(String)product_code.substring(0, 8)+"1";
+		mav.addObject("dto1",productDao.eachPrice(bot_price));
+		mav.addObject("dto2",productDao.eachPrice(mid_price));
+		mav.addObject("dto3",productDao.eachPrice(top_price));
+		//System.out.println("productDao.eachPrice(bot_price) : "+ productDao.eachPrice(bot_price));
+		//System.out.println("productDao.eachPrice(mid_price) : "+ productDao.eachPrice(mid_price));
+		//System.out.println("productDao.eachPrice(top_price) : "+ productDao.eachPrice(top_price));
+		return mav;
+	}
+
+	
+	@RequestMapping("/shop/detailSell/{product_code}")  //추가 0213 sell유저가 판매하는걸로 햇음. 
+	public ModelAndView detailSell(@PathVariable("product_code") String product_code, ModelAndView mav) {
+		mav.setViewName("/shop/detailSell");
+		mav.addObject("dto", productDao.detail(product_code));
+		String p_code=product_code.substring(0,6);
+		System.out.println("p_code:"+p_code);
+		mav.addObject("list", productDao.recommendList(p_code,product_code));//추천목록추가0127
+		return mav;
+	}
+	
+	
+		
 	@RequestMapping("/shop/update.do")
 	public String update(ProductDTO dto, HttpServletRequest request) {
 		String filename = "-";

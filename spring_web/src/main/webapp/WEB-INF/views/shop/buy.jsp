@@ -111,7 +111,7 @@ function createOrderNum(){
 	//let product_code2 = "${Pdto.product_code}"; //""안붙히면 오류
 	let bill_order = "B" + product_code + year + month + day;
 	for(let i=0;i<10;i++) {
-		bill_order += Math.floor(Math.random() * 8);	
+		bill_order += Math.floor(Math.random() * 8);
 	}
 	return bill_order;
 } 

@@ -31,8 +31,10 @@
 	<c:if test="${sessionScope.user_id==null }">
 	<header class="showcase">
 		<h2 align = "center">당신만을 위한 중고거래</h2>
+		<c:if test="${sessionScope.user_check ==null }">
 		<p align = "center">중고거래를 원한다면 지금 바로 중고장터의 가족이 되어주세요!</p>
 		<div align = "center"><a href="join.page" class="btn" > 회원가입 <i class="fas fa-chevron-right"></i></a></div>
+		</c:if>
 	</header>
 	<br>
 	<br>

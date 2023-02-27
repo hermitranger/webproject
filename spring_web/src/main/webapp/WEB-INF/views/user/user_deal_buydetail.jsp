@@ -39,22 +39,28 @@
 				<td><fmt:formatNumber pattern="#,###원"
 						value="${dto.b_price}" /></td>
 			</tr>
-			<c:if test="${dto.b_check eq 2}">
+			<c:if test="${dto.b_check eq 3}">
 				<tr>
 					<td>상품검수</td>
 					<td>상</td>
 				</tr>
 			</c:if>
-			<c:if test="${dto.b_check eq 1}">
+			<c:if test="${dto.b_check eq 2}">
 				<tr>
 					<td>상품검수</td>
 					<td>중</td>
 				</tr>
 			</c:if>
-			<c:if test="${dto.b_check eq 0}">
+			<c:if test="${dto.b_check eq 1}">
 				<tr>
 					<td>상품검수</td>
 					<td>하</td>
+				</tr>
+			</c:if>
+			<c:if test="${dto.b_check eq 0}">
+				<tr>
+					<td>상품검수</td>
+					<td>미검수</td>
 				</tr>
 			</c:if>
 			<tr>
@@ -66,8 +72,7 @@
 				<td>${dto.buy_address}</td>
 			</tr>
 			<tr>
-				<td colspan="9"><input type="hidden" name="b_code"
-					value="${dto.b_code}"> <a
+				<td colspan="9"><input type="hidden" name="b_code" value="${dto.b_code}"> <a
 					href="/user/user_deal_buylist.do">구매내역</a></td>
 			</tr>
 		</table>

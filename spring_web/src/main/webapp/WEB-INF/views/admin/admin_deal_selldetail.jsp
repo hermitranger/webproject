@@ -8,6 +8,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+$(function() {
+	var s_progress = "${dto.s_progress}";
+	if (s_progress == "1") {
+		$(":radio[name = 's_progress'][value = '1']").attr('checked', true);
+	} else if (s_progress == "2") {
+		$(":radio[name = 's_progress'][value = '2']").attr('checked', true);
+	} else if (s_progress == "0") {
+		$(":radio[name = 's_progress'][value = '0']").attr('checked', true);
+	}
+	
+});
+
+function check_update() {
+	if (confirm("수정사항을 업데이트하시겠습니까?")) {
+		var s_progress = $("input[name='s_progress'][id='s_progress']:checked").val();
+		document.form1.action = "/admin/sell_update.do";
+		document.form1.submit();
+	}
+}
+
+</script>
+
 <body>
 <%@ include file="../include/menu.jsp"%>
 	<h3>판매정보</h3>
@@ -43,19 +67,19 @@
 				<td><fmt:formatNumber pattern="#,###"
 						value="${dto.s_price}" /></td>
 			</tr>
-			<c:if test="${dto.s_check eq 2}">
+			<c:if test="${dto.s_check eq 3}">
 				<tr>
 					<td>상품검수</td>
 					<td>상</td>
 				</tr>
 			</c:if>
-			<c:if test="${dto.s_check eq 1}">
+			<c:if test="${dto.s_check eq 2}">
 				<tr>
 					<td>상품검수</td>
 					<td>중</td>
 				</tr>
 			</c:if>
-			<c:if test="${dto.s_check eq 0}">
+			<c:if test="${dto.s_check eq 1}">
 				<tr>
 					<td>상품검수</td>
 					<td>하</td>
@@ -70,9 +94,23 @@
 				<td>${dto.sell_address}</td>
 			</tr>
 			<tr>
-				<td colspan="6"><input type="hidden" name="b_code"
-					value="${dto.s_code}"> <a
-					href="/admin/admin_deal_selllist.do">판매내역</a></td>
+				<td>진행내역</td>
+				<td><c:set var="row.s_progress"/><!--라디오버튼은 name에따라서 같이 움직입니다.  -->
+					<input type="radio" name="s_progress" id="s_progress" value="0">
+					결제완료<input type="radio" name="s_progress" id="s_progress" value="1">
+					배송중<input type="radio" name="s_progress" id="s_progress" value="2">
+					완료			
+				</td>
+			</tr>
+			<tr>
+				<td colspan="8"><input type="hidden" name="s_code"
+					value="${dto.s_code}"> 
+					<input
+					type="button" value="판매내역"
+					onclick="location.href='/admin/admin_deal_selllist.do'">
+					 <input type="button"
+					value="수정" onclick="check_update()"> 				
+					</td>			
 			</tr>
 		</table>
 	</form>

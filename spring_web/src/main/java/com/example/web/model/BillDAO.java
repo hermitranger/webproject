@@ -15,8 +15,10 @@ public interface BillDAO {
 	BuyBillDTO buy_detail(String b_code);
 	// 구매내역 상세정보
 	void buy_update(BuyBillDTO dto);
-	// 검수단계 입력
-	
+	// 검수단계, 거래 진행상황 업데이트
+	void sell_update(SellBillDTO dto);
+	// 거래 진행상황 업데이트
+
 	List<SellBillDTO> sell_list(int start_s, int end_s, String search_option, String keyword); 
 	// 판매내역 나열 + 페이지 분할
 	int sell_count(String search_option, String keyword);

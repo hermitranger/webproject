@@ -28,4 +28,6 @@ public interface UserDAO {
 
 	public List<ProductDTO> search_search(String str);
 
+	
+	public int emailchk(String user_email);
 }

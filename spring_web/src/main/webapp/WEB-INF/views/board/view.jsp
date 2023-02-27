@@ -207,10 +207,10 @@ ${html}
 </div>
 <!-- <div class="fileDrop">여기로 파일을 끌어다 놓으세요.</div> -->
 <div>
-	<input type="hidden" name="idx" value="${dto.idx }">
+	<input type="hidden" name="idx" value="${dto.idx}">
 	<c:if test="${sessionScope.user_id==dto.writer }">
 	<button type="button" id="btnUpdate">수정</button>
-	<button type="button" id="btnDelete">삭제</button>
+	<button type="button" id="btnDelete" >삭제</button>
 	</c:if>
 	<button type="button" id="btnList">목록</button>
 

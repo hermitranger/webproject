@@ -3,18 +3,24 @@ DROP TABLE sell_bill;
 
 CREATE TABLE sell_bill (
 bill_order VARCHAR(50) PRIMARY KEY,
-s_code VARCHAR(50) NOT NULL,
-sell_id VARCHAR(50) NOT NULL,
-s_name VARCHAR(50) NOT NULL,
 bill_date TIMESTAMP DEFAULT NOW(),
-s_price INT DEFAULT 0,
+s_progress INT NOT NULL,
+s_code VARCHAR(50) NOT NULL,
+s_name VARCHAR(50) NOT NULL,
+s_cate VARCHAR(50),
 s_check INT DEFAULT 0,
+s_price INT DEFAULT 0,
+sell_id VARCHAR(50) NOT NULL,
+sell_name VARCHAR(50) NOT NULL,
+sell_tel VARCHAR(50) NOT NULL,
+sell_eail VARCHAR(50) NOT NULL,
+sell_post VARCHAR(50),
+sell_address VARCHAR(100),
 bill_deliver INT DEFAULT 0,
 bill_total INT DEFAULT 0,
 FOREIGN KEY(sell_id) REFERENCES user(user_id),
 FOREIGN KEY(s_code) REFERENCES product(product_code)
 );
-
 
 delimiter $$
 DROP PROCEDURE if EXISTS loopInsert$$

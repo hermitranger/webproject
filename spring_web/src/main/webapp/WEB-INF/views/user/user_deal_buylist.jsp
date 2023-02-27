@@ -2,17 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>user_deal_buylist</title>
 <script>
 	function list(page) {
 		location.href = "/user/user_deal_buylist.do?curPage=" + page
-				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
+				+ "&search_option=${buymap.search_option}&keyword=${buymap.keyword}";
 	}
 </script>
 </head>
@@ -21,8 +19,8 @@
 	<%@ include file="../include/menu.jsp"%>
 	<div id="table_">
 		<div id="wrapper">
-			<h4>구매내역</h4>
-			<div align="center">
+			<h4>판매내역</h4>
+			<!-- <div align="center"> -->
 				<form name="form1" method="post" action="/user/user_deal_buylist.do">
 					<select name="search_option">
 						<option value="all"
@@ -40,14 +38,13 @@
 					</select> <input name="keyword" value="${buymap.keyword}"> <input
 						type="submit" value="조회 ">
 				</form>
-			</div>
+			<!-- </div> -->
 			<br>
 
 			<!-- 구매내역 나열 -->
 			<section class="home-cards">
 				<form name="userForm">
-					<div id="wrapper">
-
+					<!-- <div id="wrapper"> -->
 						<table id="keywords" cellspacing="0" cellpadding="0">
 							<thead>
 								<tr>
@@ -62,17 +59,21 @@
 								<c:forEach var="row" items="${buymap.list}">
 									<tr>
 										<td align="center">${row.b_code}</td>
-										<td align="center" class="lalign"><a
-											href="/user/user_deal_buydetail/${row.b_code}">${row.b_name}</a></td>
+										<td align="center">${row.b_name}</td>
+										<%-- <td align="center" class="lalign"><a
+											href="/user/user_deal_buydetail/${row.b_code}">${row.b_name}</a></td> --%>
 										<td align="center">${row.b_cate}</td>
-										<c:if test="${row.b_check eq 2}">
+										<c:if test="${row.b_check eq 3}">
 											<td align="center">상</td>
 										</c:if>
-										<c:if test="${row.b_check eq 1}">
+										<c:if test="${row.b_check eq 2}">
 											<td align="center">중</td>
 										</c:if>
-										<c:if test="${row.b_check eq 0}">
+										<c:if test="${row.b_check eq 1}">
 											<td align="center">하</td>
+										</c:if>
+										<c:if test="${row.b_check eq 0}">
+											<td align="center">미검수</td>
 										</c:if>
 										<td align="center"><fmt:formatNumber pattern="#,###원"
 												value="${row.b_price}" /></td>
@@ -82,19 +83,20 @@
 
 							<!-- 페이지 나눔 -->
 							<tr>
-								<div align="center">
-									<c:if test="${map.page_info.curPage > 1 }">
+								<td colspan="6" align="center">
+									<div align="center">
+									<c:if test="${buymap.page_info_b.curPage > 1 }">
 										<a href="javascript:list('1')" style="color: black;">[처음]</a>
 									</c:if>
-									<c:if test="${map.page_info.curPage > 1}">
-										<a href="javascript:list('${map.page_info.prevPage}')"
+									<c:if test="${buymap.page_info_b.curPage > 1}">
+										<a href="javascript:list('${buymap.page_info_b.prevPage}')"
 											style="color: black;">[이전]</a>
 									</c:if>
-									<c:forEach var="num" begin="${map.page_info.blockBegin}"
-										end="${map.page_info.blockEnd}">
+									<c:forEach var="num" begin="${buymap.page_info_b.blockBegin}"
+										end="${buymap.page_info_b.blockEnd}">
 										<c:choose>
 
-											<c:when test="${num == map.page_info.curPage}">
+											<c:when test="${num == buymap.page_info_b.curPage}">
 												<span style="color: red">${num}</span>&nbsp; <!--현재 페이지 빨간색으로  -->
 											</c:when>
 											<c:otherwise>
@@ -102,19 +104,19 @@
 						</c:otherwise>
 										</c:choose>
 									</c:forEach>
-									<c:if test="${map.page_info.curPage < map.page_info.totPage}">
-										<a href="javascript:list('${map.page_info.nextPage}')"
+									<c:if test="${buymap.page_info_b.curPage < buymap.page_info_b.totPage}">
+										<a href="javascript:list('${buymap.page_info_b.nextPage}')"
 											style="color: black;">[다음]</a>
 									</c:if>
-									<c:if test="${map.page_info.curPage < map.page_info.totPage}">
-										<a href="javascript:list('${map.page_info.totPage}')"
+									<c:if test="${buymap.page_info_b.curPage < buymap.page_info_b.totPage}">
+										<a href="javascript:list('${buymap.page_info_b.totPage}')"
 											style="color: black;">[끝]</a>
 									</c:if>
 								</div>
 							</tr>
 							</tbody>
 						</table>
-					</div>
+					<!-- </div> -->
 				</form>
 			</section>
 		</div>

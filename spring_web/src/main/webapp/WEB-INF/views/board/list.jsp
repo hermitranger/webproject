@@ -104,7 +104,8 @@
 									value="${row.idx}" onclick="off()"></td>
 							</c:if>
 							<td>${row.idx }</td>
-							<td class="lalign"><a
+							<!-- <td  class="lalign"> -->
+							<td align="center"><a
 								href="/board/detail.do?idx=${row.idx }&cur_page=${map.page_info.curPage }
 		&search_option=${map.search_option }&keyword=${map.keyword }"
 								style="color: black;">${row.title }</a> <c:if
@@ -114,12 +115,12 @@
 							<td>${row.user_id}</td>
 							<td><fmt:formatDate value="${row.regdate }"
 									pattern="yyyy-MM-dd HH:mm:ss" /></td>
-							<td><img src="${row.file_name }"></td>
+							<td><img src="${row.file_name}"></td>
 							<td>${row.hit }</td>
 						</tr>
 					</c:forEach>
 					<tr>
-						<td colspan="5" align="center"><div align="center">
+						<td colspan="8" align="center"><div align="center">
 								<c:if test="${map.page_info.curPage > 1 }">
 									<a href="javascript:list('1')" style="color: black;">[처음]</a>
 								</c:if>

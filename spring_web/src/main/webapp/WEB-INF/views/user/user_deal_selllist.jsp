@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>user_deal_selllist</title>
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 	function list(page) {
 		location.href = "/user/user_deal_selllist.do?curPage=" + page
-				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
+				+ "&search_option=${sellmap.search_option}&keyword=${sellmap.keyword}";
 	}
 </script>
 </head>
@@ -38,10 +38,11 @@
 				</select> <input name="keyword" value="${sellmap.keyword}"> <input
 					type="submit" value="조회 ">
 			</form>
-
+			<br>
 			<!-- 판매내역 나열 -->
-			<form name="userForm">
-				<table border="1" width="700px">
+			<section class="home-cards">
+				<form name="userForm">
+					<table id="keywords" cellspacing="0" cellpadding="0">
 					<thead>
 					<tr>
 						<th><span>상품코드</span></th>
@@ -52,29 +53,34 @@
 					</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="row" items="${sellmap.list}">
-						<tr>
-							<td align="center">${row.s_code}</td>
-							<td align="center"><a
-								href="/user/user_deal_selldetail/${row.s_code}">${row.s_name}</a></td>
-							<td align="center">${row.s_cate}</td>
-							<c:if test="${row.s_check eq 2}">
-								<td align="center">상</td>
-							</c:if>
-							<c:if test="${row.s_check eq 1}">
-								<td align="center">중</td>
-							</c:if>
-							<c:if test="${row.s_check eq 0}">
-								<td align="center">하</td>
-							</c:if>
-							<td align="center"><fmt:formatNumber pattern="#,###원"
-									value="${row.s_price}" /></td>
-						</tr>
-					</c:forEach>
+						<c:forEach var="row" items="${sellmap.list}">
+							<tr>
+								<td align="center">${row.s_code}</td>
+								<td align="center"><a
+									href="/user/user_deal_selldetail/${row.s_code}">${row.s_name}</a></td>
+								<td align="center">${row.s_cate}</td>
+								<c:if test="${row.s_check eq 3}">
+									<td align="center">상</td>
+								</c:if>
+								<c:if test="${row.s_check eq 2}">
+									<td align="center">중</td>
+								</c:if>
+								<c:if test="${row.s_check eq 1}">
+									<td align="center">하</td>
+								</c:if>
+								<c:if test="${row.s_check eq 0}">
+									<td align="center">미검수</td>
+								</c:if>
+								<td align="center"><fmt:formatNumber pattern="#,###원"
+										value="${row.s_price}" /></td>
+							</tr>
+						</c:forEach>
+					</tbody>
 					<!-- 페이지 나눔 -->
 					<tr>
-						<td colspan="6" align="center"><c:if
-								test="${sellmap.page_info_s.curPage > 1 }">
+						<td colspan="6" align="center">
+							<div align="center">
+							<c:if test="${sellmap.page_info_s.curPage > 1 }">
 								<a href="javascript:list('1')">[처음]</a>
 							</c:if> <c:if test="${sellmap.page_info_s.curPage > 1}">
 								<a href="javascript:list('${sellmap.page_info_s.prevPage}')">[이전]</a>
@@ -89,17 +95,19 @@
 										<a href="javascript:list('${num}')">${num}</a>&nbsp;
 						</c:otherwise>
 								</c:choose>
-							</c:forEach> <c:if
-								test="${sellmap.page_info_s.curPage < sellmap.page_info_s.totPage}">
+							</c:forEach> 
+							<c:if test="${sellmap.page_info_s.curPage < sellmap.page_info_s.totPage}">
 								<a href="javascript:list('${sellmap.page_info_s.nextPage}')">[다음]</a>
-							</c:if> <c:if
-								test="${sellmap.page_info_s.curPage < sellmap.page_info_s.totPage}">
-								<a href="javascript:list('${sellmap.page_info_s.totPage}')">[끝]</a>
-							</c:if></td>
-					</tr>
-					</tbody>
-				</table>
-			</form>
+							</c:if> 
+							<c:if test="${sellmap.page_info_s.curPage < sellmap.page_info_s.totPage}">
+									<a href="javascript:list('${sellmap.page_info_s.totPage}')">[끝]</a>
+							</c:if>
+							</div>
+						</tr>
+						</tbody>
+					</table>
+				</form>
+			</section>
 		</div>
 	</div>
 	<c:set var="path" value="${pageContext.request.contextPath}" />

@@ -13,7 +13,7 @@ body {
 	text-transform: uppercase;
 	font-size: 16px;
 /* 	color: #fff; */
-	z-index : 100;
+	 z-index : 2;
 	position: relative
 }
 
@@ -25,7 +25,8 @@ a {
 #header {
 	background: #1E262D;
 	width: 100%;
-	position: relative
+	position: relative;
+	z-index: 1;
 }
 
 #header:after {
@@ -40,10 +41,14 @@ a {
 }
 
 input {
-	border: none;
-	color: #bdc3c7; padding : 10px;
+	/* border: none; */
+	/* color: #bdc3c7; padding : 10px; */
+
+	border-width : 0.1px;
+	color : black;
 	border-radius: 20px;
 	padding: 10px
+	
 }
 
 .logo {
@@ -69,10 +74,13 @@ nav>ul {
 nav li {
 	list-style: none;
 	float: left
+	/* float: down */
+	/*확인용  */
 }
 
 nav .dropdown {
 	position: relative
+
 }
 
 nav li a {
@@ -95,6 +103,10 @@ nav li:hover ul {
 nav li li {
 	float: none
 }
+#dropdown{
+	z-index: 1;
+	
+}
 
 nav .dropdown ul {
 	position: absolute;
@@ -103,6 +115,9 @@ nav .dropdown ul {
 	background: #fff;
 	padding: 20px 0;
 	border-bottom: 3px solid #34495e
+	
+	
+	
 }
 
 nav .dropdown li {
@@ -113,6 +128,7 @@ nav .dropdown li a {
 	padding: 10px 35px;
 	font-size: 13px;
 	min-width: 200px
+	z-index= 1;
 }
 
 nav .mega-dropdown {

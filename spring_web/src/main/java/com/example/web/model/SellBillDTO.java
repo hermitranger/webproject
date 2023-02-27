@@ -18,7 +18,7 @@ public class SellBillDTO {
 	private String sell_post;
 	private String s_cate;
 	private String impUid;
-	
+	private String s_progress;
 	public String getBill_order() {
 		return bill_order;
 	}
@@ -103,14 +103,22 @@ public class SellBillDTO {
 	public void setImpUid(String impUid) {
 		this.impUid = impUid;
 	}
+	public String getS_progress() {
+		return s_progress;
+	}
+	public void setS_progress(String s_progress) {
+		this.s_progress = s_progress;
+	}
 	@Override
 	public String toString() {
 		return "SellBillDTO [bill_order=" + bill_order + ", s_code=" + s_code + ", sell_id=" + sell_id + ", s_name="
 				+ s_name + ", bill_date=" + bill_date + ", s_price=" + s_price + ", s_check=" + s_check
 				+ ", bill_deliver=" + bill_deliver + ", bill_total=" + bill_total + ", sell_address=" + sell_address
 				+ ", sell_addressdetail=" + sell_addressdetail + ", sell_post=" + sell_post + ", s_cate=" + s_cate
-				+ ", impUid=" + impUid + "]";
+				+ ", impUid=" + impUid + ", s_progress=" + s_progress + "]";
 	}
+	
+	
 	
 	
 }

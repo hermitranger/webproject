@@ -1,9 +1,44 @@
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
+/* 중복되서 가로로 이상하게 나와서 주석처리함
+ ul {
+	list-style-type: none;
+}
+
+li {
+	display: inline-block;
+	margin-right: 25px;
+}
+
+li {
+	color: #ffffff;
+	font-family: "muli";
+	margin-top: 20px;
+	font-weight: 500;
+	font-size: 11px;
+}
+ */
+
 /*reset*/
 * {
 	margin: 0;
 	padding: 0;
+}
+
+input {
+	/* border: none; */
+	/* color: #bdc3c7; padding : 10px; */
+	
+	border-width : 0.1px;
+	color : black;
+	border-radius: 20px;
+	padding: 10px
+	
+}
+
+.top input[type="text"]{
+	width :10px;
+	
 }
 
 /*product info */
@@ -34,7 +69,7 @@ i.fa.fa-search {
 h3 {
 	color: #ffffff;
 	font-family: "muli";
-	margin-top: 84px;
+	/* margin-top: 84px; */
 	font-size: 20px;
 	font-weight: 500;
 }
@@ -85,22 +120,6 @@ h5 {
 	display: inline-block;
 }
 
-ul {
-	list-style-type: none;
-}
-
-li {
-	display: inline-block;
-	margin-right: 25px;
-}
-
-li {
-	color: #ffffff;
-	font-family: "muli";
-	margin-top: 20px;
-	font-weight: 500;
-	font-size: 11px;
-}
 
 .bg {
 	width: 15px;
@@ -119,6 +138,8 @@ li {
 	height: 15px;
 	cursor: pointer;
 }
+
+
 
 .yellow {
 	content: "";
@@ -213,7 +234,7 @@ li {
 
 .left {
 	content: "";
-	height: 455px;
+	height: 600px;
 	width: 330px;
 	display: flex;
 	align-items: center;
@@ -231,12 +252,35 @@ li {
 
 .right {
 	content: "";
-	height: 455px;
+	height: 600px;
 	width: 550px;
 	background-color: #2a2f40;
 	z-index: 1;
 	margin-left: 200px;
 }
+em{
+	color: rgb(0, 128, 192);
+	font-family: "muli";
+	font-weight: bold;
+	font-size: 22px;
+}
+
+strong{
+	color: rgb(0, 128, 192);
+	font-family: "muli";
+	font-weight: bold;
+	font-size: 22px;
+	/* margin-top: 21px; */
+	display: inline-block;
+}
+
+#total {
+	content: "";
+	background-color: white;
+	background-color: #2a2f40;
+	z-index: 0;
+}
+
 
 .center {
 	content: "";
@@ -255,3 +299,16 @@ li {
 	width: 305px;
 	z-index: 10;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

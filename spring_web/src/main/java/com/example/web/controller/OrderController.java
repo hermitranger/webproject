@@ -1,6 +1,9 @@
 package com.example.web.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.web.model.BuyOrderDAO;
+import com.example.web.model.DealDTO;
 import com.example.web.model.PaymentService;
 import com.example.web.model.ProductDTO;
 import com.example.web.model.SellOrderDAO;
@@ -32,12 +36,14 @@ public class OrderController {
 	@Autowired
 	PaymentService paymentService;
 
-
+	//jsp에서 1~3을 어떻게 넘겨줄까..
+	//해당 데이터가 잇는지 확인
 	
 
 	@RequestMapping("OrderBuy.do")
 	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
-
+		
+		
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("userid" + user_id);
@@ -55,9 +61,107 @@ public class OrderController {
 
 	}
 
+	/*
+	 * 무조건 3번 돌려서 not null 이면 add
+	 * 
+	 * for문돌려서 i 1~3넣고 product1 product2 producr3
+	 * 
+	 * jsp단에서도 1~3돌리고
+	 * 
+	 * 장바구니에서 할때는 똑같은거 변수 하나 주고
+	 * 
+	 * if 이거면 이거 만들고, 아니면 이거 다돌려서 확인하면 되겟구만유.
+	 */
+	
+	@Transactional
+	@RequestMapping("OrderSell2.do")                        
+	public ModelAndView OrderSell2(@RequestParam String[] ArrP_code,@RequestParam String[] ArrP_price,@RequestParam String[] ArrP_saleprice,
+			@RequestParam String[] ArrP_count,@RequestParam String[] ArrP_sumprice,
+			@RequestParam Map<String, String> map2,HttpServletRequest request, ModelAndView mav) {
+
+		HttpSession session = request.getSession();
+		String user_id= (String)session.getAttribute("user_id");
+		//System.out.println(ArrP_code);
+		int length = ArrP_code.length;
+		//System.out.println("length : " +length);
+		String product_code0= map2.get("product_code");//대표품목 코드번호
+		String size = product_code0.substring(5,6);//대표품목 번호에서 사이즈 추가
+		
+		List<DealDTO> list= new ArrayList<DealDTO>();
+		for(int i=0;i<length;i++) {
+			DealDTO dto = new DealDTO();
+			String product_code = ArrP_code[i];
+			//System.out.println("product_code"+ product_code);
+			int product_price = Integer.parseInt(ArrP_price[i]);
+			System.out.println("product_price: "+ product_price);
+			int  product_saleprice = Integer.parseInt(ArrP_saleprice[i]);
+			System.out.println("product_saleprice: "+product_saleprice);
+			int  count = Integer.parseInt(ArrP_count[i]);
+			//System.out.println("count"+ count);
+			int  sum_price = Integer.parseInt(ArrP_sumprice[i]);
+			//System.out.println("sum_price"+ sum_price);
+			double result=(((double)product_price-(double)product_saleprice)/(double)product_price)*100;
+			double sale= Math.round(result);
+			//System.out.println("sale: "+sale);
+	        dto.setSale(sale);
+			dto.setProduct_code(product_code);
+			dto.setProduct_price(product_price);
+			dto.setProduct_saleprice(product_saleprice);
+			dto.setCount(count);
+			dto.setSum_price(sum_price);
+			list.add(dto);
+		}
+		//System.out.println(list);
+
+
+		 if(user_id == null) { 
+			 mav.setViewName("/login/login"); 
+			 return mav; 	 
+		 }
+		 else {
+			 	Map<String, Object> map = new HashMap<>();
+				map.put("list", list);
+				map.put("size", size);
+				map.put("product_code0", map2.get("product_code"));
+				map.put("product_name", map2.get("product_name"));
+				map.put("total_price", map2.get("total_price"));
+				map.put("total_count", map2.get("total_count"));
+				mav.addObject("map", map);
+			 	mav.setViewName("/shop/sell2");
+				return mav; 			 
+		 }
+			//@RequestParam Map<String, String> map,HttpServletRequest request, ModelAndView mav 
+			// boolean iskey1 = map.containsKey("product_code1");
+			 // 재고 재확인 하기.
+			 // p_num 요청 수량 , product_code, product_price, product_saleprice
+			// map에 넘겨준 변수명 
+		
+			/*
+			 * System.out.println(map); boolean iskey1 = map.containsKey("product_code1");
+			 * boolean iskey2 = map.containsKey("product_code2"); boolean iskey3 =
+			 * map.containsKey("product_code3"); HttpSession session = request.getSession();
+			 * String user_id= (String)session.getAttribute("user_id"); if(user_id == null)
+			 * { mav.setViewName("/login/login"); return mav; } else { if(iskey1==true)
+			 * {map.put("product_name1","하등급");} if(iskey2==true)
+			 * {map.put("product_name2","중등급");} if(iskey3==true)
+			 * {map.put("product_name3","상등급");} map.put("each", "1"); mav.addObject("p",
+			 * map);// 해당 sell에 넘겨줌 mav.addObject("Udto", SellOrderDao.Sell_User(user_id));
+			 * //List<DealDTO> list = map;// 상품리스트 //ModelAndView mav = new ModelAndView();
+			 * //mav.setViewName("admin/admin_sale");// admin 폴더의 sale페이지 //Map<String,
+			 * Object> map = new HashMap<>(); //map.put("list", list);
+			 * 
+			 * //dto
+			 * 
+			 * 
+			 * 
+			 * return mav; }
+			 */		 
+}
+		
+	
 	@RequestMapping("OrderSell.do")
 	public ModelAndView OrderSell(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
-		System.out.println(product_code);
+		System.out.println("OrderSell product_code"+product_code);
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("user_id");
 
@@ -75,6 +179,7 @@ public class OrderController {
 		}
 
 	}
+	
 
 	@Transactional
 	@RequestMapping("BuyResult.do")
@@ -92,11 +197,13 @@ public class OrderController {
 		BuyOrderDao.Buy_Result(Pdto, Udto, bill_order, buy_address, buy_post, bill_deliver);
 
 		return "1";
+		
 
 	}
 	
 	
-
+	//window.onclose 이벤트 확인해보기
+	//transactional crud해도 이벤트가 도중에 동작이 그만두면 완료가 되지 않는다.  확
 	@Transactional
 	@RequestMapping("SellResult.do")
 	@ResponseBody
@@ -109,7 +216,7 @@ public class OrderController {
 		int check = SellOrderDao.CheckProduct(product_code);
 		System.out.println("check" +check);
 		  if(check>0) { 
-			  System.out.println("check>0 취소가 되어라...");
+			  //System.out.println("check>0 취소가 되어라...");
 			  System.out.println("imp_uid "+imp_uid);
 			  paymentService.payMentCancle(token, imp_uid, "결제 금액 오류");
 			  return "0"; 
@@ -144,17 +251,30 @@ public class OrderController {
 
 	}
 	
+	/*
+	 * @Transactional
+	 * 
+	 * @RequestMapping("test.do") public String test(HttpServletRequest request) {
+	 * System.out.println("확인"); HttpSession session = request.getSession(); String
+	 * user_id = (String)session.getAttribute("user_id");
+	 * SellOrderDao.test(user_id); System.out.println("재확인"); return
+	 * "/shop/buy_result";
+	 * 
+	 * }
+	 */
 	
-	@RequestMapping("SellFail.do")
-	public String SellFail(@RequestParam String product_code,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("user_id");
-		System.out.println("SellFail"+product_code);
+
+	@RequestMapping("SellFail.do") 
+	public String SellFail(@RequestParam String product_code,HttpServletRequest request) { 
+		HttpSession session =
+		request.getSession(); String user_id = (String)
+		session.getAttribute("user_id"); System.out.println("SellFail"+product_code);
 		System.out.println("SellFail user_id"+user_id);
-		SellOrderDao.SellFail(product_code, user_id);
-		return "redirect:/shop/list.do";
+		SellOrderDao.SellFail(product_code, user_id); return
+		"redirect:/shop/list.do";
 	
-	}
+	 }
+
 
 	@RequestMapping("BuyResult.page")
 	public String buyResult_page() {

@@ -121,11 +121,11 @@ function SellDo(){
 	}
 	
 	requestPay(data);
+	
 			
 }
 
 function requestPay(data) {
-	
 		document.getElementById("bill_order").value = data.orderNum;
 	    IMP.request_pay({
 	        pg : 'kcp',
@@ -149,7 +149,7 @@ function requestPay(data) {
 	        	alert("결제완료");
 	        	//return location.href="/SellResult.page";
 	        } else {  // 결제 실패 시 로직
-	      		
+	        	
 	        	alert("결제실패");
 	        	sellFail();
 	        	//return location.href="/shop/list.do";

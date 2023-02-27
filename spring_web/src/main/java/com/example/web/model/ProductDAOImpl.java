@@ -136,6 +136,11 @@ public class ProductDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("product.findpcode",pcode);
 	}
 	
+	@Override
+	   public ProductDTO eachPrice(String product_code) {   
+	      return sqlSession.selectOne("product.eachprice",product_code);      
+	   }
+	
 //	@Override
 //	public int findPName(String pname) {
 //		

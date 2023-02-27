@@ -39,19 +39,19 @@
 				<td><fmt:formatNumber pattern="#,###원"
 						value="${dto.s_price}" /></td>
 			</tr>
-			<c:if test="${dto.s_check eq 2}">
+			<c:if test="${dto.s_check eq 3}">
 				<tr>
 					<td>상품검수</td>
 					<td>상</td>
 				</tr>
 			</c:if>
-			<c:if test="${dto.s_check eq 1}">
+			<c:if test="${dto.s_check eq 2}">
 				<tr>
 					<td>상품검수</td>
 					<td>중</td>
 				</tr>
 			</c:if>
-			<c:if test="${dto.s_check eq 0}">
+			<c:if test="${dto.s_check eq 1}">
 				<tr>
 					<td>상품검수</td>
 					<td>하</td>

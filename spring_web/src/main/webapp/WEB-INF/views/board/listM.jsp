@@ -103,7 +103,8 @@
 									value="${row.idx}" onclick="off()"></td>
 							</c:if>
 							<td>${row.idx }</td>
-							<td class="lalign"><a
+							<!-- <td class="lalign" > -->
+							<td align="center"><a
 								href="/board/detail.do?idx=${row.idx }&cur_page=${map.page_info.curPage }
 		&search_option=${map.search_option }&keyword=${map.keyword }"
 								style="color: black;">${row.title }</a> <c:if

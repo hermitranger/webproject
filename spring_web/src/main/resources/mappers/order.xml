@@ -23,6 +23,10 @@
 	insert into sell_bill values
 		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_saleprice},#{user_id},#{user_name},#{user_phone},#{user_email},#{sell_post},#{sell_address},#{bill_deliver},#{bill_total})
 	</insert>
+	<!-- 
+	<insert id="test">
+	insert into test values(#{user_id})
+	</insert> -->
 
 		<!-- map.put("Pdto", Pdto);
 		//여기부터 시작 들어갈거 다 맵에 넣어야함

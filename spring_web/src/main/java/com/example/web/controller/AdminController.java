@@ -143,6 +143,7 @@ public class AdminController {
 		int end = page_info.getPageEnd();// 레코드 끝번호
 
 		List<UserDTO> list = adminDao.user_list(start, end, search_option, keyword);
+		System.out.println("admincontroller list" + list);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/admin_list");// admin 폴더의 list페이지
 		Map<String, Object> map = new HashMap<>();

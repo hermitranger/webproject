@@ -68,6 +68,11 @@ public class BillDAOImpl implements BillDAO {
 	public void buy_update(BuyBillDTO dto) {
 		sqlSession.update("deal.buy_update", dto);
 	}
+	
+	@Override
+	public void sell_update(SellBillDTO dto) {
+		sqlSession.update("deal.sell_update", dto);
+	}
 
 	
 	@Override

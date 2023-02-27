@@ -97,37 +97,33 @@ $(function(){
       }); 
 
    });
-   
    $("button[name='sale']").click(function(){
-         
-         if($(this).val()=="적용")
-         {
-            var percent = $("input[name='sale_text']").val()
-            if(percent <= 0 || percent >=100){
-               alert("할인%를 다시 확인해 주세요");
-               return
-            }
-            else {
-               var percent = $("input[name='sale_text']").val();
-               }
-            
-         }
-         else {
-            var percent = $(this).val();
-         }
-      
-         //alert("percent" + percent);      
-   
-         var tdArr = new Array();   // 배열 선언
-         var fperBtn = $(this);
-      
-         var tr = fperBtn.parent().parent();
-         var td = tr.children();
-
+       
+	      var tdArr = new Array();   // 배열 선언
+	       var fperBtn = $(this);
+	    
+	       var tr = fperBtn.parent().parent();
+	       var td = tr.children();
+	         if($(this).val()=="적용")
+	         {
+	           
+	           var percent = parseInt(tr.find('td:eq(11) input').val());
+	           alert("percent"+percent);
+	            //var percent = $("input[name='sale_text']").val();
+	            if(percent <= 0 || percent >=100){
+	               alert("할인%를 다시 확인해 주세요");
+	               return
+	           }
+	            
+	         }
+	         else {
+	            var percent = $(this).val();
+	         }
+	      
          var product_code = td.eq(4).text();
          var product_price = td.eq(5).text().replace(",","").replace("원","");
          var product_saleprice = td.eq(6).text().replace(",","").replace("원","");
-         alert(product_code + product_price + product_saleprice);
+         //alert(product_code + product_price + product_saleprice);
       
          
          $.ajax({

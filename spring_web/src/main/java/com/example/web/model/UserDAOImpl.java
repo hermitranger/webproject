@@ -125,5 +125,11 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println("daolist:"+list);
 		return list;
 	}
+	
+	public int emailchk(String user_email) {
+	      
+	      return sqlSession.selectOne("user.emailchk", user_email);
+	      
+	   }
 
 }

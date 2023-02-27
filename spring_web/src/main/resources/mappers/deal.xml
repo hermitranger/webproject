@@ -4,13 +4,13 @@
 
 	<select id="buy_deal"
 		resultType="com.example.web.model.BuyBillDTO">
-		select b_code, b_name, b_cate, buy_id, b_price from
+		select b_code, b_name, b_cate, buy_id, b_price, b_progress,bill_order from
 		buy_bill limit 5
 	</select>
 
 	<select id="sell_deal"
 		resultType="com.example.web.model.SellBillDTO">
-		select s_code, s_name, s_cate, sell_id, s_price from
+		select s_code, s_name, s_cate, sell_id, s_price, s_progress,bill_order from
 		sell_bill limit 5
 	</select>
 
@@ -61,7 +61,11 @@
 	</select>
 	
 	<update id="buy_update">
-		update buy_bill set b_check = #{b_check} where b_code = #{b_code}
+		update buy_bill set b_check = #{b_check}, b_progress = #{b_progress} where b_code = #{b_code}
+	</update>
+	
+	<update id="sell_update">
+		update sell_bill set s_progress = #{s_progress} where s_code = #{s_code}
 	</update>
 
 	<select id="sell_detail"
@@ -108,8 +112,7 @@
 				where s_code like CONCAT('%',#{keyword},'%') or
 				sell_id like
 				CONCAT('%',#{keyword},'%') or
-				s_name like CONCAT('%',#{keyword},'%')
-				or
+				s_name like CONCAT('%',#{keyword},'%')or
 				s_check like CONCAT('%',#{keyword},'%') or
 				s_price like
 				CONCAT('%',#{keyword},'%')
@@ -138,14 +141,14 @@
 
 	<select id="user_buy_deal"
 		resultType="com.example.web.model.BuyBillDTO">
-		select b_code, b_name, b_cate, buy_id, b_price
+		select b_code, b_name, b_cate, buy_id, b_price, b_progress,bill_order
 		from buy_bill  
 		where buy_id = #{user_id} limit 5
 	</select>
 	
 	<select id="user_sell_deal"
 		resultType="com.example.web.model.SellBillDTO">
-		select s_code, s_name, sell_id, s_cate, s_price 
+		select s_code, s_name, sell_id, s_cate, s_price, s_progress,bill_order
 		from sell_bill
 		where sell_id = #{user_id} limit 5
 	</select>

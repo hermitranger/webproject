@@ -3,19 +3,22 @@ DROP TABLE buy_bill;
 
 CREATE TABLE buy_bill (
 bill_order VARCHAR(50) PRIMARY KEY,
-b_code VARCHAR(50) NOT NULL,
-buy_id VARCHAR(50) NOT NULL,
-b_name VARCHAR(50) NOT NULL,
 bill_date TIMESTAMP DEFAULT NOW(),
-b_price INT DEFAULT 0,
+b_progress INT NOT NULL,
+b_code VARCHAR(50) NOT NULL,
+b_name VARCHAR(50) NOT NULL,
+b_cate VARCHAR(50),
 b_check INT DEFAULT 0,
+b_price INT DEFAULT 0,
+buy_id VARCHAR(50) NOT NULL,
+buy_name VARCHAR(50) NOT NULL,
+buy_post VARCHAR(50),
+buy_address VARCHAR(100),
 bill_deliver INT DEFAULT 0,
-bill_total INT DEFAULT 0,
+
 FOREIGN KEY(buy_id) REFERENCES user(user_id),
 FOREIGN KEY(b_code) REFERENCES product(product_code)
 );
-
-
 delimiter $$
 DROP PROCEDURE if EXISTS loopInsert$$
 CREATE PROCEDURE loopInsert()
