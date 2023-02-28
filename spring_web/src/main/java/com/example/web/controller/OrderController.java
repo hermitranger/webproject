@@ -76,7 +76,7 @@ public class OrderController {
 	@Transactional
 	@RequestMapping("OrderSell2.do")                        
 	public ModelAndView OrderSell2(@RequestParam String[] ArrP_code,@RequestParam String[] ArrP_price,@RequestParam String[] ArrP_saleprice,
-			@RequestParam String[] ArrP_count,@RequestParam String[] ArrP_sumprice,
+			@RequestParam String[] ArrP_count,@RequestParam String[] ArrP_sumprice,@RequestParam String[] ArrP_name,
 			@RequestParam Map<String, String> map2,HttpServletRequest request, ModelAndView mav) {
 
 		HttpSession session = request.getSession();
@@ -90,12 +90,13 @@ public class OrderController {
 		List<DealDTO> list= new ArrayList<DealDTO>();
 		for(int i=0;i<length;i++) {
 			DealDTO dto = new DealDTO();
+			String product_name = ArrP_name[i];
 			String product_code = ArrP_code[i];
 			//System.out.println("product_code"+ product_code);
 			int product_price = Integer.parseInt(ArrP_price[i]);
-			System.out.println("product_price: "+ product_price);
+			//System.out.println("product_price: "+ product_price);
 			int  product_saleprice = Integer.parseInt(ArrP_saleprice[i]);
-			System.out.println("product_saleprice: "+product_saleprice);
+			//System.out.println("product_saleprice: "+product_saleprice);
 			int  count = Integer.parseInt(ArrP_count[i]);
 			//System.out.println("count"+ count);
 			int  sum_price = Integer.parseInt(ArrP_sumprice[i]);
@@ -103,6 +104,7 @@ public class OrderController {
 			double result=(((double)product_price-(double)product_saleprice)/(double)product_price)*100;
 			double sale= Math.round(result);
 			//System.out.println("sale: "+sale);
+			dto.setProduct_name(product_name);
 	        dto.setSale(sale);
 			dto.setProduct_code(product_code);
 			dto.setProduct_price(product_price);
@@ -126,6 +128,7 @@ public class OrderController {
 				map.put("product_name", map2.get("product_name"));
 				map.put("total_price", map2.get("total_price"));
 				map.put("total_count", map2.get("total_count"));
+				map.put("user_id", user_id);
 				mav.addObject("map", map);
 			 	mav.setViewName("/shop/sell2");
 				return mav; 			 
@@ -204,48 +207,75 @@ public class OrderController {
 	
 	//window.onclose 이벤트 확인해보기
 	//transactional crud해도 이벤트가 도중에 동작이 그만두면 완료가 되지 않는다.  확
-	@Transactional
-	@RequestMapping("SellResult.do")
-	@ResponseBody
-	public String SellResult(@RequestParam Map<String, Object> map,HttpSession session) throws IOException{
-		String token = paymentService.getToken();
-		System.out.println("토큰 : " + token);
-		String imp_uid = (String)map.get("imp_uid");
-	
-		String product_code = (String) map.get("product_code");
-		int check = SellOrderDao.CheckProduct(product_code);
-		System.out.println("check" +check);
-		  if(check>0) { 
-			  //System.out.println("check>0 취소가 되어라...");
-			  System.out.println("imp_uid "+imp_uid);
-			  paymentService.payMentCancle(token, imp_uid, "결제 금액 오류");
-			  return "0"; 
-			  } 
-		  else { 
-			  String user_id = (String)map.get("user_id"); 
-			  System.out.println("user_id"+user_id);
-			  String user_phone = (String)map.get("selectTel") + "-" +  (String)map.get("userTel01") + "-" + (String)map.get("userTel02"); 
-			  System.out.println("user_phone"+user_phone);
-			  String user_name = (String)map.get("user_name"); 
-			  System.out.println("user_name"+user_name);
-			  String user_email = (String)map.get("user_email01") + "@" + (String)map.get("selectEmail"); 
-			  System.out.println("user_email"+user_email);
-			  String bill_order = (String)map.get("bill_order"); 
-			  System.out.println("bill_order"+bill_order);
-			  String sell_post = (String)map.get("zipcode"); 
-			  System.out.println("sell_post"+sell_post);
-			  String sell_address = (String)map.get("address1") + " " + (String) map.get("address2"); 
-			  System.out.println("sell_address"+sell_address);
-			  int bill_deliver = Integer.parseInt(map.get("fee").toString());// 오브젝트형 -> 인트 하는법 : 스트링 변환후	  parseInt
-			  System.out.println("bill_deliver"+bill_deliver);
-			  int bill_total = bill_deliver +
-			  Integer.parseInt(map.get("product_price").toString());// 오브젝트형 -> 인트 하는법 :  스트링 // 변환후 parseInt 
-			  System.out.println("bill_total"+bill_total);
-			  ProductDTO  Pdto = SellOrderDao.Sell_Product(product_code); 
-			  System.out.println("Pdto"+Pdto);
-			  SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address,	 sell_post, bill_deliver, bill_total);
-			  return "1";
-		  }
+	   @Transactional
+	   @RequestMapping("SellResult.do")
+	   @ResponseBody
+	   public String SellResult(@RequestParam Map<String, Object> map,HttpSession session) throws IOException{
+	      String token = paymentService.getToken();
+	      System.out.println("토큰 : " + token);
+	      String imp_uid = (String)map.get("imp_uid");
+	      String[] ArrP_name = ((String)map.get("ArrP_name")).split(",");
+	      String[] ArrP_code = ((String)map.get("ArrP_code")).split(",");
+	     // String[] ArrP_price = ((String)map.get("ArrP_price")).split(",");
+	      //String[] ArrP_saleprice = ((String)map.get("ArrP_saleprice")).split(",");
+	      String[] ArrP_count = ((String)map.get("ArrP_count")).split(",");
+	      //String[] ArrP_sumprice = ((String)map.get("ArrP_sumprice")).split(","); 
+	      int check =0;
+	      System.out.println("length: "+ArrP_count.length);
+	      for(int i=0; i<ArrP_count.length;i++) {//db 수량 비교 for문
+	    	  System.out.println(i+"바퀴");
+	    	  check = SellOrderDao.CheckCount(ArrP_code[i]) ;
+	    	  if(Integer.parseInt(ArrP_count[i]) > check) {
+	    		  check=0;
+	    		  break;
+	    	  }	  
+	      }
+	     
+	      //String product_code = (String) map.get("product_code");
+	      
+	      System.out.println("check" +check);
+	        if(check==0) { 
+	           //System.out.println("check>0 취소가 되어라...");
+	           System.out.println("imp_uid "+imp_uid);
+	           paymentService.payMentCancle(token, imp_uid, "오류");
+	           return "0"; 
+	           } 
+	        else { 
+	           String user_id = (String)map.get("user_id"); 
+	           System.out.println("user_id"+user_id);
+	           String user_phone = (String)map.get("selectTel") + "-" +  (String)map.get("userTel01") + "-" + (String)map.get("userTel02"); 
+	           System.out.println("user_phone"+user_phone);
+	           String user_name = (String)map.get("user_name"); 
+	           System.out.println("user_name"+user_name);
+	           String user_email = (String)map.get("user_email01") + "@" + (String)map.get("selectEmail"); 
+	           System.out.println("user_email"+user_email);
+	           String bill_order = (String)map.get("bill_order"); 
+	           System.out.println("bill_order"+bill_order);
+	           String sell_post = (String)map.get("zipcode"); 
+	           System.out.println("sell_post"+sell_post);
+	           String sell_address = (String)map.get("address1") + " " + (String) map.get("address2"); 
+	           System.out.println("sell_address"+sell_address);
+	           int bill_deliver = Integer.parseInt(map.get("fee").toString());// 오브젝트형 -> 인트 하는법 : 스트링 변환후     parseInt
+	           System.out.println("bill_deliver"+bill_deliver);
+	           int bill_total = bill_deliver +
+	           Integer.parseInt(map.get("total_price").toString());// 오브젝트형 -> 인트 하는법 :  스트링 // 변환후 parseInt 
+	           System.out.println("bill_total"+bill_total);
+	           //여기서부터 수정하면 된다 위에까지는 다똑같다.
+	           for(int i=0; i<ArrP_count.length;i++) {//db 수량 비교 for문
+	        	   // s_code, s_name, s_cate,s_price(판매가)
+	        	    String product_code= ArrP_code[i];
+	        	    ProductDTO  Pdto = SellOrderDao.Sell_Product(product_code); 
+	        	    Pdto.setProduct_name(ArrP_name[i]);
+		   			Pdto.setProduct_amount(Integer.parseInt(ArrP_count[i]));
+		   			SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address,  sell_post, bill_deliver, bill_total);	  
+	        	   System.out.println("Pdto"+Pdto);
+	 	      }
+	          // ProductDTO  Pdto = SellOrderDao.Sell_Product(product_code); 
+	           //System.out.println("Pdto"+Pdto);
+	           //23.02.28test SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address,    sell_post, bill_deliver, bill_total);
+	           return "1";
+	        }
+
 		  
 		 
 

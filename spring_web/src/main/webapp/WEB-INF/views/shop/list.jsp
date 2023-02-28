@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>중고상점-상품목록</title>
+<title>중고상점-상품목록(list.jsp)</title>
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 	$(function() {
@@ -15,10 +15,10 @@
 		});
 		
 		//sale();
-		
-		
+			
 		
 	});
+	
 
 	function list(page) {
 		location.href = "/shop/list.do?curPage=" + page
@@ -31,15 +31,13 @@
 
 
 </head>
-<body id="ajaxfunction">
+<body>
 	<%@ include file="../include/menu.jsp"%>
-<div class="ajaxcontainer">	
-<input type="hidden" id="error" value="${error }">
 	<div class="container_list">
 
 		<div class="main">
 			<div class="input-group">
-				<%-- 			<span class="fa fa-search form-control-feedback"></span>
+				<span class="fa fa-search form-control-feedback"></span>
 			<form name="form1" method="post" action="/shop/list.do">
 				<select name="search_option">
 					<option value="all"
@@ -53,45 +51,44 @@
 				</select>
 					<input type="text" name="keyword" class="form-control"
 						value="${map.keyword}"> <input type="submit" value="조회 ">
-			</form> --%>
+			</form>
 			</div>
 		</div>
-
-
 		<br>
-		<section class="home-cards">
+			<section class="home-cards">
 			<c:forEach var="row" items="${map.list}">
+		
 				<div align="left">
-				<div class="${row.product_code }">
-					<img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
+				<img src="/resources/images/${row.filename}" width="150px"height="150px" alt="x">
+					<!-- <img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" /> -->
 					<h4 align="center">
-					
-						<a href="/shop/detail/${row.product_code}">${row.product_name}</a>
-						
+						<a href="/shop/detail/${row.product_code}">${row.product_name}</a>		
 					</h4>
 					<c:if test="${sessionScope.user_check == '1'}">
 						<a href="/shop/edit/${row.product_code}">[편집]</a>
 					</c:if>
 					<p align="center">
-					
 					<c:if test="${row.product_price ne row.product_saleprice}">						
 						<p style="text-decoration:line-through" align="center">
-						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" /></p>
+						정상가 : <fmt:formatNumber value="${row.product_price}" pattern="#,###원" /></p>
 						<p align="center" style="color: red">
-						할인가<fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원"/><br>
+						할인가 : <fmt:formatNumber value="${row.product_saleprice}" pattern="#,###원"/><br>
 						sale : <c:set var="sale" value="${((row.product_price-row.product_saleprice)/row.product_price)*100}"/>
 						<c:out value="${sale}"/>%
 						</p>		
-					</c:if>
-					
+					</c:if>	
 					<c:if test="${row.product_price eq row.product_saleprice}">
-						정상가<fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
+						즉시 구매가 : <fmt:formatNumber value="${row.product_price}" pattern="#,###원" />
 					</c:if>
 					</p>
+				<p align="center">
+				<input type="button" value = "구매" onclick="location.href='/shop/detailBuy/${row.product_code}'"><!--2.13에 이후는 buy ,sell 하고 나중에 다 바꾸자  -->
+				<input type="button" value = "판매" onclick="location.href='/shop/detailSell/${row.product_code}'"><!--2.13에 이후는 buy ,sell 하고 나중에 다 바꾸자  -->
+				</p>
 					</div>
-				</div>
 			</c:forEach>
-		</section>
+			</section>
+		
 		<br>
 		<div align="center">
 			<c:if test="${map.page_info.curPage > 1 }">
@@ -101,16 +98,14 @@
 				<a href="javascript:list('${map.page_info.prevPage}')"
 					style="color: black;">[이전]</a>
 			</c:if>
-			<c:forEach var="num" begin="${map.page_info.blockBegin}"
-				end="${map.page_info.blockEnd}">
+			<c:forEach var="num" begin="${map.page_info.blockBegin}" end="${map.page_info.blockEnd}">
 				<c:choose>
-
 					<c:when test="${num == map.page_info.curPage}">
 						<span style="color: red">${num}</span>&nbsp; <!--현재 페이지 빨간색으로  -->
 					</c:when>
 					<c:otherwise>
 						<a href="javascript:list('${num}')" style="color: black;">${num}</a>&nbsp;
-						</c:otherwise>
+					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${map.page_info.curPage < map.page_info.totPage}">
@@ -128,7 +123,5 @@
 	<script src="${path}/resources/js/main.js?ver=2"></script>
 	<link rel="stylesheet" href="${path}/resources/css/search.css?ver=2" />
 	<link rel="stylesheet" href="${path}/resources/css/main.css?ver=2" />
-	</div>
 </body>
-
 </html>

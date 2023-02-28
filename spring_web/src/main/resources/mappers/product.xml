@@ -52,7 +52,7 @@
 
 	<select id="new_list"
 		resultType="com.example.web.model.ProductDTO">
-		select product_code, product_name, product_cate, product_price, product_date 
+		select product_code, product_name, product_cate, product_price, product_date, filename 
 		from product
 		order by product_date desc
 		limit 4
@@ -61,7 +61,7 @@
 	<sql id="search">
 		<choose>
 			<when test="search_option == 'all'"><!--all, not null 모두검색 -->
-				where product_amount > 0 and
+				where (product_amount > 0 and product_code like CONCAT('%','0')) and
 				((product_brand like CONCAT('%',#{keyword},'%')) or
 				(product_name like
 				CONCAT('%',#{keyword},'%')) or

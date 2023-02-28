@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>중고상점-상품정보</title>
+<title>중고상점-상품정보_detail</title>
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 	$(function() {

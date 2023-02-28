@@ -44,25 +44,25 @@
 	<section class="home-cards">
 		<div>
 			<a href="/shop/list.do"> <img
-				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
+				src="../resources/images/fan.jpg" alt="" />
 			</a>
 			<h3 align="center">계절가전</h3>
 		</div>
 		<div>
 			<a href="/shop/list.do"> <img
-				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
+				src="../resources/images/sound equipment.jpg" alt="" />
 			</a>
 			<h3 align="center">음향기기</h3>
 		</div>
 		<div>
 			<a href="/shop/list.do"> <img
-				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
+				src="../resources/images/TV.jpg" alt="" />
 			</a>
-			<h3 align="center">주방가전</h3>
+			<h3 align="center">영상기기</h3>
 		</div>
 		<div>
 			<a href="/shop/list.do"> <img
-				src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" />
+				src="../resources/images/computer.jpg" alt="" />
 			</a>
 			<h3 align="center">컴퓨터 및 기타</h3>
 		</div>
@@ -76,7 +76,7 @@
 	<section class="home-cards">
 		<c:forEach var="row" items="${list}">
 			<div>
-				<img src="https://i.ibb.co/zVqhWn2/card5.png" alt="" />
+				<img src="../resources/images/${row.filename}" alt="" />
 				<h3>${row.product_name}</h3>
 				<h4>${row.product_cate}</h4>
 				<h4>${row.product_price}</h4>

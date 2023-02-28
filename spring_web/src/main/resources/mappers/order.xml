@@ -21,7 +21,7 @@
 	
 	<insert id="Sell_Result">
 	insert into sell_bill values
-		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_saleprice},#{user_id},#{user_name},#{user_phone},#{user_email},#{sell_post},#{sell_address},#{bill_deliver},#{bill_total})
+		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_saleprice},#{user_id},#{user_name},#{user_phone},#{user_email},#{sell_post},#{sell_address},#{bill_deliver},#{bill_total},#{Pdto.product_amount})
 	</insert>
 	<!-- 
 	<insert id="test">
@@ -45,8 +45,8 @@
 		(#{bill_order},now(),0,#{Pdto.product_code},#{Pdto.product_name},#{Pdto.product_cate},0,#{Pdto.product_price},#{Udto.user_id},#{Udto.user_name},#{buy_post},#{buy_address},#{bill_deliver})
 	</insert>
 	
-	<select id="CheckProduct" resultType="int">
-		select count(*) from sell_bill where s_code = #{product_code} 
+	<select id="CheckCount" resultType="int">
+		select product_amount from product where product_code = #{product_code} 
 		
 	</select>
 	

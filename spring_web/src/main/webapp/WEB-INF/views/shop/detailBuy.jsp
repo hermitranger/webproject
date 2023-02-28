@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>중고상점-상품정보</title>
+<title>중고상점-상품정보_detailbuy</title>
 <!--하등급 가격 올려 놓고 select 버튼 눌럿을때 가격 변동하게 하는게 좋을것 같다.  -->
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
@@ -15,8 +15,6 @@
 수량
 총계
  */
-
-
 //서버로 왓다갓다하면 개발하기는 편리하지만, 반응이 느리다.
 //아래와 같이 진행하면 속도는 빠르지만 코드 수정이 어렵다. 추가로 jsp를 따로 만들어서 불러오는 작업으로 진행시 더 수월해질 것이다.
 let basket = {
@@ -103,47 +101,51 @@ let basket = {
 	        document.getElementById(eachprice).value=newval*price;
 	        //각각  	var eachprice= 'total_price' + pos;에 값이 들어감.	        
 	        this.total();//총 합계 totalCount, totalPrice 재계산
-
 	        
 	    }
 		
-
 }
 
 function Arr(){
-	
+	var product_name0 = "${dto.product_name}";
+	var product_name="";
 	var ArrP_code = new Array();
 	var ArrP_price = new Array();
 	var ArrP_saleprice = new Array();
 	var ArrP_count = new Array();
 	var ArrP_sumprice= new Array();
+	var ArrP_name= new Array();
 	for(i=1;i<4;i++){
 	    if($("#total_price"+i).val()!=""){
+	    	if(i==1){
+	    		product_name = product_name0.concat("(하)");
+	    		}
+	    	else if(i==2){
+	    		product_name = product_name0.concat("(중)");
+	    		}
+	    	else if(i==3){
+	    		product_name = product_name0.concat("(상)");   	
+	    	}
 	    	var product_code = $("#product_code"+i).val();
 	    	var product_price = $("#product_price"+i).val();
 	    	var product_saleprice = $("#product_saleprice"+i).val();
 	    	var count = $("#p_num"+i).val();
 	    	var sumprice =$("#total_price"+i).val();    	
 	    // 가져온 값을 배열에 담는다.
+	    	ArrP_name.push(product_name);
 		    ArrP_code.push(product_code); 
 		    ArrP_price.push(product_price);
 		    ArrP_saleprice.push(product_saleprice);
 		    ArrP_count.push(count);
 		    ArrP_sumprice.push(sumprice);
         }     
-	
 	}
+	 $("#ArrP_name").val(ArrP_name);
 	 $("#ArrP_code").val(ArrP_code);
 	 $("#ArrP_price").val(ArrP_price);
 	 $("#ArrP_saleprice").val(ArrP_saleprice);
 	 $("#ArrP_count").val(ArrP_count);
 	 $("#ArrP_sumprice").val(ArrP_sumprice);
-	/*  alert("ArrP_code[0] : " + ArrP_code[0]);
-	 alert("ArrP_code[1] : " + ArrP_code[1]);
-	 alert("ArrP_code[2] : " + ArrP_code[2]); */
-	 
-	
-
 }
 
 
@@ -489,7 +491,8 @@ Number.prototype.formatNumber = function(){
 						<input type="hidden" id="ArrP_price" name="ArrP_price" value="">
 						<input type="hidden" id="ArrP_saleprice" name="ArrP_saleprice" value="">
 						<input type="hidden" id="ArrP_count" name="ArrP_count" value="">
-						<input type="hidden" id="ArrP_sumprice" name="ArrP_sumprice" value="">				
+						<input type="hidden" id="ArrP_sumprice" name="ArrP_sumprice" value="">
+						<input type="hidden" id="ArrP_name" name="ArrP_name" value="">				
 						</form>		
 						<input type="hidden" id="total_price1" name="total_price1" value="">
 						<input type="hidden" id="total_price2" name="total_price2" value="">

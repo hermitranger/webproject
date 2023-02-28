@@ -311,19 +311,19 @@
 			<div id="change" name="change">
 				<select id="product_1" name="product_1" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="11">소형난방</option>
-					<option value="12">중형난방</option>
-					<option value="13">대형난방</option>
+					<option value="11">히터</option>
+					<option value="12">전기난로</option>
+					<option value="13">난방기</option>
 				</select> <select id="product_2" name="product_2" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="21">소형냉방</option>
-					<option value="22">중형냉방</option>
-					<option value="23">대형냉방</option>
+					<option value="21">선풍기</option>
+					<option value="22">벽걸이에어컨</option>
+					<option value="23">스탠드에어컨</option>
 				</select> <select id="product_3" name="product_3" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="31">소형영상</option>
-					<option value="32">중형영상</option>
-					<option value="33">대형영상</option>
+					<option value="31">카메라</option>
+					<option value="32">빔프로젝트</option>
+					<option value="33">TV</option>
 				</select> <select id="product_4" name="product_4" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
 					<option value="41">소형음향</option>
@@ -357,6 +357,10 @@
 				<option value="01">삼성</option>
 				<option value="02">LG</option>
 				<option value="03">한경희</option>
+				<option value="04">신일전자</option>
+				<option value="05">한일전기</option>
+				<option value="06">파세코</option>
+				<option value="07">캐리어</option>
 				<option value="11">샤오미</option>
 				<option value="12">하이얼</option>
 			</select> <br> 상품모델 <input type="text" id="product_model"

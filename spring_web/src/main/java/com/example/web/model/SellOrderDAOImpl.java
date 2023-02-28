@@ -53,8 +53,8 @@ public class SellOrderDAOImpl implements SellOrderDAO {
 	}
 
 	@Override
-	public int CheckProduct(String product_code) {
-		return sqlSession.selectOne("order.CheckProduct", product_code);	
+	public int CheckCount(String product_code) {
+		return sqlSession.selectOne("order.CheckCount", product_code);	
 	}
 	
 	public SellBillDTO SellFail(String product_code, String user_id) {
