@@ -326,14 +326,14 @@
 					<option value="33">TV</option>
 				</select> <select id="product_4" name="product_4" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="41">소형음향</option>
-					<option value="42">중형음향</option>
-					<option value="43">대형음향</option>
+					<option value="41">이어폰</option>
+					<option value="42">헤드폰</option>
+					<option value="43">스피커</option>
 				</select> <select id="product_5" name="product_5" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="51">소형주방</option>
-					<option value="52">중형주방</option>
-					<option value="53">대형주방</option>
+					<option value="51">전자레인지</option>
+					<option value="52">오븐</option>
+					<option value="53">냉장고</option>
 				</select> <select id="product_6" name="product_6" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
 					<option value="61">소형청소</option>
@@ -363,6 +363,7 @@
 				<option value="07">캐리어</option>
 				<option value="11">샤오미</option>
 				<option value="12">하이얼</option>
+				<option value="13">애플</option>
 			</select> <br> 상품모델 <input type="text" id="product_model"
 				name="product_model"> <br> 상품가격 <input type="number"
 				name="product_price" id="product_price"> <br> 상품크기 <select
