@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,8 @@
 <script>
 
 $(function(){ 
-	alert("userid : " + $("#user_id").val());
+	
+	//alert("userid : " + $("#user_id").val());
    fee();
    Arr();   
 
@@ -61,7 +63,7 @@ $(function(){
 
       for(i=0;i<"${fn:length(map.list)}";i++){
          if(i==0){
-            ArrP_name.push(${map.list[0].product_code});
+             ArrP_name.push("${map.list[0].product_name}");
              ArrP_code.push(${map.list[0].product_code}); 
              ArrP_price.push(${map.list[0].product_price});
              ArrP_saleprice.push(${map.list[0].product_saleprice});
@@ -69,7 +71,7 @@ $(function(){
              ArrP_sumprice.push(${map.list[0].sum_price});
             }
          else if(i==1){
-            ArrP_name.push(${map.list[1].product_code});
+            ArrP_name.push("${map.list[1].product_name}");
              ArrP_code.push(${map.list[1].product_code}); 
              ArrP_price.push(${map.list[1].product_price});
              ArrP_saleprice.push(${map.list[1].product_saleprice});
@@ -77,7 +79,7 @@ $(function(){
              ArrP_sumprice.push(${map.list[1].sum_price});
             }
          else if(i==2){
-            ArrP_name.push(${map.list[2].product_code});
+            ArrP_name.push("${map.list[2].product_name}");
              ArrP_code.push(${map.list[2].product_code}); 
              ArrP_price.push(${map.list[2].product_price});
              ArrP_saleprice.push(${map.list[2].product_saleprice});
@@ -86,8 +88,8 @@ $(function(){
             }
            }      
       
-        $("#ArrP_name").val(ArrP_code);
-       alert($("#ArrP_name").val());
+        $("#ArrP_name").val(ArrP_name);
+       //alert($("#ArrP_name").val());
         $("#ArrP_code").val(ArrP_code);
        $("#ArrP_price").val(ArrP_price);
        $("#ArrP_saleprice").val(ArrP_saleprice);
@@ -128,7 +130,7 @@ function SellDo(){
         address2 : $("#address2").val(),
         fee : $("#fee").val(),
         product_price : $("#product_price").val(),
-        name: $("#product_name").val() + "외"+ ($("#count").val()-1)+"건",
+        name: $("#product_name").val() + "외"+"${fn:length(map.list)-1}"+"건",
         amount: $("#total_price").val(),
         total_price: $("#total_price").val(),
         seller_email: $("#user_email").val(),
@@ -188,12 +190,12 @@ function SellDo(){
 function requestPay(data) {
       document.getElementById("bill_order").value = data.orderNum;
        IMP.request_pay({
-           pg : 'kcp',
+           pg : 'kakaopay.TC0ONETIME',//kcp
            pay_method : 'card',
            merchant_uid: data.orderNum,
            name: data.name,
            //amount: $("#product_price").val(),                         //TEST 끝날시 숫자 타입
-           amount: 100, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
+           //amount: 100, //테스트용 1원 값은 SellResult()에서 잘 전달 됨
            amount: data.amount,
            seller_email: "",
            seller_name: "",
@@ -201,13 +203,15 @@ function requestPay(data) {
            seller_addr: data.seller_addr,
            seller_postcode: data.seller_postcode
        }, function (rsp) { // callback
-           if (rsp.success) {  // 결제 성공 시 로직   
+           if (rsp.success) {  // 결제 성공 시 로직
+        	   alert("결제완료");
               data.imp_uid = rsp.imp_uid;
               data.merchant_uid = rsp.merchant_uid;
               document.getElementById("imp_uid").value = rsp.imp_uid;
-              document.getElementById("merchant_uid").value=rsp.merchant_uid;
+              document.getElementById("merchant_uid").value=rsp.merchant_uid; 
+             
               SellResult(data); 
-              alert("결제완료");
+              //alert("결제완료");
               //return location.href="/SellResult.page";
            } else {  // 결제 실패 시 로직
               SellResult(data);//23.02.28test  
@@ -239,7 +243,7 @@ function SellResult(data){
             if (jdata == "1") {
                alert("성공");
                return location.href="/SellResult.page"
-            } else {
+            } else {            	
                alert("매진상품입니다.");
                return "redirect:/shop/list.do";
             }
@@ -602,7 +606,7 @@ function showPostcode() {
    <!--판매 및 목록 버튼-->
    <input type="button" value="구매하기" onclick="SellDo()">
    <input type="button" value="목록" onclick="location.href='/shop/list.do'">
-   <!-- <input type="text" id="imp_uid"  name="imp_uid" value="" readonly/> -->
+   <input type="hidden" id="imp_uid"  name="imp_uid" value="" readonly/>
    <input type="hidden"  id="fee" name="fee" value="" readonly />
    <!--판매 및 목록 버튼-->
       

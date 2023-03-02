@@ -40,6 +40,23 @@ public class OrderController {
 	//해당 데이터가 잇는지 확인
 	
 
+	/*
+	 * @RequestMapping("OrderBuy.do") public ModelAndView sale(@RequestParam String
+	 * product_code, ModelAndView mav, HttpServletRequest request) {
+	 * 
+	 * 
+	 * HttpSession session = request.getSession(); String user_id = (String)
+	 * session.getAttribute("user_id"); System.out.println("userid" + user_id); if
+	 * (user_id != null) { mav.addObject("Pdto",
+	 * BuyOrderDao.Buy_Product(product_code)); mav.addObject("Udto",
+	 * BuyOrderDao.Buy_User(user_id)); mav.setViewName("/shop/buy"); return mav;
+	 * 
+	 * } else { mav.setViewName("/login/login"); return mav;
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 	@RequestMapping("OrderBuy.do")
 	public ModelAndView sale(@RequestParam String product_code, ModelAndView mav, HttpServletRequest request) {
 		
@@ -48,6 +65,9 @@ public class OrderController {
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("userid" + user_id);
 		if (user_id != null) {
+			String size=(String)product_code.substring(5, 6);
+			System.out.println("size" + size);
+			mav.addObject("size",size);
 			mav.addObject("Pdto", BuyOrderDao.Buy_Product(product_code));
 			mav.addObject("Udto", BuyOrderDao.Buy_User(user_id));
 			mav.setViewName("/shop/buy");
@@ -60,19 +80,6 @@ public class OrderController {
 		}
 
 	}
-
-	/*
-	 * 무조건 3번 돌려서 not null 이면 add
-	 * 
-	 * for문돌려서 i 1~3넣고 product1 product2 producr3
-	 * 
-	 * jsp단에서도 1~3돌리고
-	 * 
-	 * 장바구니에서 할때는 똑같은거 변수 하나 주고
-	 * 
-	 * if 이거면 이거 만들고, 아니면 이거 다돌려서 확인하면 되겟구만유.
-	 */
-	
 	@Transactional
 	@RequestMapping("OrderSell2.do")                        
 	public ModelAndView OrderSell2(@RequestParam String[] ArrP_code,@RequestParam String[] ArrP_price,@RequestParam String[] ArrP_saleprice,
@@ -81,38 +88,46 @@ public class OrderController {
 
 		HttpSession session = request.getSession();
 		String user_id= (String)session.getAttribute("user_id");
-		//System.out.println(ArrP_code);
-		int length = ArrP_code.length;
-		//System.out.println("length : " +length);
+		System.out.println(ArrP_code);
+		
+		int length = ArrP_price.length;
+		
+		System.out.println("length : " +length);
+		/*
+		 * int check=0; for(int a=0;a<length;a++) { if(ArrP_price[a]!="") { check++; } }
+		 */
 		String product_code0= map2.get("product_code");//대표품목 코드번호
 		String size = product_code0.substring(5,6);//대표품목 번호에서 사이즈 추가
+		System.out.println("ArrP_price[]" +ArrP_price[0]);
+		
 		
 		List<DealDTO> list= new ArrayList<DealDTO>();
 		for(int i=0;i<length;i++) {
 			DealDTO dto = new DealDTO();
 			String product_name = ArrP_name[i];
 			String product_code = ArrP_code[i];
-			//System.out.println("product_code"+ product_code);
-			int product_price = Integer.parseInt(ArrP_price[i]);
-			//System.out.println("product_price: "+ product_price);
-			int  product_saleprice = Integer.parseInt(ArrP_saleprice[i]);
-			//System.out.println("product_saleprice: "+product_saleprice);
-			int  count = Integer.parseInt(ArrP_count[i]);
-			//System.out.println("count"+ count);
-			int  sum_price = Integer.parseInt(ArrP_sumprice[i]);
-			//System.out.println("sum_price"+ sum_price);
-			double result=(((double)product_price-(double)product_saleprice)/(double)product_price)*100;
-			double sale= Math.round(result);
-			//System.out.println("sale: "+sale);
-			dto.setProduct_name(product_name);
-	        dto.setSale(sale);
-			dto.setProduct_code(product_code);
-			dto.setProduct_price(product_price);
-			dto.setProduct_saleprice(product_saleprice);
-			dto.setCount(count);
-			dto.setSum_price(sum_price);
-			list.add(dto);
-		}
+				if(ArrP_price[i]!="") {
+				int product_price = Integer.parseInt(ArrP_price[i]);
+				//System.out.println("product_price: "+ product_price);
+				int  product_saleprice = Integer.parseInt(ArrP_saleprice[i]);
+				//System.out.println("product_saleprice: "+product_saleprice);
+				int  count = Integer.parseInt(ArrP_count[i]);
+				//System.out.println("count"+ count);
+				int  sum_price = Integer.parseInt(ArrP_sumprice[i]);
+				//System.out.println("sum_price"+ sum_price);
+				double result=(((double)product_price-(double)product_saleprice)/(double)product_price)*100;
+				double sale= Math.round(result);
+				//System.out.println("sale: "+sale);
+				dto.setProduct_name(product_name);
+		        dto.setSale(sale);
+				dto.setProduct_code(product_code);
+				dto.setProduct_price(product_price);
+				dto.setProduct_saleprice(product_saleprice);
+				dto.setCount(count);
+				dto.setSum_price(sum_price);
+				list.add(dto);
+				}
+			}
 		//System.out.println(list);
 
 
@@ -211,9 +226,12 @@ public class OrderController {
 	   @RequestMapping("SellResult.do")
 	   @ResponseBody
 	   public String SellResult(@RequestParam Map<String, Object> map,HttpSession session) throws IOException{
+		   
+		  
 	      String token = paymentService.getToken();
 	      System.out.println("토큰 : " + token);
 	      String imp_uid = (String)map.get("imp_uid");
+	      System.out.println("imp_uid" + imp_uid);
 	      String[] ArrP_name = ((String)map.get("ArrP_name")).split(",");
 	      String[] ArrP_code = ((String)map.get("ArrP_code")).split(",");
 	     // String[] ArrP_price = ((String)map.get("ArrP_price")).split(",");
@@ -235,10 +253,10 @@ public class OrderController {
 	      
 	      System.out.println("check" +check);
 	        if(check==0) { 
-	           //System.out.println("check>0 취소가 되어라...");
-	           System.out.println("imp_uid "+imp_uid);
-	           paymentService.payMentCancle(token, imp_uid, "오류");
-	           return "0"; 
+		           //System.out.println("check>0 취소가 되어라...");
+		           System.out.println("imp_uid "+imp_uid);
+		           paymentService.payMentCancle(token, imp_uid, "오류");
+		           return "0"; 
 	           } 
 	        else { 
 	           String user_id = (String)map.get("user_id"); 
@@ -266,8 +284,9 @@ public class OrderController {
 	        	    String product_code= ArrP_code[i];
 	        	    ProductDTO  Pdto = SellOrderDao.Sell_Product(product_code); 
 	        	    Pdto.setProduct_name(ArrP_name[i]);
+	        	    System.out.println("ordercontrol name: "+ArrP_name[i]);
 		   			Pdto.setProduct_amount(Integer.parseInt(ArrP_count[i]));
-		   			SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address,  sell_post, bill_deliver, bill_total);	  
+		   			SellOrderDao.Sell_Result(Pdto, user_id, user_phone, user_name, user_email, bill_order, sell_address,  sell_post, bill_deliver, bill_total,token,imp_uid);	  
 	        	   System.out.println("Pdto"+Pdto);
 	 	      }
 	          // ProductDTO  Pdto = SellOrderDao.Sell_Product(product_code); 

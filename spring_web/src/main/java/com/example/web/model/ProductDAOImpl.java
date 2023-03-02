@@ -95,7 +95,7 @@ public class ProductDAOImpl implements ProductDAO {
 		
 		map.put("start",start-1);
 		map.put("end", end);
-		System.out.println("start:end="+start+":"+end);		
+		//System.out.println("start:end="+start+":"+end);		
 		return sqlSession.selectList("product.catelist",map);
 		
 	}

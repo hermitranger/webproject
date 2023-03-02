@@ -31,7 +31,7 @@
 			<table id="keywords" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
-						<th><span>상품코드</span></th>
+						<th><span>주문코드</span></th>
 						<th><span>상품명</span></th>
 						<th><span>상품카테고리</span></th>
 						<th><span>상품가격</span></th>
@@ -41,9 +41,9 @@
 				<tbody>
 					<c:forEach var="row" items="${selllist}">
 						<tr>
-							<td align="center">${row.s_code}</td>
+							<td align="center">${row.bill_order}</td>
 							<td align="center"><a
-								href="/user/user_deal_selldetail/${row.s_code}" style="color:black;">${row.s_name}</a></td>
+								href="/user/user_deal_selldetail/${row.s_name}" style="color:black;">${row.s_name}</a></td>
 							<td align="center">${row.s_cate}</td>
 							<td align="center"><fmt:formatNumber pattern="#,###원"
 									value="${row.s_price}" /></td>
@@ -52,6 +52,8 @@
 									<c:when test="${row.s_progress eq  0}">입금확인</c:when>
 									<c:when test="${row.s_progress eq  1}">배송중</c:when>
 									<c:when test="${row.s_progress eq  2}">완료</c:when>
+									<c:when test="${row.s_progress eq  3}">환불요청중</c:when>
+									<c:when test="${row.s_progress eq  4}">환불완료</c:when>
 								</c:choose>
 							</td>
 						</tr>
@@ -64,7 +66,7 @@
 			<table id="keywords" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
-						<th><span>상품코드</span></th>
+						<th><span>주문코드</span></th>
 						<th><span>상품명</span></th>
 						<th><span>상품카테고리</span></th>
 						<th><span>상품가격</span></th>
@@ -73,7 +75,7 @@
 				</thead>
 				<c:forEach var="row" items="${buylist}">
 					<tr>
-						<td align="center">${row.b_code}</td>
+						<td align="center">${row.bill_order}</td>
 						<td align="center"><a
 							href="/user/user_deal_buydetail/${row.b_code}" style="color:black;">${row.b_name}</a></td>
 						<td align="center">${row.b_cate}</td>
@@ -81,10 +83,10 @@
 								value="${row.b_price}" /></td>
 						<td align="center"><c:set var="row.b_progress" value="" />
 								<c:choose>
-									<c:when test="${row.b_progress eq  0}">미배송</c:when>
-									<c:when test="${row.b_progress eq  1}">배송중</c:when>
-									<c:when test="${row.b_progress eq  2}">검수중</c:when>
-									<c:when test="${row.b_progress eq  3}">검수완</c:when>
+									<c:when test="${row.b_progress eq  0}">주문접수</c:when>
+									<c:when test="${row.b_progress eq  1}">물건 수령</c:when>
+									<c:when test="${row.b_progress eq  2}">검수 중</c:when>
+									<c:when test="${row.b_progress eq  3}">검수 완</c:when>
 									<c:when test="${row.b_progress eq  4}">완료</c:when>
 								</c:choose>
 						</td>

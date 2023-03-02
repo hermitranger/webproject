@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="deal">
+
+	<select id="buy_deal"
+		resultType="com.example.web.model.BuyBillDTO">
+		select b_code, b_name, b_cate, buy_id, b_price, b_progress,bill_order from
+		buy_bill limit 5
+	</select>
+
+	<select id="sell_deal"
+		resultType="com.example.web.model.SellBillDTO">
+		select s_code, s_name, s_cate, sell_id, s_price, s_progress,bill_order from
+		sell_bill limit 5
+	</select>
+
+	<select id="buy_list"
+		resultType="com.example.web.model.BuyBillDTO">
+		select * from 
+		(select @RNUM := @RNUM + 1 AS NUM, A.* from
+		(select * from
+		buy_bill
+		<include refid="buy_search" /> 
+		)A,
+		(select @RNUM :=0)b)c
+		where c.num between #{start_b} and #{end_b}
+		order by b_check desc
+	</select>
+
+	<select id="sell_list"
+		resultType="com.example.web.model.SellBillDTO">
+		select * from
+		(select @RNUM := @RNUM+1 AS NUM, A.* from
+		(select * from
+		sell_bill
+		<include refid="sell_search" />
+		)A,
+		(select @RNUM := 0)b)c
+		where c.num between #{start_s} and #{end_s}
+	</select>
+
+
+	<select id="buy_count" resultType="int">
+		select count(*) from buy_bill
+		<include refid="buy_search" />
+	</select>
+
+	<select id="sell_count" resultType="int">
+		select count(*) from sell_bill
+		<include refid="sell_search" />
+	</select>
+
+
+	<select id="buy_detail"
+		resultType="com.example.web.model.BuyBillDTO">
+		select * from buy_bill where b_code = #{b_code}
+	</select>
+	
+	<select id = "buy_infrom" resultType = "com.example.web.model.BuyBillDTO">
+		select b_code, b_name, b_price, b_cate, b_check from buy_bill where b_code = #{b_code};
+	</select>
+	
+	<update id="buy_update">
+		update buy_bill set b_check = #{b_check}, b_progress = #{b_progress} where b_code = #{b_code}
+	</update>
+	
+	<update id="sell_update">
+		update sell_bill set s_progress = #{s_progress} where s_code = #{s_code}
+	</update>
+
+	<select id="sell_detail"
+		resultType="com.example.web.model.SellBillDTO">
+		select * from sell_bill where s_code = #{s_code}
+	</select>
+
+	<sql id="buy_search">
+		<choose>
+			<!-- <when test="search_option == 'all' and #{keyword} != null ">all, 
+				not null 모두검색 -->
+			<when test="search_option == 'all'"><!--all, not null 모두검색 -->
+				where (b_code like CONCAT('%',#{keyword},'%') or
+				buy_id like
+				CONCAT('%',#{keyword},'%') or
+				b_name like CONCAT('%',#{keyword},'%') or
+				b_check like CONCAT('%',#{keyword},'%') or
+				b_price like
+				CONCAT('%',#{keyword},'%'))
+			</when>
+			<when test="search_option == 'b_code'">
+				where  b_code like CONCAT('%',#{keyword},'%') 
+			</when>
+			<when test="search_option == 'buy_id'">
+				where buy_id like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'b_name'">
+				where b_name like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'b_check'">
+				where b_check like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'b_price'">
+				where b_price like CONCAT('%',#{keyword},'%')
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="sell_search">
+		<choose>
+			<when test="search_option == 'all'"><!--all, not null 모두검색 -->
+				where s_code like CONCAT('%',#{keyword},'%') or
+				sell_id like
+				CONCAT('%',#{keyword},'%') or
+				s_name like CONCAT('%',#{keyword},'%')or
+				s_check like CONCAT('%',#{keyword},'%') or
+				s_price like
+				CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 's_code'">
+				where s_code like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 'sell_id'">
+				where sell_id like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 's_name'">
+				where s_name like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 's_check'">
+				where s_check like CONCAT('%',#{keyword},'%')
+			</when>
+			<when test="search_option == 's_price'">
+				where s_price like CONCAT('%',#{keyword},'%')
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 유저 전용 -->
+
+	<select id="user_buy_deal"
+		resultType="com.example.web.model.BuyBillDTO">
+		select b_code, b_name, b_cate, buy_id, b_price, b_progress,bill_order
+		from buy_bill  
+		where buy_id = #{user_id} limit 5
+	</select>
+	
+	<select id="user_sell_deal"
+		resultType="com.example.web.model.SellBillDTO">
+		select s_code, s_name, sell_id, s_cate, s_price, s_progress,bill_order
+		from sell_bill
+		where sell_id = #{user_id} limit 5
+	</select>
+	
+		<select id="user_buy_list"
+		resultType="com.example.web.model.BuyBillDTO">
+		select * from
+		(select @RNUM := @RNUM + 1 AS NUM, A.* from
+		(select * from
+		buy_bill
+		<include refid="user_buy_search" />
+		)A,
+		(select @RNUM :=0)b)c
+		where c.num between #{start_b} and #{end_b} 
+	</select>
+
+	<select id="user_sell_list"
+		resultType="com.example.web.model.SellBillDTO">
+		select * from
+		(select @RNUM := @RNUM+1 AS NUM, A.* from
+		(select * from
+		sell_bill
+		<include refid="user_sell_search" />
+		)A,
+		(select @RNUM := 0)b)c
+		where c.num between #{start_s} and #{end_s}
+	</select>
+	
+		<select id="user_buy_count" resultType="int">
+		select count(*) from buy_bill  
+		<include refid="buy_search" />
+	</select>
+
+	<select id="user_sell_count" resultType="int">
+		select count(*) from sell_bill 
+		<include refid="sell_search" />
+	</select>
+	
+	<select id="user_buy_detail"
+		resultType="com.example.web.model.BuyBillDTO">
+		select * from buy_bill where b_code = #{b_code} and buy_id = #{user_id}
+	</select>
+
+	<select id="user_sell_detail"
+		resultType="com.example.web.model.SellBillDTO">
+		select * from sell_bill where s_code = #{s_code} and sell_id = #{user_id}
+	</select>
+	
+	<sql id="user_buy_search">
+		<choose>
+			<!-- <when test="search_option == 'all' and #{keyword} != null ">all, 
+				not null 모두검색 -->
+			<when test="search_option == 'all'"><!--all, not null 모두검색 -->
+				where buy_id = #{user_id} and
+				b_code like CONCAT('%',#{keyword},'%') or
+				buy_id like CONCAT('%',#{keyword},'%') or
+				b_name like CONCAT('%',#{keyword},'%') or
+				b_cate like CONCAT('%',#{keyword},'%') or
+				b_check like CONCAT('%',#{keyword},'%') or
+				b_price like CONCAT('%',#{keyword},'%') 
+			</when>
+			<when test="search_option == 'b_code'">
+				where b_code like CONCAT('%',#{keyword},'%') and buy_id = #{user_id}
+			</when>
+			<when test="search_option == 'b_name'">
+				where b_name like CONCAT('%',#{keyword},'%') and buy_id = #{user_id}
+			</when>
+			<when test="search_option == 'b_cate'">
+				where b_cate like CONCAT('%',#{keyword},'%') and buy_id = #{user_id}
+			</when>
+			<when test="search_option == 'b_check'">
+				where b_check like CONCAT('%',#{keyword},'%') and buy_id = #{user_id}
+			</when>
+			<when test="search_option == 'b_price'">
+				where b_price like CONCAT('%',#{keyword},'%') and buy_id = #{user_id}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<sql id="user_sell_search">
+		<choose>
+			<when test="search_option == 'all'"><!--all, not null 모두검색 -->
+				where sell_id = #{user_id} and
+				s_code like CONCAT('%',#{keyword},'%') or
+				sell_id like CONCAT('%',#{keyword},'%') or
+				s_name like CONCAT('%',#{keyword},'%') or
+				s_cate like CONCAT('%',#{keyword},'%') or
+				s_check like CONCAT('%',#{keyword},'%') or
+				s_price like CONCAT('%',#{keyword},'%') 
+			</when>
+			<when test="search_option == 's_code'">
+				where s_code like CONCAT('%',#{keyword},'%') and sell_id = #{user_id}
+			</when>
+			<when test="search_option == 's_name'">
+				where s_name like CONCAT('%',#{keyword},'%') and sell_id = #{user_id}
+			</when>
+			<when test="search_option == 's_cate'">
+				where s_cate like CONCAT('%',#{keyword},'%') and sell_id = #{user_id}
+			</when>
+			<when test="search_option == 's_check'">
+				where s_check, user like CONCAT('%',#{keyword},'%') and sell_id = #{user_id}
+			</when>
+			<when test="search_option == 's_price'">
+				where s_price like CONCAT('%',#{keyword},'%') and sell_id = #{user_id}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</sql>
+</mapper>

@@ -42,7 +42,7 @@
 		var product_detail = $("#product_detail").val();
 		var cate = $("#product_cate").val();
 		var cate_detail = $("#product_" + cate).val();
-		var product_brand = $("#product_brand").val();
+		var product_brand = $("#product_brand option:checked").text();
 		var product_size = $("#product_size").val();
 		var product_cate = $("#product_cate :selected").text();
 		var product_priority = $("#product_priority").val();
@@ -52,7 +52,7 @@
 		var dto = new FormData;
 		var product_code = pcode;
 		alert("product code:" + pcode + " 로 등록됩니다.");
-
+		
 		dto.append("product_code", product_code);
 		dto.append("product_name", product_name);
 		dto.append("product_cate", product_cate);
@@ -336,14 +336,14 @@
 					<option value="53">냉장고</option>
 				</select> <select id="product_6" name="product_6" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="61">소형청소</option>
-					<option value="62">중형청소</option>
-					<option value="63">대형청소</option>
+					<option value="61">핸디청소기</option>
+					<option value="62">로봇청소기</option>
+					<option value="63">진공청소기</option>
 				</select> <select id="product_7" name="product_7" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
-					<option value="71">소형컴퓨터</option>
-					<option value="72">중형컴퓨터</option>
-					<option value="73">대형컴퓨터</option>
+					<option value="71">PC기타</option>
+					<option value="72">노트북</option>
+					<option value="73">데스크탑</option>
 				</select> <select id="product_8" name="product_8" style="visibility: hidden;">
 					<option value="default">세부항목을 선택하세요</option>
 					<option value="81">소형기타</option>
@@ -364,6 +364,8 @@
 				<option value="11">샤오미</option>
 				<option value="12">하이얼</option>
 				<option value="13">애플</option>
+				<option value="14">ASUS</option>
+				<option value="15">디월트</option>
 			</select> <br> 상품모델 <input type="text" id="product_model"
 				name="product_model"> <br> 상품가격 <input type="number"
 				name="product_price" id="product_price"> <br> 상품크기 <select

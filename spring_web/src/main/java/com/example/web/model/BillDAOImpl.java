@@ -159,4 +159,65 @@ public class BillDAOImpl implements BillDAO {
 		map.put("user_id", user_id);
 		return sqlSession.selectOne("deal.user_sell_detail", map);
 	}
+	
+
+	
+	@Override
+	public int checkRefund(String bill_order1) {
+
+		return sqlSession.selectOne("deal.checkRefund",bill_order1);
+	}
+	
+	@Override
+	public void refund_update(String bill_order1) {
+		sqlSession.update("deal.refund_update", bill_order1);
+	}
+	
+	@Override
+	public void refund(String bill_order1) {
+		sqlSession.update("deal.refund", bill_order1);
+	}
+	
+	
+	@Override
+	public int checkFinish(String bill_order1) {
+
+		return sqlSession.selectOne("deal.checkFinish",bill_order1);
+	}
+	
+	@Override
+	public String refundDo(String bill_order1) {
+		return sqlSession.selectOne("deal.refundDo", bill_order1);
+	}
+	
+	@Override
+	public void registration(ProductDTO dto) {
+		sqlSession.insert("deal.product_insert", dto);
+	}
+	
+	@Override
+	public int checkCode(String check_code) {
+
+		return sqlSession.selectOne("deal.checkCode",check_code);
+	}
+
+	@Override
+	public void plus(String check_code) {
+		sqlSession.update("deal.plus",check_code);
+		
+	}
+
+	@Override
+	public int regischeck(String bill_order) {
+		return sqlSession.selectOne("deal.regischeck",bill_order);
+	}
+
+	@Override
+	public void billplus(String bill_order) {
+		sqlSession.update("deal.billplus",bill_order);
+		
+	}
+
+
+	
 }

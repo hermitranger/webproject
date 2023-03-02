@@ -72,6 +72,53 @@
 		resultType="com.example.web.model.SellBillDTO">
 		select * from sell_bill where s_code = #{s_code}
 	</select>
+	
+<!-- 	<insert id="plzRefund">
+		INSERT INTO refund (bill_order,user_id,token,imp_uid) SELECT bill_order,sell_id,token,imp_uid FROM sell_bill where bill_order = #{bill_order1};
+	</insert>
+	 -->
+	<select id="checkRefund" resultType="int">
+		select count(*) from sell_bill where bill_order=#{bill_order1} and and s_progress=3
+	</select>
+	
+	<update id="refund_update">
+		update sell_bill set s_progress = 3 where bill_order = #{bill_order1}
+	</update>
+	
+	<update id="refund"><!-- 관리자 -->
+		update sell_bill set s_progress = 4 where bill_order = #{bill_order1}
+	</update>
+	
+	<select id="checkFinish" resultType="int"><!-- 관리자 -->
+		select count(*) from sell_bill where bill_order=#{bill_order1} and s_progress=4
+	</select>
+	
+	<select id="refundDo" resultType="String"><!-- 관리자 -->
+		select DISTINCT imp_uid from sell_bill where bill_order=#{bill_order1} and s_progress=3
+	</select>
+	
+	<insert id="product_insert">
+		INSERT INTO product values(#{dto.product_code},#{dto.filename},#{dto.product_name},#{dto.product_model},#{dto.product_cate},#{dto.product_brand},#{dto.product_price},#{dto.product_amount},NOW(),#{dto.product_detail},,#{dto.product_check},#{dto.product_saleprice}) ;
+	</insert>
+	
+	<select id="checkCode" resultType="int"><!-- 관리자 -->
+		select count(*) from product where product_code=#{check_code}
+	</select>
+	
+	<update id="plus">
+		update product set product_amount = product_amount+1 where product_code=#{product_code}
+	</update>
+	
+	<select id="regischeck" resultType="int">
+		select count(*) from buy_bill where bill_order=#{bill_order} and regis_check=0
+	</select>
+	
+	<update id="billplus">
+		update buy_bill set regis_check = 1 where bill_order=#{bill_order}
+	</update>
+	
+	
+	
 
 	<sql id="buy_search">
 		<choose>

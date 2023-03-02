@@ -21,15 +21,6 @@
 	});
 
 	$(function() {
-		$("#btnBuy").click(function() {
-			if (confirm("해당 제품을 구매하시겠습니까??")) {
-				document.form1.action = "/OrderSell.do";
-				document.form1.submit();
-			}
-		});
-	});
-
-	$(function() {
 		$("#btnSell").click(function() {
 			if (confirm("해당 제품을 판매하시겠습니까??")) {
 				document.form1.action = "/OrderBuy.do";
@@ -68,6 +59,17 @@
 	height: 20%;
 	padding: 10px;
 }
+
+.detail{
+	background:darked;
+	width:400px; height:400px;
+	line-height:400px;
+	text-align:center;
+	color:#fff;
+	font-size:20px;
+	margin:0 auto;
+
+}
 </style>
 </head>
 <body>
@@ -83,9 +85,11 @@
 
  		<div class="card">
 			<div class="left">
-				<img src="/resources/images/${dto.filename}" width="300px"
-					height="300px" alt="shoe"> <i class="fa fa-long-arrow-left"></i>
-				<i class="fa fa-long-arrow-right"></i>
+				<div class="detetail" title="${dto.product_detail}">
+					<img src="/resources/images/${dto.filename}" width="300px"
+						height="300px" alt="shoe"> <i class="fa fa-long-arrow-left"></i>
+					<i class="fa fa-long-arrow-right"></i>
+				</div>
 			</div>
 			<div class="right">
 				<div class="product-info">
@@ -133,6 +137,9 @@
 							</c:if>	
 							<%-- <fmt:formatNumber value="${dto.product_price}" pattern="#,###원" /> --%>
 					</h4>
+					</div>
+					<div>
+						<h1>상세설명 <br> 그림 위 마우스를 올려주세요</h1>
 					</div>
 						<br>
 						<input type="button" id="btnSell"

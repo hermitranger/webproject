@@ -312,18 +312,23 @@ public class ProductController {
 	public ModelAndView detailBuy(@PathVariable("product_code") String product_code, ModelAndView mav) {
 		mav.setViewName("/shop/detailBuy");
 		mav.addObject("dto", productDao.detail(product_code));
+		//System.out.println("product_code" + product_code);
 		String p_code=product_code.substring(0,6);
 		//System.out.println("p_code:"+p_code);
 		mav.addObject("list", productDao.recommendList(p_code,product_code));//추천목록추가0127 ???
 		String top_price=(String)product_code.substring(0, 8)+"3";
+		//System.out.println("top_price" + top_price);
 		String mid_price=(String)product_code.substring(0, 8)+"2";
 		String bot_price=(String)product_code.substring(0, 8)+"1";
 		mav.addObject("dto1",productDao.eachPrice(bot_price));
 		mav.addObject("dto2",productDao.eachPrice(mid_price));
 		mav.addObject("dto3",productDao.eachPrice(top_price));
+
+		
 		//System.out.println("productDao.eachPrice(bot_price) : "+ productDao.eachPrice(bot_price));
 		//System.out.println("productDao.eachPrice(mid_price) : "+ productDao.eachPrice(mid_price));
 		//System.out.println("productDao.eachPrice(top_price) : "+ productDao.eachPrice(top_price));
+		
 		return mav;
 	}
 

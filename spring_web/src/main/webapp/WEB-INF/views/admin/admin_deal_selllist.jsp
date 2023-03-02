@@ -9,6 +9,42 @@
 <title>admin_deal_selllist</title>
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
+
+$(function(){
+	$("button[name='refund']").click(function(){
+		 if(confirm("해당 주문번호 물건들이 모두 함께 취소됩니다.")){
+	     var that = $(this);
+	     var tr = that.parent().parent();
+	     var td = tr.children();
+	     var bill_order = tr.find('td:eq(0)').text();
+	     alert("bill_order : "+bill_order);
+	     $.ajax({
+	       url :"/admin/refund.do",                    // 전송 URL
+	       type : 'POST',                // GET or POST 방식
+	      traditional : true,   
+	       cache:false,
+	       data : {
+	    	   bill_order : bill_order
+	          // 보내고자 하는 data 변수 설정
+	       },
+	       dataType : "json",
+	         success: function(data){
+	            //console.log('jdata:'+jdata);
+	             if(data == "1") {
+	                 alert("환불 완료");
+	                 location.replace("admin_deal_selllist.do");
+	             }else if(data=="2"){
+	            	 alert("이미 환불된 품목입니다.");
+	             }else{
+	            	 
+	             }
+	         }
+	 	  });
+		 }
+		 else{}
+		});
+	});
+	
 	function list(page) {
 		location.href = "/admin/admin_deal_selllist.do?curPage="
 				+ page
@@ -20,7 +56,7 @@
 	<!-- 판매내역 검색창 -->
 	<%@ include file="../include/menu.jsp"%>
 	<div id="table_">
-		<div id="wrapper2">
+		<div id="wrapper2" style="width:1500px;">
 			<h4>판매목록</h4>
 			<form name="form1" method="post"
 				action="/admin/admin_deal_selllist.do">
@@ -48,19 +84,22 @@
 				<table id="keywords2" cellspacing="0" cellpadding="0">
 					<thead>
 						<tr>
+							<th><span>주문번호</span></th>
 							<th><span>상품코드</span></th>
 							<th><span>유저아이디</span></th>
 							<th><span>상품명</span></th>
 							<th><span>상품카테고리</span></th>
-							<th><span>검수등급</span></th>
+							<!-- <th><span>검수등급</span></th> -->
 							<th><span>상품가격</span></th>
 							<th><span>진행내역</span></th>
+							<th><span>환불</span></th>
 							<th><span>편집</span></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="row" items="${sellmap.list}">
 							<tr>
+								<td align="center">${row.bill_order}</td>
 								<td align="center">${row.s_code}</td>
 								<td align="center">${row.sell_id}</td>
 								<td align="center">${row.s_name}	</td>
@@ -69,7 +108,7 @@
 									style="color: black;">${row.s_name}</a></td> --%>
 								<td align="center">${row.s_cate}</td>
 								
-								<c:if test="${row.s_check eq 3}">
+								<%-- <c:if test="${row.s_check eq 3}">
 									<td align="center">상</td>
 								</c:if>
 								<c:if test="${row.s_check eq 2}">
@@ -80,7 +119,7 @@
 								</c:if>
 								<c:if test="${row.s_check eq 0}">
 									<td align="center">미검수</td>
-								</c:if>
+								</c:if> --%>
 								
 								<td align="center"><fmt:formatNumber pattern="#,###원"
 										value="${row.s_price}" /></td>
@@ -89,11 +128,21 @@
 									<c:when test="${row.s_progress eq  0}">결제완료</c:when>
 									<c:when test="${row.s_progress eq  1}">배송중</c:when>
 									<c:when test="${row.s_progress eq  2}">완료</c:when>
+									<c:when test="${row.s_progress eq  3}">환불요청</c:when>
+									<c:when test="${row.s_progress eq  4}">환불완료</c:when>
 								</c:choose>
-							</td>	
-								<td align="center"><a
-									href="/admin/admin_deal_selldetail/${row.s_code}"
-									style="color: blue;">[편집]</a></td>
+								</td>
+								<td align="center">
+									<button name="refund">환불</button>
+								</td>
+								<c:if test="${row.s_progress ne 4}">
+									<c:if test="${row.s_progress ne 3}">									
+										<td align="center"><a
+											href="/admin/admin_deal_selldetail/${row.s_code}"
+											style="color: blue;">[편집]</a>
+										</td>
+									</c:if>
+								</c:if>
 							</tr>
 						</c:forEach>
 						<!-- 페이지 나눔 -->

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>중고장터 :: 요청게시판</title>
+<title>중고장터 :: 물품요청게시판</title>
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 	$(function() {
@@ -58,7 +58,7 @@
 
 	<div id="table_">
 		<div id="wrapper">
-			<h3>게시판</h3>			
+			<h3>물품게시판</h3>			
 			<h4>${map.count }개의게시물이있습니다.</h4>
 			<div align="center">
 				<form name="form1" method="post" action="/board/list.do">

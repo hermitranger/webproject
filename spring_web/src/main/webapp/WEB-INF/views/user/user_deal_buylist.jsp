@@ -48,7 +48,7 @@
 						<table id="keywords" cellspacing="0" cellpadding="0">
 							<thead>
 								<tr>
-									<th><span>상품코드</span></th>
+									<th><span>주문코드</span></th>
 									<th><span>상품명</span></th>
 									<th><span>상품카테고리</span></th>
 									<th><span>검수등급</span></th>
@@ -58,7 +58,7 @@
 							<tbody>
 								<c:forEach var="row" items="${buymap.list}">
 									<tr>
-										<td align="center">${row.b_code}</td>
+										<td align="center">${row.bill_order}</td>
 										<td align="center">${row.b_name}</td>
 										<%-- <td align="center" class="lalign"><a
 											href="/user/user_deal_buydetail/${row.b_code}">${row.b_name}</a></td> --%>

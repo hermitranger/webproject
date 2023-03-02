@@ -42,4 +42,27 @@ public interface BillDAO {
 	// 판매내역 상세정보
 	BuyBillDTO product_inform(String b_code);
 	
+	
+	int checkRefund(String bill_order1);
+	
+	void refund_update(String bill_order1);
+	
+	int checkFinish(String bill_order1);
+	
+	void refund(String bill_order1);
+	
+	String refundDo(String bill_order1);
+    
+    void registration(ProductDTO dto);
+    
+	int checkCode(String check_code);
+	
+	void plus(String check_code);
+	
+	int regischeck(String bill_order);
+	
+	void billplus(String bill_order);
+	
+	
+	
 }

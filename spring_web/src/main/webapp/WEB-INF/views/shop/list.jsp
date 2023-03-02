@@ -62,7 +62,7 @@
 				<img src="/resources/images/${row.filename}" width="150px"height="150px" alt="x">
 					<!-- <img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" /> -->
 					<h4 align="center">
-						<a href="/shop/detail/${row.product_code}">${row.product_name}</a>		
+						<a href="/shop/detailBuy/${row.product_code}">${row.product_name}</a>		
 					</h4>
 					<c:if test="${sessionScope.user_check == '1'}">
 						<a href="/shop/edit/${row.product_code}">[편집]</a>

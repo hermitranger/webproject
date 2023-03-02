@@ -1,5 +1,6 @@
 package com.example.web.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,21 +9,32 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.web.model.BillDAO;
 import com.example.web.model.BuyBillDTO;
 import com.example.web.model.PageUtil;
+import com.example.web.model.PaymentService;
+import com.example.web.model.ProductDTO;
 import com.example.web.model.SellBillDTO;
+import com.example.web.model.SellOrderDAO;
 
 @Controller
 public class BillController {
 
 	@Autowired
 	BillDAO billDao;
+	
+	@Autowired
+	PaymentService paymentService;
+	
+	@Autowired
+	SellOrderDAO SellOrderDao;
 	
 	// 운영자 
 	@RequestMapping("admin_deal.do")
@@ -141,6 +153,81 @@ public class BillController {
 		mav.addObject("dto", selldetail);
 		return mav;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/admin/Registration.do")
+	public String registration(@RequestParam String bill_order,@RequestParam String product_code, @RequestParam String check) {//관리자 판매목록 - 편집 - 진행상황 업데이트
+		System.out.println(bill_order);
+		int billcheck=billDao.regischeck(bill_order);
+		System.out.println("billcheck" + billcheck);
+		if(billcheck>0) {
+		
+			ProductDTO dto = SellOrderDao.Sell_Product(product_code);
+			String name=dto.getProduct_name();
+			String code=dto.getProduct_code();
+			int price=dto.getProduct_price();
+			int saleprice=dto.getProduct_saleprice();
+			
+			if(check.equals("하")) {
+				System.out.println("하");
+				
+				String bot_name=name+"("+check+")";
+				String check_code=code.substring(0,8)+"1";
+				int check1 = billDao.checkCode(check_code);
+				if(check1==0)
+				{
+					dto.setProduct_name(bot_name);
+					dto.setProduct_code(check_code);
+					dto.setProduct_price(price);
+					dto.setProduct_saleprice(saleprice);
+
+					billDao.registration(dto);}
+				else {
+					billDao.plus(check_code);		
+				}
+			}
+			else if(check.equals("중")) {
+				String mid_name=name+"("+check+")";
+				String check_code=code.substring(0,8)+"2";
+				int check2 = billDao.checkCode(check_code);
+				int mid_price = price+(price*5/100);
+				int mid_saleprice = saleprice+(saleprice*5/100);
+				if(check2==0)
+				{
+				dto.setProduct_name(mid_name);
+				dto.setProduct_name(check_code);
+				dto.setProduct_price(mid_price);
+				dto.setProduct_saleprice(mid_saleprice);
+				billDao.registration(dto);}
+				else {
+					billDao.plus(check_code);		
+				}
+				
+				
+			}else if(check.equals("상")) {
+				String top_name=name+"("+check+")";
+				String check_code=code.substring(0,8)+"3";
+				int top_price = price+(price*5/100);
+				int top_saleprice = saleprice+(saleprice*10/100);
+				int check3 = billDao.checkCode(check_code);
+				if(check3==0)
+				{
+				dto.setProduct_name(top_name);
+				dto.setProduct_name(check_code);
+				dto.setProduct_price(top_price);
+				dto.setProduct_saleprice(top_saleprice);
+				billDao.registration(dto);}
+			else {
+				billDao.plus(check_code);		
+				}
+				
+			}
+			billDao.billplus(bill_order);
+			return "1";
+		}else {return "2";}
+		
+	}
+	
 
 	
 	// 유저관련
@@ -257,4 +344,50 @@ public class BillController {
 		mav.addObject("dto", selldetail);
 		return mav;
 	}
+	
+	@ResponseBody
+	@Transactional
+	@RequestMapping("user/plzRefund.do")
+	public String plzRefund(@RequestParam String bill_order) {
+		String bill_order1 = (String)bill_order;
+		int check =billDao.checkRefund(bill_order1);
+		if(check>0) {
+			return "2";
+		}
+		else {
+			//billDao.plzRefund(bill_order1);
+			billDao.refund_update(bill_order1);
+			//조인 문 사용 해서 sell_bill에서 값 가져오고
+			return "1";
+		}
+		
+	}
+	@ResponseBody
+	@Transactional
+	@RequestMapping("admin/refund.do")
+	public String refund(@RequestParam String bill_order) throws IOException{
+		String token = paymentService.getToken();
+		String bill_order1 = (String)bill_order;
+		int check =billDao.checkFinish(bill_order1);
+		if(check>0) {
+			return "2";
+		}
+		else {	
+			String Imp_uid = billDao.refundDo(bill_order1);
+			try {
+				paymentService.payMentCancle(token, Imp_uid, "오류");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			billDao.refund(bill_order1);
+			//조인 문 사용 해서 sell_bill에서 값 가져오고
+			return "1";
+		}
+		
+	}
+	
+	
+	
+	
 }

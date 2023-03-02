@@ -72,7 +72,7 @@ $(function(){
 			<!-- <li><a href="/test.do">트랜잭션 테스트</a> -->
 			<li><a href="/" >홈페이지</a></li>
 			<li><a href="/shop/list.do">상품 목록</a>
-			<li><a href="/board/list.do">게시판</a>
+			<li><a href="/board/list.do">물품 요청게시판</a>
 			<!-- <ul>
 				<li><a href="#">인기상품</a></li>
 				<li><a href="/shop/new_list.do">신규상품</a></li>

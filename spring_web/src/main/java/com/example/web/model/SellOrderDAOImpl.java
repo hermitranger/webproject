@@ -33,7 +33,7 @@ public class SellOrderDAOImpl implements SellOrderDAO {
 	
 
 	@Override
-	public SellBillDTO Sell_Result(ProductDTO Pdto,String user_id,String user_phone,String user_name,String user_email,String bill_order,String sell_address,String sell_post,int bill_deliver,int bill_total) {
+	public SellBillDTO Sell_Result(ProductDTO Pdto,String user_id,String user_phone,String user_name,String user_email,String bill_order,String sell_address,String sell_post,int bill_deliver,int bill_total,String token,String imp_uid) {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("Pdto", Pdto);
@@ -47,9 +47,9 @@ public class SellOrderDAOImpl implements SellOrderDAO {
 		map.put("sell_post", sell_post);
 		map.put("bill_deliver", bill_deliver);
 		map.put("bill_total", bill_total);
-		
+		map.put("token", token);
+		map.put("imp_uid", imp_uid);
 		return sqlSession.selectOne("order.Sell_Result",map);
-		
 	}
 
 	@Override

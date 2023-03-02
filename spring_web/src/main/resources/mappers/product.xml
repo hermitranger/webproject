@@ -154,7 +154,7 @@
 		p.recommend DESC LIMIT 0,5;
 	</select>
 	<select id="eachprice" resultType="com.example.web.model.ProductDTO">
-   select product_code,product_price,product_saleprice,product_amount from product where product_code=#{product_code};
+   select product_code,product_price,product_saleprice,product_amount,product_name from product where product_code=#{product_code};
    
    
    </select>

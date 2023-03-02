@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>buy.jsp</title>
+
 <script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <!-- jQuery -->
@@ -52,7 +53,7 @@ function requestPay() {
 	else{
 		alert("배송비 결제");
 	    IMP.request_pay({
-	        pg : 'kcp',
+	        pg : 'kakaopay.TC0ONETIME',
 	        pay_method : 'card',
 	        merchant_uid: "IMP"+makeMerchantUid, 
 	        name: $("#product_name").val(),
@@ -118,21 +119,21 @@ function createOrderNum(){
 
 
 function fee(){
-	let cate="${Pdto.product_code}";
+	let size=$("#size").val();
 	
-	if(cate.slice(-1) =="1"){     
+	if(size =="1"){     
 		const price = 5000;
 		let result = price.toLocaleString();
 		document.getElementById("fee").value=price;
 		 document.getElementById("fee2").value=result;
 	 }
-	 else if(cate.slice(-1) =="2"){
+	 else if(size =="2"){
 		 const price = 10000;
 			let result = price.toLocaleString();
 			document.getElementById("fee").value=price;
 			 document.getElementById("fee2").value=result;
 	 }
-	 else if(cate.slice(-1) =="3"){ 
+	 else if(size =="3"){ 
 		 const price = 20000;
 		let result = price.toLocaleString();
 		document.getElementById("fee").value=price;
@@ -144,24 +145,25 @@ function fee(){
 function jejuFee(fullAddr){
     let jeju=fullAddr.substring(0,2);
     let fee="";
-    let size =$("#product_code").val().toString();
+    let size ="${size}";
+    alert("size : " + size);
     let test = $("#product_code").val(); 
     if(jeju === "제주"){
 		document.getElementById("jeju").value="제주도는 기존 배송료에서 배송비가 3000원 추가됩니다. ";
     
-   	 if(size.slice(-1) =="1"){
+   	 if(size =="1"){
    		const price = 8000;
 		let result = price.toLocaleString();
 		document.getElementById("fee").value=price;
 		 document.getElementById("fee2").value=result;
    	 }
-	 	 else if(size.slice(-1) =="2"){ 
+	 	 else if(size =="2"){ 
 	 	const price = 13000;
 	 	let result = price.toLocaleString();
 	 	document.getElementById("fee").value=price;
 		 document.getElementById("fee2").value=result;
    	 }
-   	 else if(size.slice(-1) =="3"){ 
+   	 else if(size =="3"){ 
    		const price = 23000;
 	 	let result = price.toLocaleString();
 	 	document.getElementById("fee").value=price;
@@ -170,19 +172,19 @@ function jejuFee(fullAddr){
     }
 		else {
 			 document.getElementById("jeju").value="기본배송 지역";
-   	 if(size.slice(-1) =="1"){ 
+   	 if(size =="1"){ 
    		const price = 5000;
 		let result = price.toLocaleString();
 		document.getElementById("fee").value=price;
 		 document.getElementById("fee2").value=result;
    	 }
-   	 else if(size.slice(-1) =="2"){
+   	 else if(size =="2"){
    		const price = 10000;
 		let result = price.toLocaleString();
 		document.getElementById("fee").value=price;
 		 document.getElementById("fee2").value=result;
    	 }
-   	 else if(size.slice(-1) =="3"){
+   	 else if(size =="3"){
    		const price = 20000;
 		let result = price.toLocaleString();
 		document.getElementById("fee").value=price;
@@ -277,7 +279,8 @@ function showPostcode() {
 	<!--폼데이터 전달용 숨기기  -->
 		<input type="hidden"  id="bill_order" name="bill_order" value="">
 		<input type="hidden" name="product_code" id="product_code" value="${Pdto.product_code}">
-		<input type="hidden" style="border:0"  id="fee" name="fee" value="" readonly /> 
+		<input type="hidden" style="border:0"  id="fee" name="fee" value="" readonly />
+		<input type="hidden"  id="size" name="size" value="${size}" readonly /> 
 	<!--input 대신 button으로 할시 기본값 submit이라 foam 전송 후 새로고침 -> 숨겨놓은 product 값 컨트롤단에서 requestparm으로 받을시 2개받음  -->
 		
 	</form>	

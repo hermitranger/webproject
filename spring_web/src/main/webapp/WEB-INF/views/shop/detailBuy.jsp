@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,9 +59,25 @@ let basket = {
 	        var item = document.querySelector('input[name=p_num'+pos+']');
 	        var price = document.querySelector('input[name=product_saleprice'+pos+']').getAttribute('value');
 	        var sumprice = document.querySelector('.price'+pos);
-	        var amount1 = ${dto1.product_amount};
-	        var amount2 = ${dto2.product_amount};
-	        var amount3 = ${dto3.product_amount};
+	       
+	        if(!$("#amount1").val()){
+	        	const amount1=0;
+	        }
+	        else{
+	        	 var amount1 = $("#amount1").val();
+	        }
+	        if(!$("#amount2").val()){
+	        	const amount2=0;
+	        }
+	        else{
+	        	 var amount2 = $("#amount2").val();
+	        }
+	        if(!$("#amount3").val()){
+	        	const amount3=0;
+	        }
+	        else{
+	        	 var amount3 = $("#amount3").val();
+	        }
 	    	var eachprice= 'total_price' + pos;
 	        
 	        // input박스가 p_num1이렇게 되어있다.
@@ -70,17 +87,17 @@ let basket = {
 	        var newval = event.target.classList.contains('up') ? p_num+1 : event.target.classList.contains('down') ? p_num-1 : event.target.value;
 	        // 3) 클래스에 UP이 포함되어 있으면 P_NUM+1, DOWN이면 P_NUM -1, 아니면 지금 값
 	        if (parseInt(newval) < 1 || parseInt(newval) > 99) { return false; }
-	        else if(pos==1&& parseInt(newval) > ${dto1.product_amount}){ 
+	        else if(pos==1&& parseInt(newval) > amount1){ 
 		    	alert("수량 부족, 현재 재고 :" + amount1);
 		    	item.value = amount1;
 		    	return false;
 		    }
-	        else if(pos==2 && parseInt(newval) > ${dto2.product_amount}){ 
+	        else if(pos==2 && parseInt(newval) > amount2){ 
 	        	alert("수량 부족, 현재 재고 :" + amount2);
 		    	item.value = amount2;
 		    	return false;
 		    }
-	        else if(pos==3&& parseInt(newval) > ${dto3.product_amount}){ 
+	        else if(pos==3&& parseInt(newval) > amount3){ 
 	        	alert("수량 부족, 현재 재고 :" + amount3);
 		    	item.value = amount3;
 		    	return false;
@@ -107,8 +124,8 @@ let basket = {
 }
 
 function Arr(){
-	var product_name0 = "${dto.product_name}";
-	var product_name="";
+	//var product_name0 = "${dto.product_name}";
+	//var product_name="";
 	var ArrP_code = new Array();
 	var ArrP_price = new Array();
 	var ArrP_saleprice = new Array();
@@ -116,36 +133,44 @@ function Arr(){
 	var ArrP_sumprice= new Array();
 	var ArrP_name= new Array();
 	for(i=1;i<4;i++){
-	    if($("#total_price"+i).val()!=""){
-	    	if(i==1){
+		
+	    if($("#total_price"+i).val()==""||$("#total_price"+i).val()==null){
+	    }
+	    else{
+	    	//alert(i+"확인 : "+$("#total_price"+i).val());
+	    	/* if(i==1){
 	    		product_name = product_name0.concat("(하)");
 	    		}
 	    	else if(i==2){
 	    		product_name = product_name0.concat("(중)");
 	    		}
 	    	else if(i==3){
-	    		product_name = product_name0.concat("(상)");   	
-	    	}
+	    		product_name = product_name0.concat("(상)");
+	    	} */
+	    	var product_name=$("#product_name"+i).val();
 	    	var product_code = $("#product_code"+i).val();
 	    	var product_price = $("#product_price"+i).val();
 	    	var product_saleprice = $("#product_saleprice"+i).val();
 	    	var count = $("#p_num"+i).val();
 	    	var sumprice =$("#total_price"+i).val();    	
 	    // 가져온 값을 배열에 담는다.
-	    	ArrP_name.push(product_name);
-		    ArrP_code.push(product_code); 
-		    ArrP_price.push(product_price);
-		    ArrP_saleprice.push(product_saleprice);
-		    ArrP_count.push(count);
-		    ArrP_sumprice.push(sumprice);
+		    	ArrP_name.push(product_name);
+			    ArrP_code.push(product_code); 
+			    ArrP_price.push(product_price);
+			    ArrP_saleprice.push(product_saleprice);
+			    ArrP_count.push(count);
+			    ArrP_sumprice.push(sumprice);
         }     
 	}
+
+	
 	 $("#ArrP_name").val(ArrP_name);
 	 $("#ArrP_code").val(ArrP_code);
 	 $("#ArrP_price").val(ArrP_price);
 	 $("#ArrP_saleprice").val(ArrP_saleprice);
 	 $("#ArrP_count").val(ArrP_count);
 	 $("#ArrP_sumprice").val(ArrP_sumprice);
+
 }
 
 
@@ -175,6 +200,8 @@ Number.prototype.formatNumber = function(){
 							"<input type='text' name='p_num3' id='p_num3' size='1' maxlength='2' class='p_num' value='1' onkeyup='javascript:basket.changePNum(3);'>"+
 							"<input class='up' type='button' value='+' onclick='javascript:basket.changePNum(3);'>"+
 							"<input type='button' value='삭제' class='abutton' onclick='javascript:basket.delItem();'><br>" +
+							"<input type='hidden' id='total_price3' name='total_price3'>"+
+							"<input type='hidden' id='product_name3' name='product_name3' value='${dto3.product_name}'>"+
 						"</c:if>"+
 						/*saleprice*/		
 						"<c:if test='${dto3.product_price ne dto3.product_saleprice}'>"+	
@@ -192,6 +219,8 @@ Number.prototype.formatNumber = function(){
 							"<p style='text-decoration:line-through; color:white;display:inline-block;' align='center'>"+
 							"<fmt:formatNumber value='${dto3.product_price}' pattern='#,###원' />)</p>"+	
 					        "</c:if>"+
+					        "<input type='hidden' id='total_price3' name='total_price3'>"+
+					        "<input type='hidden' id='product_name3' name='product_name3' value='${dto3.product_name}'>"+
 					"</div>"
 			);	
 		var mid =$("<div id=mid>" + 
@@ -205,6 +234,9 @@ Number.prototype.formatNumber = function(){
 						"<input type='text' name='p_num2' id='p_num2' size='1' maxlength='2' class='p_num' value='1' onkeyup='javascript:basket.changePNum(2);'>"+
 						"<input class='up' type='button' value='+' onclick='javascript:basket.changePNum(2);'>"+
 						"<input type='button' value='삭제' class='abutton' onclick='javascript:basket.delItem();'><br>" +
+						"<input type='hidden' id='total_price2' name='total_price2'>"+
+						"<input type='hidden' id='product_name2' name='product_name2' value='${dto2.product_name}'>"+
+						
 					"</c:if>"+
 					/*saleprice*/		
 					"<c:if test='${dto2.product_price ne dto2.product_saleprice}'>"+	
@@ -222,6 +254,8 @@ Number.prototype.formatNumber = function(){
 						"<p style='text-decoration:line-through; color:white;display:inline-block;' align='center'>"+
 						"<fmt:formatNumber value='${dto2.product_price}' pattern='#,###원' />)</p>"+	
 				        "</c:if>"+
+				        "<input type='hidden' id='total_price2' name='total_price2'>"+
+				        "<input type='hidden' id='product_name2' name='product_name2' value='${dto2.product_name}'>"+
 				"</div>"
 			);
 		
@@ -236,6 +270,8 @@ Number.prototype.formatNumber = function(){
 						"<input type='text' name='p_num1' id='p_num1' size='1' maxlength='2' class='p_num' value='1' onkeyup='javascript:basket.changePNum(1);'>"+
 						"<input class='up' type='button' value='+' onclick='javascript:basket.changePNum(1);'>"+
 						"<input type='button' value='삭제' class='abutton' onclick='javascript:basket.delItem();'><br>" +
+						"<input type='hidden' id='total_price1' name='total_price1'>"+
+						"<input type='hidden' id='product_name1' name='product_name1' value='${dto1.product_name}'>"+
 					"</c:if>"+
 					/*saleprice*/
 					"<c:if test='${dto1.product_price ne dto1.product_saleprice}'>"+	
@@ -253,6 +289,8 @@ Number.prototype.formatNumber = function(){
 						"<p style='text-decoration:line-through; color:white;display:inline-block;' align='center'>"+
 						"<fmt:formatNumber value='${dto1.product_price}' pattern='#,###원' />)</p>"+	
 				        "</c:if>"+
+				        "<input type='hidden' id='total_price1' name='total_price1'>"+
+				        "<input type='hidden' id='product_name1' name='product_name1' value='${dto1.product_name}'>"+
 				"</div>"
 			);
 		
@@ -292,10 +330,14 @@ Number.prototype.formatNumber = function(){
 		$("#product_check").on("change", function(){
 			
 			if($(this).val()== '3'){
+				if(!$("#amount3").val()||$("#amount3").val()==0){
+					alert("재고가 없습니다.")
+					return ;
+				}
 				//alert("top" + $("#top").length);
-				if(!$("#top").length){
+				else if(!$("#top").length){
 					$("#3").append(top);
-					var price = ${dto3.product_saleprice};
+					var price = Number($("#product_saleprice3").val());
 					document.querySelector('.price3').textContent = price.formatNumber() + '원';
 					document.getElementById("total_price3").value=price;
 					
@@ -306,9 +348,13 @@ Number.prototype.formatNumber = function(){
 			}
 			else if($(this).val()== '2'){
 				//alert("mid" + $("#mid").length);
-				if(!$("#mid").length){
+				if(!$("#amount2").val()||$("#amount2").val()==0){
+					alert("재고가 없습니다.")
+					return ;
+				}
+				else if(!$("#mid").length){
 					$("#2").append(mid);
-					var price = ${dto2.product_saleprice};
+					var price = Number($("#product_saleprice2").val());
 					document.querySelector('.price2').textContent = price.formatNumber() + '원';
 					document.getElementById("total_price2").value=price;
 				}
@@ -318,9 +364,13 @@ Number.prototype.formatNumber = function(){
 			}
 			else if($(this).val()== '1'){
 				//alert("bot" + $("#bot").length);
-				if(!$("#bot").length){
+				if(!$("#amount1").val()||$("#amount1").val()==0){
+					alert("재고가 없습니다.")
+					return ;
+				}
+				else if(!$("#bot").length){
 					$("#1").append(bot);
-					var price = ${dto1.product_saleprice};
+					var price = Number($("#product_saleprice1").val());
 					document.querySelector('.price1').textContent = price.formatNumber() + '원';
 					document.getElementById("total_price1").value=price;
 				}
@@ -401,6 +451,17 @@ Number.prototype.formatNumber = function(){
 	height: 20%;
 	padding: 10px;
 }
+
+.detail{
+	background:darked;
+	width:400px; height:400px;
+	line-height:400px;
+	text-align:center;
+	color:#fff;
+	font-size:20px;
+	margin:0 auto;
+
+}
 </style>
 </head>
 <body>
@@ -414,12 +475,14 @@ Number.prototype.formatNumber = function(){
 
 	
 
- 		<div class="card">
-			<div class="left">
-				<img src="/resources/images/${dto.filename}" width="300px"
-					height="300px" alt="shoe"> <i class="fa fa-long-arrow-left"></i>
-				<i class="fa fa-long-arrow-right"></i>
-			</div>
+ 		<div class="card">	
+				<div class="left">
+					<div class="detetail" title="${dto.product_detail}">
+					<img src="/resources/images/${dto.filename}" width="300px"
+						height="300px" alt="shoe"> <i class="fa fa-long-arrow-left"></i>
+					<i class="fa fa-long-arrow-right"></i>
+					</div>
+				</div>
 			<div class="right">
 				<div class="product-info">
 					<div class="product-name">
@@ -442,7 +505,7 @@ Number.prototype.formatNumber = function(){
 					</ul> --%>
 					
 					<div class="details">	
-						<h2>${dto.product_name}</h2>
+						<h4>${dto.product_name}</h4><br>
 						<h4>
 							<span class="fa fa-dollar"></span>${dto.product_brand}
 						</h4>
@@ -494,9 +557,13 @@ Number.prototype.formatNumber = function(){
 						<input type="hidden" id="ArrP_sumprice" name="ArrP_sumprice" value="">
 						<input type="hidden" id="ArrP_name" name="ArrP_name" value="">				
 						</form>		
-						<input type="hidden" id="total_price1" name="total_price1" value="">
-						<input type="hidden" id="total_price2" name="total_price2" value="">
-						<input type="hidden" id="total_price3" name="total_price3" value="">
+						<input type="hidden" id="amount1" name="amount1" value="${dto1.product_amount}">
+						<input type="hidden" id="amount2" name="amount2" value="${dto2.product_amount}">
+						<input type="hidden" id="amount3" name="amount3" value="${dto3.product_amount}">
+						<input type="hidden" id="product_saleprice1" name="product_saleprice1" value="${dto1.product_saleprice}">
+						<input type="hidden" id="product_saleprice2" name="product_saleprice2" value="${dto2.product_saleprice}">
+						<input type="hidden" id="product_saleprice3" name="product_saleprice3" value="${dto3.product_saleprice}">					
+						
 					</div>
 					<br>
 					<br>
@@ -506,8 +573,13 @@ Number.prototype.formatNumber = function(){
 							onclick="location.href='/shop/edit/${dto.product_code}'"
 							value="상품수정" style="color: black;">
 					</c:if>
+					<div>
+						<h1>상세설명 <br> 그림 위 마우스를 올려주세요</h1>
+					</div>
 				</div>
+				
 			</div>
+			
 		</div>
 		<div class="card"><!--코드왓다갓다함 고쳐야 함 계속 누를시  -->
 			<div class="center">
@@ -528,7 +600,8 @@ Number.prototype.formatNumber = function(){
 					</c:forEach>
 				</div>
 			</div>
-		</div>		
+		</div>
+					
 	<%-- 	<input type="hidden" name="product_code" value="${dto.product_code}">
  --%>
 

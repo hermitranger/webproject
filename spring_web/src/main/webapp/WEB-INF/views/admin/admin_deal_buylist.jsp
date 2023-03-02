@@ -7,8 +7,53 @@
 <head>
 <meta charset="UTF-8">
 <!-- <title>관리자 전용 구매목록</title> -->
+<script src="http://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>admin_deal_buylist</title>
 <script>
+
+$(function(){
+	$("button[name='registration']").click(function(){
+		alert("확인")
+		 if(confirm("물건을 등록하시겠습니까.")){
+	     var that = $(this);
+	     var tr = that.parent().parent();
+	     var td = tr.children();
+	     var bill_order = tr.find('td:eq(0)').text();
+	     var product_code = tr.find('td:eq(1)').text();
+	     var check = tr.find('td:eq(5)').text();
+	    /*  alert(bill_order);
+	     alert(product_code);
+	     alert(check); */
+	     
+	    $.ajax({
+	       url :"/admin/Registration.do",                    // 전송 URL
+	       type : 'POST',                // GET or POST 방식
+	      traditional : true,   
+	       cache:false,
+	       data : {
+	    	   bill_order : bill_order,
+	    	   product_code : product_code,
+	    	   check : check
+	    	   
+	          // 보내고자 하는 data 변수 설정
+	       },
+	       dataType : "json",
+	         success: function(data){
+	            //console.log('jdata:'+jdata);
+	             if(data == "1") {
+	                 alert("등록 완료");
+	                 location.replace("admin_deal_buylist.do");
+	             }else if(data=="2"){
+	            	 alert("이미 적용된 품목입니다.");
+	             }else{
+	            	 
+	             }
+	         }
+	 	  }); 
+		 }
+		 else{}
+		});
+});
 	function list(page) {
 		location.href = "/admin/admin_deal_buylist.do?curPage=" + page
 				+ "&search_option=${map.search_option}&keyword=${map.keyword}";
@@ -19,7 +64,7 @@
 	<!-- 구매내역 검색창 -->
 <%@ include file="../include/menu.jsp"%>
 <div id="table_">
-		<div id="wrapper2">
+		<div id="wrapper2" style="width:1650px;">
 	<h4>구매목록</h4>
 	<form name="form1" method="post" action="/admin/admin_deal_buylist.do">
 		<select name="search_option">
@@ -43,9 +88,11 @@
 
 	<!-- 구매내역 나열 -->
 	<form name="userForm">
+		<!-- <form name="form" method="post" action="/admin_sale_list.do"> -->
 		<table id="keywords2" cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
+				<th><span>주문번호</span></th>
 				<th><span>상품코드</span></th>
 				<th><span>유저아이디</span></th>
 				<th><span>상품명</span></th>
@@ -53,12 +100,14 @@
 				<th><span>검수등급</span></th>
 				<th><span>상품가격</span></th>
 				<th><span>진행내역</span></th>
+				<th><span>상품등록</span></th>
 				<th><span>편집</span></th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="row" items="${buymap.list}">
 				<tr>
+					<td align="center">${row.bill_order}</td>
 					<td align="center">${row.b_code}</td>
 					<td align="center">${row.buy_id}</td>
 					<td align="center">${row.b_name}</td>
@@ -89,7 +138,14 @@
 									<c:when test="${row.b_progress eq  3}">검수완</c:when>
 									<c:when test="${row.b_progress eq  4}">완료</c:when>
 								</c:choose>
-							</td>
+					</td>
+					<td align="center">
+						<c:if test="${row.b_progress eq 4}">
+								<button name="registration">물건등록</button>
+								<%-- <a href="/admin/Registration.do/${row.b_code}/${row.b_check}" style="color: blue;">[등록]</a> --%>														
+								<%-- <input type="button"  value="상품등록" onclick="location.href='/admin/Registration.do?product_code='+${row.b_code}+'check='${row.b_check};"> --%>
+						</c:if>
+					</td>
 					<td align="center"><a href="/admin/admin_deal_buydetail/${row.b_code}" style="color: blue;">[편집]</a></td>
 				</tr>
 			</c:forEach>

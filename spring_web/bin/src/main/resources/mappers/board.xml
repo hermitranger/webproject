@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+
+<sql id="paging_header">
+	select A.*
+	from (	
+</sql>
+
+<select id = "list" resultType="com.example.web.model.BoardDTO">
+	<include refid="paging_header"/>
+	select idx,title,contents,regdate,hit,user_id,
+	(select count(*) from reply where board_idx=b.idx) cnt,
+	(select file_name from attach where board_idx=b.idx limit 1) file_name
+	from board b, user u
+	<include refid="search" />
+	order by idx desc, regdate desc
+	<include refid="paging_footer"/>
+</select>
+
+<sql id = "search">
+	<choose>
+		<when test="search_option=='all'">
+			where b.writer=u.user_id
+			and (user_id like CONCAT('%',#{keyword},'%')or
+			contents like CONCAT('%',#{keyword},'%')or
+			title like CONCAT('%',#{keyword},'%'))
+						
+		</when>
+		<otherwise>
+			where b.writer=u.user_id
+			and ${search_option} like CONCAT('%',#{keyword},'%')
+		</otherwise>
+	</choose>
+</sql>
+
+<sql id="paging_footer">
+	) A
+limit #{start} , 10
+</sql>
+
+<!-- <insert id="insert">
+	insert into board (idx, title, contents, writer) values
+	(select case count(*) when 0 then 1 else max(idx)+1 end, #{title},#{contents},#{writer})
+</insert> -->
+
+<insert id="insert">
+	insert into board (title, contents, writer) values
+	( #{title},#{contents},#{writer})
+</insert>
+
+<select id="detail" resultType="com.example.web.model.BoardDTO">
+	select idx,title,contents,b.regdate,hit,user_id,writer
+	from board b, user u
+	where b.writer=u.user_id and idx=#{idx}
+</select>
+
+<update id="increase_hit">
+	update board set hit=hit+1 where idx=#{idx}
+</update>
+
+<update id="update">
+	update board set title=#{title}, contents=#{contents}
+	where idx=#{idx}
+</update>
+
+<delete id="delete">
+	delete from board where idx=#{idx}
+</delete>
+
+<select id="count" resultType="int">
+	select count(*) from board b, user u
+	<include refid="search"/>
+</select>
+
+<select id="list_attach" resultType="String">
+	select file_name from attach
+	where board_idx=#{board_idx} order by regdate
+</select>
+
+<!-- <insert id="insert_attach">
+	insert into attach (file_name, board_idx) values
+	(#{file_name}, (select max(idx) from board) idx)==>as 안통함
+</insert> -->
+<insert id="insert_attach">
+	insert into attach (file_name, board_idx) values
+	(#{file_name}, (select max(idx) from board))
+</insert>
+
+<insert id="update_attach">
+	insert into attach (file_name, board_idx)
+	values (#{file_name},#{idx})
+</insert>
+
+<delete id="delete_attach">
+	delete from attach where file_name=#{file_name}
+</delete>
+<select id="idx" resultType="int">
+	select max(idx) from board
+</select>
+<delete id="delete_attach_idx">
+	delete from attach where board_idx=#{idx}
+</delete>
+<select id="file_detail" resultType="String">
+	select * from attach where board_idx=#{idx}
+</select>
+
+</mapper>
