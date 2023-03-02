@@ -78,7 +78,7 @@
 	</insert>
 	 -->
 	<select id="checkRefund" resultType="int">
-		select count(*) from sell_bill where bill_order=#{bill_order1} and and s_progress=3
+		select count(*) from sell_bill where bill_order=#{bill_order1} and s_progress=3
 	</select>
 	
 	<update id="refund_update">
