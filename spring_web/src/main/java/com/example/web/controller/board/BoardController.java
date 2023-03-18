@@ -106,7 +106,7 @@ public class BoardController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("count", count);
-		map.put("serch_option", search_option);
+		map.put("search_option", search_option);
 		map.put("keyword", keyword);
 		map.put("page_info", page_info);
 		mav.addObject("map",map);		

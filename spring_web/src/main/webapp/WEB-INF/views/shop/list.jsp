@@ -59,6 +59,7 @@
 			<c:forEach var="row" items="${map.list}">
 		
 				<div align="left">
+				<div class="${row.product_code }">
 				<img src="/resources/images/${row.filename}" width="150px"height="150px" alt="x">
 					<!-- <img src="https://i.ibb.co/KjGFHVJ/card2.png" alt="" /> -->
 					<h4 align="center">
@@ -85,6 +86,7 @@
 				<input type="button" value = "구매" onclick="location.href='/shop/detailBuy/${row.product_code}'"><!--2.13에 이후는 buy ,sell 하고 나중에 다 바꾸자  -->
 				<input type="button" value = "판매" onclick="location.href='/shop/detailSell/${row.product_code}'"><!--2.13에 이후는 buy ,sell 하고 나중에 다 바꾸자  -->
 				</p>
+					</div>
 					</div>
 			</c:forEach>
 			</section>
