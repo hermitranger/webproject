@@ -240,7 +240,7 @@
 <input type="text" id="sample5_extraAddress" placeholder="참고항목">
 
 
-
+<div align="center">
 <!-- <input type="text" id="user_addr" placeholder="주소" readonly>
 <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br> -->
 <div id="map" style="width:300px;height:300px;margin-top:10px;"></div>
@@ -343,7 +343,7 @@
     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
    
 </script>
-
+</div>
 			
 			<input type = "button" id="join" value = "회원가입" style="color:black;">
 			</form>

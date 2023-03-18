@@ -82,7 +82,7 @@
 				<input type="text" id="user_zipcode" name="user_zipcode"
 					placeholder="우편번호" value="${dto.user_zipcode}" readonly> <input
 					type="button" onclick="sample5_execDaumPostcode()" value="우편번호 찾기">
-
+				<div align="center">
 				<br>
 				<h2 class="active">주소</h2>
 				<input type="text" id="user_addr" name="user_addr"
@@ -91,7 +91,7 @@
 				<input type="text" id="user_addrdetail" name="user_addrdetail"
 					value="${dto.user_addrdetail}"><br> <input type="text"
 					id="sample5_extraAddress" placeholder="참고항목">
-
+				
 				<div id="map" style="width: 300px; height: 300px; margin-top: 10px;"></div>
 
 				<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -237,11 +237,7 @@
 					map.addControl(mapTypeControl,
 							kakao.maps.ControlPosition.TOPRIGHT);
 				</script>
-
-
-
-
-
+				</div>
 				<!-- 유저체크<input type="number" id="check"  name="check"><br> -->
 				<br> <input type='button' value='회원정보수정' onclick="conf()"
 					style="color: black;"> <input type='button' value='메인화면'
